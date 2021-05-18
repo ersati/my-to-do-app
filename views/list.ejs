@@ -6,5 +6,11 @@
 <input type="submit" value="input" name="name1">
 
 </form>
-
+<ul>
+  
+<% people.forEach((element, index )=> { %>
+    <li><%= element %> to jest index: <%=index %></li>
+  
+<%});%>
+</ul>
 <% include('footer'); -%>

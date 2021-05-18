@@ -13,7 +13,9 @@ app.use(express.static("public"))
 
 const arr = []
 app.get('/', (req,res) => {
-    res.render('list')
+    res.render('list',{
+        people: arr,
+    })
 })
 
 app.post('/', (req,res) =>{
