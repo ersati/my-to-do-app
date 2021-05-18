@@ -10,8 +10,19 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(express.static("public"))
+
+const arr = []
 app.get('/', (req,res) => {
     res.render('list')
+})
+
+app.post('/', (req,res) =>{
+    const valueInput = req.body.name2;
+    const valueInput1 = req.body.name1;
+    arr.push(valueInput);
+    console.log(arr)
+    console.log(req.body)
+    res.redirect('/')
 })
 
 
