@@ -12,24 +12,37 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"))
 
 const arr = []
+const list = []
 app.get('/', (req,res) => {
     res.render('list',{
         people: arr,
+        list: list
     })
 })
 
 app.post('/', (req,res) =>{
     const valueInput = req.body.name2;
     const valueInput1 = req.body.name1;
+    
     arr.push(valueInput);
     console.log(arr)
     console.log(req.body)
-    res.redirect('/')
+    
+   
 })
 
+app.post('/another-list' , (req,res) => {
+    const ownList = req.body.ownList
+    list.push(ownList);
+    console.log(list)
+    res.redirect('/')
+})
 app.post('/delete', (req, res) => {
     const deleteInput = req.body.checkbox
     console.log('ok', deleteInput)
+    arr.splice(deleteInput, 1);
+    console.log(arr)
+    res.redirect('/')
 })
 
 

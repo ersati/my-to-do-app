@@ -10,9 +10,26 @@
   
 <% people.forEach((element, index )=> { %>
     <form action="/delete" method="post">
-     <li><%= element %> to jest index: <input type="checkbox" value="<%= index %>" name="checkbox" onChange="this.form.submit()">  </li> 
+     <li> <input type="checkbox" name="complete" id="">  <%= element %> to jest index: <input type="checkbox" value="<%= index %>" name="checkbox" onChange="this.form.submit()">  </li> 
      </form> 
   
+<% }); %>
+</ul>
+
+<ul>
+<li><a href="">Work</a></li>
+<li><a href="">Finance</a></li>
+<li><a href="">Self Development</a></li>
+<li><a href="">Family & friends</a></li>
+<li><a href="">Hobby</a></li>
+<li><a href="">Health</a></li>
+<p>Create your own list </p>
+<form action="/another-list" method="post">
+    <input type="text" name="ownList" id="">
+    <input type="submit" value="add">
+</form>
+<% list.forEach(el => { %>
+    <li><a href=""><%= el %></a></li>
 <% }); %>
 </ul>
 <% include('footer'); -%>
