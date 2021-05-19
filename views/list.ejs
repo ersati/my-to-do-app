@@ -9,8 +9,10 @@
 <ul>
   
 <% people.forEach((element, index )=> { %>
-    <li><%= element %> to jest index: <%=index %></li>
+    <form action="/delete" method="post">
+     <li><%= element %> to jest index: <input type="checkbox" value="<%= index %>" name="checkbox" onChange="this.form.submit()">  </li> 
+     </form> 
   
-<%});%>
+<% }); %>
 </ul>
 <% include('footer'); -%>

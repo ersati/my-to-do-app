@@ -27,6 +27,11 @@ app.post('/', (req,res) =>{
     res.redirect('/')
 })
 
+app.post('/delete', (req, res) => {
+    const deleteInput = req.body.checkbox
+    console.log('ok', deleteInput)
+})
+
 
 app.listen(3000,function() {
     console.log('serwer is working on port 3000')
