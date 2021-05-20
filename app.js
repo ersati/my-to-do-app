@@ -20,6 +20,29 @@ app.get('/', (req,res) => {
     })
 })
 
+app.get ('/work', (req,res) => {
+    res.render('work')
+})
+
+app.get ('/self-development', (req,res) => {
+    res.render('self-development')
+})
+
+app.get ('/hobby', (req,res) => {
+    res.render('hobby')
+})
+
+app.get ('/health', (req,res) => {
+    res.render('health')
+})
+
+app.get ('/finance', (req,res) => {
+    res.render('finance')
+})
+app.get ('/fandf', (req,res) => {
+    res.render('fandf')
+})
+
 app.post('/', (req,res) =>{
     const valueInput = req.body.name2;
     const valueInput1 = req.body.name1;
