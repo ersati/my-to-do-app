@@ -16,7 +16,7 @@
 <% }); %>
 </ul>
 
-<ul>
+<ul id="own-list">
 <li><a href="/work">Work</a></li>
 <li><a href="/finance">Finance</a></li>
 <li><a href="/self-development">Self Development</a></li>
@@ -29,7 +29,7 @@
     <input type="submit" value="add">
 </form>
 <% list.forEach(el => { %>
-    <li><a href=""><%= el %></a></li>
+    <li><a href="/<%= el %>"><%= el %></a></li>
 <% }); %>
 </ul>
 <% include('footer'); -%>
