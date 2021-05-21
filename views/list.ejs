@@ -26,10 +26,23 @@
 <p>Create your own list </p>
 <form action="/another-list" method="post">
     <input type="text" name="ownList" id="">
-    <input type="submit" value="add">
+    <input type="submit" value="add" id='add'>
 </form>
+
+
+
 <% list.forEach(el => { %>
     <li><a href="/<%= el %>"><%= el %></a></li>
 <% }); %>
+
 </ul>
+
+<script>
+    const ul = document.querySelectorAll('#own-list li').length;
+    const add = document.querySelector('#add');
+    console.log(ul)
+    if(ul > 10 ){
+        add.disabled = true;
+    }
+</script>
 <% include('footer'); -%>
