@@ -9,6 +9,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
+app.use('/favicon.ico', express.static('images/favicon.ico'));
+
+
 app.use(express.static("public"))
 
 const arr = []
@@ -61,6 +64,7 @@ app.post('/', (req,res) =>{
     arr.push(valueInput);
     console.log(arr)
     console.log(req.body)
+    res.redirect('/')
     
    
 })
@@ -73,11 +77,21 @@ app.post('/another-list' , (req,res) => {
 })
 app.post('/delete', (req, res) => {
     const deleteInput = req.body.checkbox
-    console.log('ok', deleteInput)
-    arr.splice(deleteInput, 1);
-    console.log(arr)
+    
+
+    const deleteOwnList = req.body.checkboxown
+
+    if(deleteOwnList > -1){
+        list.splice(deleteOwnList, 1)
+    }else {
+        arr.splice(deleteInput, 1);
+    }
+
+        console.log(arr)
+    
     res.redirect('/')
 })
+
 
 
 app.listen(3000,function() {

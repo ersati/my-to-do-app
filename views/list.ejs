@@ -31,8 +31,10 @@
 
 
 
-<% list.forEach(el => { %>
-    <li><a href="/<%= el %>"><%= el %></a></li>
+<% list.forEach((el,index )=> { %>
+<form action="/delete" method="post">
+    <li> <a href="/<%= el %>"><%= el %></a> <input type="checkbox" value="<%= index %>" name="checkboxown" onChange="this.form.submit()">  </li> 
+    </form> 
 <% }); %>
 
 </ul>
