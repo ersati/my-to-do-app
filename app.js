@@ -16,6 +16,7 @@ app.use(express.static("public"))
 
 const arr = []
 const list = []
+const hobby = [];
 let param = '';
 app.get('/', (req,res) => {
     res.render('list',{
@@ -33,7 +34,10 @@ app.get ('/self-development', (req,res) => {
 })
 
 app.get ('/hobby', (req,res) => {
-    res.render('hobby')
+    res.render('hobby', {
+        hobby: hobby,
+        param:param
+    })
 })
 
 app.get ('/health', (req,res) => {
@@ -50,6 +54,7 @@ app.get ('/fandf', (req,res) => {
 
 app.get('/:paramName', (req, res) => {
     const paramName = req.params.paramName;
+    param = paramName
     console.log(paramName)
     res.render('own', {
         title: paramName
@@ -77,8 +82,11 @@ app.post('/another-list' , (req,res) => {
 })
 app.post('/delete', (req, res) => {
     const deleteInput = req.body.checkbox
-    
 
+    const hiddenInput = req.body.listName
+    console.log( req.body.name)
+    
+    // console.log(req.body)
     const deleteOwnList = req.body.checkboxown
 
     if(deleteOwnList > -1){
@@ -90,6 +98,12 @@ app.post('/delete', (req, res) => {
         console.log(arr)
     
     res.redirect('/')
+})
+
+app.post('/hobby', (req,res) => {
+    const valueInput = req.body.name2;
+    hobby.push(valueInput);
+    res.redirect('/hobby')
 })
 
 
