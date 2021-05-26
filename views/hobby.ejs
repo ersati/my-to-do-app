@@ -1,5 +1,5 @@
 <%- include('header'); -%>
-<h1 name="hobby">Hobby</h1>
+<h1 >Hobby</h1>
 
 
 <form action="/hobby" method="post">
@@ -10,7 +10,7 @@
     <ul>
       
     <% hobby.forEach((element, index )=> { %>
-        <form action="/delete" method="post">
+        <form action="/delete-hobby" method="post">
          <li> <input type="checkbox" name="complete" id="">  <%= element %> to jest index: 
             <input type="checkbox" value="<%= index %>" name="checkbox" onChange="this.form.submit()"> 
          </li> 

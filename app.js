@@ -17,6 +17,10 @@ app.use(express.static("public"))
 const arr = []
 const list = []
 const hobby = [];
+const health = [];
+const finance = []; 
+const fandf = [];
+const self = [];
 let param = '';
 app.get('/', (req,res) => {
     res.render('list',{
@@ -30,7 +34,10 @@ app.get ('/work', (req,res) => {
 })
 
 app.get ('/self-development', (req,res) => {
-    res.render('self-development')
+    res.render('self-development', {
+        self: self,
+        param:param
+    })
 })
 
 app.get ('/hobby', (req,res) => {
@@ -41,14 +48,23 @@ app.get ('/hobby', (req,res) => {
 })
 
 app.get ('/health', (req,res) => {
-    res.render('health')
+    res.render('health', {
+        health: health,
+        param:param
+    })
 })
 
 app.get ('/finance', (req,res) => {
-    res.render('finance')
+    res.render('finance',{
+        finance:finance,
+        param:param
+    })
 })
 app.get ('/fandf', (req,res) => {
-    res.render('fandf')
+    res.render('fandf', {
+        fandf:fandf,
+        param:param
+    })
 })
 
 
@@ -63,12 +79,7 @@ app.get('/:paramName', (req, res) => {
 
 app.post('/', (req,res) =>{
     const valueInput = req.body.name2;
-    const valueInput1 = req.body.name1;
-    const random = req.params
-    console.log(random)
     arr.push(valueInput);
-    console.log(arr)
-    console.log(req.body)
     res.redirect('/')
     
    
@@ -77,26 +88,16 @@ app.post('/', (req,res) =>{
 app.post('/another-list' , (req,res) => {
     const ownList = req.body.ownList
     list.push(ownList);
-    console.log(list)
     res.redirect('/')
 })
 app.post('/delete', (req, res) => {
     const deleteInput = req.body.checkbox
-
-    const hiddenInput = req.body.listName
-    console.log( req.body.name)
-    
-    // console.log(req.body)
     const deleteOwnList = req.body.checkboxown
-
     if(deleteOwnList > -1){
         list.splice(deleteOwnList, 1)
     }else {
         arr.splice(deleteInput, 1);
     }
-
-        console.log(arr)
-    
     res.redirect('/')
 })
 
@@ -106,7 +107,59 @@ app.post('/hobby', (req,res) => {
     res.redirect('/hobby')
 })
 
+app.post('/delete-hobby', (req, res) => {
+    const index = req.body.checkbox
+    hobby.splice(index, 1);
+    res.redirect('/hobby')
+})
+app.post('/health', (req,res) => {
+    const valueInput = req.body.name2;
+    health.push(valueInput);
+    res.redirect('/health')
+})
 
+app.post('/delete-health', (req, res) => {
+    const index = req.body.checkbox
+    health.splice(index, 1);
+    res.redirect('/health')
+})
+
+app.post('/finance', (req,res) => {
+    const valueInput = req.body.name2;
+    finance.push(valueInput);
+    res.redirect('/finance')
+})
+
+app.post('/delete-finance', (req, res) => {
+    const index = req.body.checkbox
+    finance.splice(index, 1);
+    res.redirect('/finance')
+})
+
+
+app.post('/fandf', (req,res) => {
+    const valueInput = req.body.name2;
+    fandf.push(valueInput);
+    res.redirect('/fandf')
+})
+
+app.post('/delete-fandf', (req, res) => {
+    const index = req.body.checkbox
+    fandf.splice(index, 1);
+    res.redirect('/fandf')
+})
+
+app.post('/self', (req,res) => {
+    const valueInput = req.body.name2;
+    self.push(valueInput);
+    res.redirect('/self-development')
+})
+
+app.post('/delete-self', (req, res) => {
+    const index = req.body.checkbox
+    self.splice(index, 1);
+    res.redirect('/self-development')
+})
 
 app.listen(3000,function() {
     console.log('serwer is working on port 3000')
