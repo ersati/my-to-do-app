@@ -21,6 +21,7 @@ const health = [];
 const finance = []; 
 const fandf = [];
 const self = [];
+const work = []
 let param = '';
 app.get('/', (req,res) => {
     res.render('list',{
@@ -29,8 +30,11 @@ app.get('/', (req,res) => {
     })
 })
 
-app.get ('/work', (req,res) => {
-    res.render('work')
+app.get('/work', (req,res) => {
+    res.render('work',{
+        work:work,
+        param:param
+    })
 })
 
 app.get ('/self-development', (req,res) => {
@@ -100,6 +104,20 @@ app.post('/delete', (req, res) => {
     }
     res.redirect('/')
 })
+
+app.post('/work', (req,res) => {
+    const valueInput = req.body.name2;
+    work.push(valueInput);
+    res.redirect('/work')
+})
+
+app.post('/delete-work', (req, res) => {
+    const index = req.body.checkbox
+    work.splice(index, 1);
+    res.redirect('/work')
+})
+
+
 
 app.post('/hobby', (req,res) => {
     const valueInput = req.body.name2;

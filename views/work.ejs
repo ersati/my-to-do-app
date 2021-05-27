@@ -1,5 +1,25 @@
 <%- include('header'); -%>
 <h1>Work</h1>
 
+
+<form action="/work" method="post">
+    <input type="text" name="name2">
+    <input type="submit" value="input" name="name1">
+    
+    </form>
+    <ul>
+      
+    <% work.forEach((element, index )=> { %>
+        <form action="/delete-work" method="post">
+         <li> <input type="checkbox" name="complete" id="">  <%= element %> to jest index: 
+            <input type="checkbox" value="<%= index %>" name="checkbox" onChange="this.form.submit()"> 
+         </li> 
+         <input type="hidden" name="listName" value="<%= param%>"></input>
+         </form> 
+      
+    <% }); %>
+    </ul>
+
+
 <a href="/">Back to home</a>
 <% include('footer'); -%>
