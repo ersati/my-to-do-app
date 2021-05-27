@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
+
+
 const app = express();
 
 
@@ -14,6 +17,23 @@ app.use('/favicon.ico', express.static('images/favicon.ico'));
 
 app.use(express.static("public"))
 
+mongoose.connect("mongodb://localhost:27017/todolistDB", {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true,
+	useFindAndModify: false
+})
+const listSchema = {
+    task: String
+
+}
+const Hobby = mongoose.model('Hobby', listSchema);
+const hobbyList = new Hobby({
+    name: 'Juzio',
+})
+
+hobbyList.save()
+console.log(hobbyList)
 const arr = []
 const list = []
 const hobby = [];
