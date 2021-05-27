@@ -23,6 +23,28 @@ mongoose.connect("mongodb://localhost:27017/todolistDB", {
 	useCreateIndex: true,
 	useFindAndModify: false
 })
+var db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "connection error:"));
+
+db.once("open", function() {
+  console.log("Connection Successful!");
+});
+
+var schema = mongoose.Schema({
+    name: String,
+    age: Number
+  });
+  
+  var Model = mongoose.model("model", schema, "myCollection");
+  
+  var doc1 = new Model({ name: "John", age: 21 });
+  
+  doc1.save(function(err, doc) {
+    if (err) return console.error(err);
+    console.log("Document inserted succussfully!");
+  });
+
 const listSchema = {
     task: String
 
@@ -43,6 +65,14 @@ const fandf = [];
 const self = [];
 const work = []
 let param = '';
+
+Hobby.find({}, function(err, value){
+if(err){
+    console.log(err)
+}else {
+    console.log(value)
+}
+})
 app.get('/', (req,res) => {
     res.render('list',{
         people: arr,
