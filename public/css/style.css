@@ -3,4 +3,40 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+}
+
+section {
+  margin: 40px;
+}
+
+section form {
+  display: flex;
+}
+
+section form input[type="text"] {
+  padding: 10px;
+  margin: 0px;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid black;
+}
+
+section form input[type="text"]:focus {
+  border: none;
+  border-bottom: 3px solid black;
+}
+
+section form input[type="submit"] {
+  padding: 10px;
+  margin: 0px;
+  background: linear-gradient(#e66465, #9198e5);
+  border: none;
+  box-shadow: 2px 2px 5px 0 linear-gradient(#e66465, #9198e5);
+  color: #111;
+  border-radius: 5px;
+}
+
+section.all {
+  width: 45%;
 }
