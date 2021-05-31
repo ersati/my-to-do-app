@@ -1,9 +1,30 @@
 section{
     margin: 40px;
+    width: 75vw;
+    
+ul { 
+    list-style-type:none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    li { 
+        padding: 5px 10px;
+        border: 1px solid black;
+        margin: 5px 0 ;
+        border-bottom-left-radius: 5px;
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    }
+}
 form {
+    text-align: center;
     display: flex;
     input[type="text"]{
-        padding:10px;
+        padding:5px 10px;
         margin:0px;
         border: none;
         background-color: transparent;
@@ -14,19 +35,20 @@ form {
         }
     }
     input[type="submit"]{
-        padding:10px;
+        padding:5px 10px;
         margin: 0px;
         background: linear-gradient(#e66465, #9198e5);
         border: none;
         box-shadow: 2px 2px 5px 0 linear-gradient(#e66465, #9198e5);
         color: #111;
-        border-radius: 5px;
+        border-bottom-left-radius: 7px;
+        cursor: pointer;
         
     }
 }
 }
 
 section.all {
-    width:45%;
+  
     
 }
