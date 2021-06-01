@@ -10,13 +10,25 @@ ul {
     margin-inline-end: 0px;
     padding-inline-start: 0px;
     li { 
-        padding: 5px 10px;
+        // padding: 5px 10px;
         border: 1px solid black;
         margin: 5px 0 ;
         border-bottom-left-radius: 5px;
+        width: 300px ;
+        transition: .3s;
+        background-color: yellowgreen;
+        overflow: hidden;
+        box-shadow: 0 0 5px 0px grey;
+        &:hover a {
+           
+            transform: translateX(20px);
+        }
         a {
+            padding: 5px 10px;
             text-decoration: none;
             color: black;
+            display: block;
+            background-color: red;
         }
     }
 }
@@ -43,8 +55,16 @@ form {
         color: #111;
         border-bottom-left-radius: 7px;
         cursor: pointer;
-        
+        &:hover{
+            color: white;
+        }
     }
+}
+
+.headline {
+    font-size: 20px;
+    font-weight: bold;
+    
 }
 }
 
