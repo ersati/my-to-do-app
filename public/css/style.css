@@ -12,6 +12,10 @@ body {
 section {
   margin: 40px;
   width: 75vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 section ul {
@@ -82,4 +86,11 @@ section form input[type="submit"]:hover {
 section .headline {
   font-size: 20px;
   font-weight: bold;
+}
+
+section.category-list ul#own-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
