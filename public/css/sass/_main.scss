@@ -78,6 +78,20 @@ section.category-list {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .own-category { 
+        display: flex;
+        justify-content: space-between;
+        .own-category__link {
+            align-self: start;
+            width: 80%;
+            text-align: left;
+        }
+        .own-category__input { 
+            align-self: end;
+            background-color: red;
+        }
+    }
   }
     
 }

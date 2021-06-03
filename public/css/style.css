@@ -94,3 +94,19 @@ section.category-list ul#own-list {
   justify-content: center;
   align-items: center;
 }
+
+section.category-list ul#own-list .own-category {
+  display: flex;
+  justify-content: space-between;
+}
+
+section.category-list ul#own-list .own-category .own-category__link {
+  align-self: start;
+  width: 80%;
+  text-align: left;
+}
+
+section.category-list ul#own-list .own-category .own-category__input {
+  align-self: end;
+  background-color: red;
+}
