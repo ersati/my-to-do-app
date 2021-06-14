@@ -15,7 +15,7 @@
 
     <% people.forEach((element, index )=> { %>
     <form action="/delete" method="post">
-        <li> <input type="checkbox" name="complete" id=""> <%= element %> to jest index: <input type="checkbox"
+        <li class="checklist"> <input type="checkbox" name="complete" id="list<%=index%>"> <label for="list<%=index%>"><%= element %></label> to jest index: <input type="checkbox"
                 value="<%= index %>" name="checkbox" onChange="this.form.submit()"> </li>
     </form>
 

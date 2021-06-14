@@ -31,31 +31,31 @@ db.once("open", function() {
   console.log("Connection Successful!");
 });
 
-var schema = mongoose.Schema({
-    name: String,
-    age: Number
-  });
+// var schema = mongoose.Schema({
+//     name: String,
+//     age: Number
+//   });
   
-  var Model = mongoose.model("model", schema, "myCollection");
+//   var Model = mongoose.model("model", schema, "myCollection");
   
-  var doc1 = new Model({ name: "John", age: 21 });
+//   var doc1 = new Model({ name: "John", age: 21 });
   
-  doc1.save(function(err, doc) {
-    if (err) return console.error(err);
-    console.log("Document inserted succussfully!");
-  });
+//   doc1.save(function(err, doc) {
+//     if (err) return console.error(err);
+//     console.log("Document inserted succussfully!");
+//   });
 
-const listSchema = {
-    task: String
+// const listSchema = {
+//     task: String
 
-}
-const Hobby = mongoose.model('Hobby', listSchema);
-const hobbyList = new Hobby({
-    name: 'Juzio',
-})
+// }
+// const Hobby = mongoose.model('Hobby', listSchema);
+// const hobbyList = new Hobby({
+//     name: 'Juzio',
+// })
 
-hobbyList.save()
-console.log(hobbyList)
+// hobbyList.save()
+// console.log(hobbyList)
 const arr = []
 const list = []
 const hobby = [];
