@@ -45,11 +45,11 @@ db.once("open", function() {
 //     console.log("Document inserted succussfully!");
 //   });
 
-// const listSchema = {
-//     task: String
+const listSchema = {
+    task: String
 
-// }
-// const Hobby = mongoose.model('Hobby', listSchema);
+}
+const Hobby = mongoose.model('Hobby', listSchema);
 // const hobbyList = new Hobby({
 //     name: 'Juzio',
 // })

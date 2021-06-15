@@ -19,6 +19,7 @@ body {
   --border-radius: 10px;
   background: var(--background);
   width: var(--width);
+  min-width: 60vw;
   height: var(--height);
   border-radius: var(--border-radius);
   position: relative;
@@ -27,6 +28,7 @@ body {
   display: grid;
   grid-template-columns: 30px auto 90px 5px;
   align-items: center;
+  margin: 5px;
 }
 
 .checklist label {
@@ -117,6 +119,14 @@ body {
 
 .checklist input[type="checkbox"]:checked + label::after {
   animation: firework .5s ease forwards .1s;
+}
+
+.checklist .input-delete:after {
+  content: "X" !important;
+  position: absolute;
+  height: 15px !important;
+  top: auto;
+  border-radius: 2px;
 }
 
 @keyframes move {
