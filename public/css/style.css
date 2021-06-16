@@ -124,6 +124,7 @@ body {
 .checklist .input-delete:after {
   content: "X" !important;
   position: absolute;
+  border-radius: 50% !important;
   height: 15px !important;
   top: auto;
   border-radius: 2px;

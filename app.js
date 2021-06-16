@@ -31,6 +31,42 @@ db.once("open", function() {
   console.log("Connection Successful!");
 });
 
+
+
+
+
+
+const itemsSchema = {
+    name: String
+}
+
+const Item = mongoose.model("Item", itemsSchema, 'lists')
+
+
+const task = new Item({
+    name: "Hello everyone"
+})
+const task1 = new Item({
+    name: "Press the Add button to add tasks"
+})
+
+const task2 = new Item({
+    name: "Press <--- to delete the file"
+})
+const defaultTask = [task, task1, task2]
+
+const tasksSchema = {
+    name: String
+}
+
+const List = mongoose.model("List", tasksSchema, 'lists')
+
+const hobb = new List({
+    name: "Hobby"
+})
+
+
+
 // var schema = mongoose.Schema({
 //     name: String,
 //     age: Number
@@ -74,10 +110,29 @@ if(err){
 }
 })
 app.get('/', (req,res) => {
-    res.render('list',{
-        people: arr,
-        list: list
+
+    Item.find({}, function (err, foundItems) {
+
+        if (foundItems.length === 0) {
+            Item.insertMany(defaultTask, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(foundItems)
+                    console.log("Successfully saved default items to DB")
+                }
+            })
+            res.redirect("/")
+        } else {
+            res.render('list',{
+                people: foundItems,
+                list: list
+            })
+        }
     })
+
+    
+    
 })
 
 app.get('/work', (req,res) => {
