@@ -17,6 +17,9 @@ app.use('/favicon.ico', express.static('images/favicon.ico'));
 
 app.use(express.static("public"))
 
+// Mongoose Connection 
+
+
 mongoose.connect("mongodb://localhost:27017/todolistDB", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -32,12 +35,13 @@ db.once("open", function() {
 });
 
 
+//Mongoose Connection
 
-
-
+//Task Main Page
 
 const itemsSchema = {
-    name: String
+    name: String,
+    list: String
 }
 
 const Item = mongoose.model("Item", itemsSchema, 'lists')
@@ -53,18 +57,32 @@ const task1 = new Item({
 const task2 = new Item({
     name: "Press <--- to delete the file"
 })
-const defaultTask = [task, task1, task2]
+
+
+//Task Main Page
 
 const tasksSchema = {
     name: String
 }
 
-const List = mongoose.model("List", tasksSchema, 'lists')
+const List = mongoose.model("List", itemsSchema, 'lists')
 
-const hobb = new List({
-    name: "Hobby"
+const hobb = new Item({
+    list: "Hobby"
 })
 
+const heal = new Item({
+    list: "Health"
+})
+const listTask = [hobb, heal]
+
+const defaultTask = [task, task1, task2, hobb, heal]
+
+
+// heal.save(function(err, doc) {
+//         if (err) return console.error(err);
+//         console.log("Document inserted succussfully!");
+//       });
 
 
 // var schema = mongoose.Schema({
@@ -112,7 +130,7 @@ if(err){
 app.get('/', (req,res) => {
 
     Item.find({}, function (err, foundItems) {
-
+console.log(foundItems)
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
                 if (err) {
@@ -122,6 +140,7 @@ app.get('/', (req,res) => {
                     console.log("Successfully saved default items to DB")
                 }
             })
+           
             res.redirect("/")
         } else {
             res.render('list',{
