@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
+const e = require('express');
 
 
 const app = express();
@@ -21,17 +22,17 @@ app.use(express.static("public"))
 
 
 mongoose.connect("mongodb://localhost:27017/todolistDB", {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-	useCreateIndex: true,
-	useFindAndModify: false
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 })
 var db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
 
-db.once("open", function() {
-  console.log("Connection Successful!");
+db.once("open", function () {
+    console.log("Connection Successful!");
 });
 
 
@@ -44,7 +45,7 @@ const itemsSchema = {
     list: String
 }
 
-const Item = mongoose.model("Item", itemsSchema, 'lists')
+const Item = mongoose.model("Item", itemsSchema, 'tasks')
 
 
 const task = new Item({
@@ -62,10 +63,10 @@ const task2 = new Item({
 //Task Main Page
 
 const tasksSchema = {
-    name: String
+    list: String
 }
 
-const List = mongoose.model("List", itemsSchema, 'lists')
+const List = mongoose.model("List", tasksSchema, 'lists')
 
 const hobb = new Item({
     list: "Hobby"
@@ -76,8 +77,12 @@ const heal = new Item({
 })
 const listTask = [hobb, heal]
 
-const defaultTask = [task, task1, task2, hobb, heal]
 
+const defaultTask = [task, task1, task2]
+
+const listSchema = {
+    task: String
+}
 
 // heal.save(function(err, doc) {
 //         if (err) return console.error(err);
@@ -89,21 +94,17 @@ const defaultTask = [task, task1, task2, hobb, heal]
 //     name: String,
 //     age: Number
 //   });
-  
+
 //   var Model = mongoose.model("model", schema, "myCollection");
-  
+
 //   var doc1 = new Model({ name: "John", age: 21 });
-  
+
 //   doc1.save(function(err, doc) {
 //     if (err) return console.error(err);
 //     console.log("Document inserted succussfully!");
 //   });
 
-const listSchema = {
-    task: String
-
-}
-const Hobby = mongoose.model('Hobby', listSchema);
+// const Hobby = mongoose.model('Hobby', listSchema);
 // const hobbyList = new Hobby({
 //     name: 'Juzio',
 // })
@@ -114,84 +115,106 @@ const arr = []
 const list = []
 const hobby = [];
 const health = [];
-const finance = []; 
+const finance = [];
 const fandf = [];
 const self = [];
 const work = []
 let param = '';
 
-Hobby.find({}, function(err, value){
-if(err){
-    console.log(err)
-}else {
-    console.log(value)
-}
+// Hobby.find({}, function(err, value){
+// if(err){
+//     console.log(err)
+// }else {
+//     console.log(value)
+// }
+// })
+
+List.find({}, function (err, foundItems) {
+   
+    if (foundItems.length === 0) {
+        List.insertMany(listTask, function (err) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(foundItems)
+                console.log("Successfully saved default items to DB list")
+            }
+        })
+    } 
 })
-app.get('/', (req,res) => {
+
+const lists = Item.find({});
+   
+
+
+    
+console.log(lists)
+
+app.get('/', (req, res) => {
 
     Item.find({}, function (err, foundItems) {
-console.log(foundItems)
+        
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
                 if (err) {
                     console.log(err)
                 } else {
                     console.log(foundItems)
-                    console.log("Successfully saved default items to DB")
+                    console.log("Successfully saved default items to DB item")
                 }
             })
-           
+
             res.redirect("/")
         } else {
-            res.render('list',{
+            res.render('list', {
                 people: foundItems,
                 list: list
             })
         }
     })
+   
 
-    
-    
+
 })
 
-app.get('/work', (req,res) => {
-    res.render('work',{
-        work:work,
-        param:param
+app.get('/work', (req, res) => {
+    res.render('work', {
+        work: work,
+        param: param
     })
 })
 
-app.get ('/self-development', (req,res) => {
+app.get('/self-development', (req, res) => {
     res.render('self-development', {
         self: self,
-        param:param
+        param: param
     })
 })
 
-app.get ('/hobby', (req,res) => {
+app.get('/hobby', (req, res) => {
     res.render('hobby', {
         hobby: hobby,
-        param:param
+        param: param
     })
 })
 
-app.get ('/health', (req,res) => {
+app.get('/health', (req, res) => {
     res.render('health', {
         health: health,
-        param:param
+        param: param
     })
 })
 
-app.get ('/finance', (req,res) => {
-    res.render('finance',{
-        finance:finance,
-        param:param
+app.get('/finance', (req, res) => {
+    res.render('finance', {
+        finance: finance,
+        param: param
     })
 })
-app.get ('/fandf', (req,res) => {
+app.get('/fandf', (req, res) => {
     res.render('fandf', {
-        fandf:fandf,
-        param:param
+        fandf: fandf,
+        param: param
     })
 })
 
@@ -205,15 +228,29 @@ app.get('/:paramName', (req, res) => {
     })
 })
 
-app.post('/', (req,res) =>{
-    const valueInput = req.body.name2;
-    arr.push(valueInput);
-    res.redirect('/')
-    
-   
+app.post('/', (req, res) => {
+    // const valueInput = req.body.name2;
+    // arr.push(valueInput);
+    // res.redirect('/')
+// old version
+
+
+const valueInput = req.body.name2;
+const listName = req.body.listName;
+console.log(req.body, valueInput)
+const item = new Item({
+    name:valueInput
 })
 
-app.post('/another-list' , (req,res) => {
+
+if(listName === "List"){
+item.save()
+res.redirect('/')
+}
+
+})
+
+app.post('/another-list', (req, res) => {
     const ownList = req.body.ownList
     list.push(ownList);
     res.redirect('/')
@@ -221,15 +258,15 @@ app.post('/another-list' , (req,res) => {
 app.post('/delete', (req, res) => {
     const deleteInput = req.body.checkbox
     const deleteOwnList = req.body.checkboxown
-    if(deleteOwnList > -1){
+    if (deleteOwnList > -1) {
         list.splice(deleteOwnList, 1)
-    }else {
+    } else {
         arr.splice(deleteInput, 1);
     }
     res.redirect('/')
 })
 
-app.post('/work', (req,res) => {
+app.post('/work', (req, res) => {
     const valueInput = req.body.name2;
     work.push(valueInput);
     res.redirect('/work')
@@ -243,7 +280,7 @@ app.post('/delete-work', (req, res) => {
 
 
 
-app.post('/hobby', (req,res) => {
+app.post('/hobby', (req, res) => {
     const valueInput = req.body.name2;
     hobby.push(valueInput);
     res.redirect('/hobby')
@@ -254,7 +291,7 @@ app.post('/delete-hobby', (req, res) => {
     hobby.splice(index, 1);
     res.redirect('/hobby')
 })
-app.post('/health', (req,res) => {
+app.post('/health', (req, res) => {
     const valueInput = req.body.name2;
     health.push(valueInput);
     res.redirect('/health')
@@ -266,7 +303,7 @@ app.post('/delete-health', (req, res) => {
     res.redirect('/health')
 })
 
-app.post('/finance', (req,res) => {
+app.post('/finance', (req, res) => {
     const valueInput = req.body.name2;
     finance.push(valueInput);
     res.redirect('/finance')
@@ -279,7 +316,7 @@ app.post('/delete-finance', (req, res) => {
 })
 
 
-app.post('/fandf', (req,res) => {
+app.post('/fandf', (req, res) => {
     const valueInput = req.body.name2;
     fandf.push(valueInput);
     res.redirect('/fandf')
@@ -291,7 +328,7 @@ app.post('/delete-fandf', (req, res) => {
     res.redirect('/fandf')
 })
 
-app.post('/self', (req,res) => {
+app.post('/self', (req, res) => {
     const valueInput = req.body.name2;
     self.push(valueInput);
     res.redirect('/self-development')
@@ -303,6 +340,6 @@ app.post('/delete-self', (req, res) => {
     res.redirect('/self-development')
 })
 
-app.listen(3000,function() {
+app.listen(3000, function () {
     console.log('serwer is working on port 3000')
 })
