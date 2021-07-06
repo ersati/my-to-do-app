@@ -143,12 +143,21 @@ List.find({}, function (err, foundItems) {
     } 
 })
 
-const lists = Item.find({});
+let liarr = []
+const li = List.find({}).then(function(data){
+
+    console.log(typeof data)
+    return liarr = data.map(item => {
+        liarr.push(item.list)
+        
+    })
+    });
+const it = Item.find({}).exec()
    
 
 
     
-console.log(lists)
+console.log(liarr.length)
 
 app.get('/', (req, res) => {
 
