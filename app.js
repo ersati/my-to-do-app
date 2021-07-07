@@ -2,14 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const e = require('express');
+const { join } = require('lodash');
 
 
 const app = express();
 
 
 app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({
+app.use(express.json())
+app.use(express.urlencoded({
     extended: true
 }))
 
@@ -75,7 +76,11 @@ const hobb = new Item({
 const heal = new Item({
     list: "Health"
 })
-const listTask = [hobb, heal]
+
+const fin = new Item({
+    list: "Finance"
+})
+const listTask = [hobb, heal,fin]
 
 
 const defaultTask = [task, task1, task2]
@@ -84,35 +89,9 @@ const listSchema = {
     task: String
 }
 
-// heal.save(function(err, doc) {
-//         if (err) return console.error(err);
-//         console.log("Document inserted succussfully!");
-//       });
 
-
-// var schema = mongoose.Schema({
-//     name: String,
-//     age: Number
-//   });
-
-//   var Model = mongoose.model("model", schema, "myCollection");
-
-//   var doc1 = new Model({ name: "John", age: 21 });
-
-//   doc1.save(function(err, doc) {
-//     if (err) return console.error(err);
-//     console.log("Document inserted succussfully!");
-//   });
-
-// const Hobby = mongoose.model('Hobby', listSchema);
-// const hobbyList = new Hobby({
-//     name: 'Juzio',
-// })
-
-// hobbyList.save()
-// console.log(hobbyList)
 const arr = []
-const list = []
+// const list = []
 const hobby = [];
 const health = [];
 const finance = [];
@@ -121,44 +100,18 @@ const self = [];
 const work = []
 let param = '';
 
-// Hobby.find({}, function(err, value){
-// if(err){
-//     console.log(err)
-// }else {
-//     console.log(value)
-// }
-// })
-
-List.find({}, function (err, foundItems) {
-   
-    if (foundItems.length === 0) {
-        List.insertMany(listTask, function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log(foundItems)
-                console.log("Successfully saved default items to DB list")
-            }
-        })
-    } 
-})
-
-let liarr = []
-const li = List.find({}).then(function(data){
-
-    console.log(typeof data)
-    return liarr = data.map(item => {
-        liarr.push(item.list)
-        
-    })
-    });
-const it = Item.find({}).exec()
-   
-
-
     
-console.log(liarr.length)
 
+const listArr = []
+
+const list = List.find({}, function (err, data){
+    if(err){
+        console.log(err)
+    } else {
+        listArr.push(data)
+        console.log([listArr, ...data])
+    }
+})
 app.get('/', (req, res) => {
 
     Item.find({}, function (err, foundItems) {
@@ -177,7 +130,7 @@ app.get('/', (req, res) => {
         } else {
             res.render('list', {
                 people: foundItems,
-                list: list
+                list: listArr[0]
             })
         }
     })
@@ -231,9 +184,10 @@ app.get('/fandf', (req, res) => {
 app.get('/:paramName', (req, res) => {
     const paramName = req.params.paramName;
     param = paramName
-    console.log(paramName)
+    const namesTitle = listArr[0].map(item => item.list)
+    const title = namesTitle.filter(item => !(param.indexOf(item) == -1))
     res.render('own', {
-        title: paramName
+        title: title
     })
 })
 
