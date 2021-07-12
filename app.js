@@ -66,8 +66,10 @@ const task2 = new Item({
 const tasksSchema = {
     list: String
 }
-
-const List = mongoose.model("List", tasksSchema, 'lists')
+const listSchema = {
+    task: String
+}
+const List = mongoose.model("List", listSchema, 'lists')
 
 const hobb = new Item({
     list: "Hobby"
@@ -85,11 +87,24 @@ const listTask = [hobb, heal,fin]
 
 const defaultTask = [task, task1, task2]
 
-const listSchema = {
-    task: String
+
+const hobbySchema = {
+    hobby: String
 }
+const Hobby = mongoose.model('Hobby', hobbySchema)
 
+const firstElHobby = new Hobby({
+    hobby: "Hello everyone"
+})
 
+const secondElHobby = new Hobby({
+    hobby: "Press the Add button to add tasks"
+})
+
+const thirdElHobby = new Hobby({
+    hobby: "Press <--- to delete the file"
+})
+const hobbysTasks = [firstElHobby,secondElHobby, thirdElHobby]
 const arr = []
 // const list = []
 const hobby = [];
@@ -154,9 +169,29 @@ app.get('/self-development', (req, res) => {
 })
 
 app.get('/hobby', (req, res) => {
-    res.render('hobby', {
-        hobby: hobby,
-        param: param
+    // res.render('hobby', {
+    //     hobby: hobby,
+    //     param: param
+    // })
+    Hobby.find({}, function (err, foundItems) {
+        
+        if (foundItems.length === 0) {
+            Item.insertMany(hobbysTasks, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(foundItems)
+                    console.log("Successfully saved default items to DB hobby")
+                }
+            })
+
+            res.redirect("/")
+        } else {
+            res.render('list', {
+                hobby: foundItems,
+                param: param
+            })
+        }
     })
 })
 
