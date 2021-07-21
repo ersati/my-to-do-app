@@ -84,25 +84,27 @@ const fin = new Item({
 })
 const listTask = [hobb, heal,fin]
 
-
+// List.insertMany(listTask, (err) =>{
+//     if(err) console.log(err)
+// })
 const defaultTask = [task, task1, task2]
 
 
 const hobbySchema = {
     hobby: String
 }
-const Hobby = mongoose.model('Hobby', hobbySchema)
+const Hobby = mongoose.model('Hobby', hobbySchema, 'hobby')
 
 const firstElHobby = new Hobby({
-    hobby: "Hello everyone"
+    hobby: "Hello everyone in Hobby section"
 })
 
 const secondElHobby = new Hobby({
-    hobby: "Press the Add button to add tasks"
+    hobby: "Press the Add button to add tasks in Hobby section"
 })
 
 const thirdElHobby = new Hobby({
-    hobby: "Press <--- to delete the file"
+    hobby: "Press <--- to delete the file in Hobby section"
 })
 const hobbysTasks = [firstElHobby,secondElHobby, thirdElHobby]
 const arr = []
@@ -176,7 +178,7 @@ app.get('/hobby', (req, res) => {
     Hobby.find({}, function (err, foundItems) {
         
         if (foundItems.length === 0) {
-            Item.insertMany(hobbysTasks, function (err) {
+            Hobby.insertMany(hobbysTasks, function (err) {
                 if (err) {
                     console.log(err)
                 } else {
@@ -185,9 +187,9 @@ app.get('/hobby', (req, res) => {
                 }
             })
 
-            res.redirect("/")
+            res.redirect("/hobby")
         } else {
-            res.render('list', {
+            res.render('hobby', {
                 hobby: foundItems,
                 param: param
             })

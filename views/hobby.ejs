@@ -11,11 +11,21 @@
       
     <% hobby.forEach((element, index )=> { %>
         <form action="/delete-hobby" method="post">
-         <li> <input type="checkbox" name="complete" id="">  <%= element %> to jest index: 
+
+
+         <!-- <li> <input type="checkbox" name="complete" id="">  <%= element %> to jest index: 
             <input type="checkbox" value="<%= index %>" name="checkbox" onChange="this.form.submit()"> 
          </li> 
          <input type="hidden" name="listName" value="<%= param%>"></input>
-         </form> 
+          -->
+          <li class="checklist"> 
+            <input type="checkbox" name="complete" id="list<%=index%>"> 
+            <label for="list<%=index%>"><%= element.hobby %></label> to jest index: 
+            <input class="input-delete" type="checkbox"
+                value="<%= index %>" name="checkbox" onChange="this.form.submit()">
+                 
+                </li>
+        </form> 
       
     <% }); %>
     </ul>
