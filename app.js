@@ -90,6 +90,8 @@ const listTask = [hobb, heal,fin]
 const defaultTask = [task, task1, task2]
 
 
+//Hobby
+
 const hobbySchema = {
     hobby: String
 }
@@ -107,6 +109,30 @@ const thirdElHobby = new Hobby({
     hobby: "Press <--- to delete the file in Hobby section"
 })
 const hobbysTasks = [firstElHobby,secondElHobby, thirdElHobby]
+
+//Hobby
+
+//Health
+
+const healthsSchema = {
+    health: String
+}
+const Health = mongoose.model('Health', healthsSchema, 'health')
+
+const firstElHealth = new Health({
+    health: "Hello everyone in health section"
+})
+
+const secondElHealth = new Health({
+    health: "Press the Add button to add tasks in health section"
+})
+
+const thirdElHealth = new Health({
+    health: "Press <--- to delete the file in health section"
+})
+const healthsTasks = [firstElHealth,secondElHealth, thirdElHealth]
+
+
 const arr = []
 // const list = []
 const hobby = [];
@@ -198,9 +224,30 @@ app.get('/hobby', (req, res) => {
 })
 
 app.get('/health', (req, res) => {
-    res.render('health', {
-        health: health,
-        param: param
+    // res.render('health', {
+    //     health: health,
+    //     param: param
+    // })
+
+    Health.find({}, function (err, foundItems) {
+        
+        if (foundItems.length === 0) {
+            Health.insertMany(healthsTasks, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(foundItems)
+                    console.log("Successfully saved default items to DB health")
+                }
+            })
+
+            res.redirect("/health")
+        } else {
+            res.render('health', {
+                health: foundItems,
+                param: param
+            })
+        }
     })
 })
 
