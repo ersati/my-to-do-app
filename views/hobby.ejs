@@ -13,11 +13,7 @@
         <form action="/delete-hobby" method="post">
 
 
-         <!-- <li> <input type="checkbox" name="complete" id="">  <%= element %> to jest index: 
-            <input type="checkbox" value="<%= index %>" name="checkbox" onChange="this.form.submit()"> 
-         </li> 
-         <input type="hidden" name="listName" value="<%= param%>"></input>
-          -->
+       
           <li class="checklist"> 
             <input type="checkbox" name="complete" id="list<%=index%>"> 
             <label for="list<%=index%>"><%= element.hobby %></label> to jest index: 
@@ -31,4 +27,4 @@
     </ul>
 
 <a href="/">Back to home</a>
-<% include('footer'); -%>
+<%- include('footer'); -%>

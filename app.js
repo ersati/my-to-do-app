@@ -82,11 +82,9 @@ const heal = new Item({
 const fin = new Item({
     list: "Finance"
 })
-const listTask = [hobb, heal,fin]
+const listTask = [hobb, heal, fin]
 
-// List.insertMany(listTask, (err) =>{
-//     if(err) console.log(err)
-// })
+
 const defaultTask = [task, task1, task2]
 
 
@@ -108,7 +106,7 @@ const secondElHobby = new Hobby({
 const thirdElHobby = new Hobby({
     hobby: "Press <--- to delete the file in Hobby section"
 })
-const hobbysTasks = [firstElHobby,secondElHobby, thirdElHobby]
+const hobbysTasks = [firstElHobby, secondElHobby, thirdElHobby]
 
 //Hobby
 
@@ -130,9 +128,95 @@ const secondElHealth = new Health({
 const thirdElHealth = new Health({
     health: "Press <--- to delete the file in health section"
 })
-const healthsTasks = [firstElHealth,secondElHealth, thirdElHealth]
+const healthsTasks = [firstElHealth, secondElHealth, thirdElHealth]
+//Heatlh
+
+//Finance
+
+const financeSchema = {
+    finance: String
+}
+const Finance = mongoose.model('Finance', financeSchema, 'finance')
+
+const firstElFinance = new Finance({
+    finance: "Hello everyone in Finance section"
+})
+
+const secondElFinance = new Finance({
+    finance: "Press the Add button to add tasks in Finance section"
+})
+
+const thirdElFinance = new Finance({
+    finance: "Press <--- to delete the file in Finance section"
+})
+const financeTasks = [firstElFinance, secondElFinance, thirdElFinance]
 
 
+//Finance
+
+
+// Friends and Family
+const fandfSchema = {
+    fandf: String
+}
+const Fandf = mongoose.model('Fandf', fandfSchema, 'fandf')
+
+const firstElFandf = new Fandf({
+    fandf: "Hello everyone in Fandf section"
+})
+
+const secondElFandf = new Fandf({
+    fandf: "Press the Add button to add tasks in Fandf section"
+})
+
+const thirdElFandf = new Fandf({
+    fandf: "Press <--- to delete the file in Fandf section"
+})
+const fandfTasks = [firstElFandf, secondElFandf, thirdElFandf]
+//Friends and Family 
+
+
+//self development
+const selfsSchema = {
+    self: String
+}
+const Self = mongoose.model('Self', selfsSchema, 'self')
+
+const firstElSelf = new Self({
+    self: "Hello everyone in Self section"
+})
+
+const secondElSelf = new Self({
+    self: "Press the Add button to add tasks in Self section"
+})
+
+const thirdElSelf = new Self({
+    self: "Press <--- to delete the file in Self section"
+})
+const selfsTasks = [firstElSelf, secondElSelf, thirdElSelf]
+
+//self development
+
+// Work
+const worksSchema = {
+    work: String
+}
+const Work = mongoose.model('Work', worksSchema, 'work')
+
+const firstElWork = new Work({
+    work: "Hello everyone in Work section"
+})
+
+const secondElWork = new Work({
+    work: "Press the Add button to add tasks in Work section"
+})
+
+const thirdElWork = new Work({
+    work: "Press <--- to delete the file in Work section"
+})
+const worksTasks = [firstElWork, secondElWork, thirdElWork]
+
+//Work
 const arr = []
 // const list = []
 const hobby = [];
@@ -143,12 +227,12 @@ const self = [];
 const work = []
 let param = '';
 
-    
+
 
 const listArr = []
 
-const list = List.find({}, function (err, data){
-    if(err){
+const list = List.find({}, function (err, data) {
+    if (err) {
         console.log(err)
     } else {
         listArr.push(data)
@@ -158,7 +242,7 @@ const list = List.find({}, function (err, data){
 app.get('/', (req, res) => {
 
     Item.find({}, function (err, foundItems) {
-        
+
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
                 if (err) {
@@ -177,22 +261,64 @@ app.get('/', (req, res) => {
             })
         }
     })
-   
+
 
 
 })
 
 app.get('/work', (req, res) => {
-    res.render('work', {
-        work: work,
-        param: param
+    // res.render('work', {
+    //     work: work,
+    //     param: param
+    // })
+    Work.find({}, function (err, foundItems) {
+
+        if (foundItems.length === 0) {
+            Work.insertMany(worksTasks, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(foundItems)
+                    console.log("Successfully saved default items to DB Work")
+                }
+            })
+
+            res.redirect("/work")
+        } else {
+            res.render('work', {
+                work: foundItems,
+                param: param
+            })
+        }
     })
+
 })
 
 app.get('/self-development', (req, res) => {
-    res.render('self-development', {
-        self: self,
-        param: param
+    // res.render('self-development', {
+    //     self: self,
+    //     param: param
+    // })
+
+    Self.find({}, function (err, foundItems) {
+
+        if (foundItems.length === 0) {
+            Self.insertMany(selfsTasks, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(foundItems)
+                    console.log("Successfully saved default items to DB self")
+                }
+            })
+
+            res.redirect("/self-development")
+        } else {
+            res.render('self-development', {
+                self: foundItems,
+                param: param
+            })
+        }
     })
 })
 
@@ -202,7 +328,7 @@ app.get('/hobby', (req, res) => {
     //     param: param
     // })
     Hobby.find({}, function (err, foundItems) {
-        
+
         if (foundItems.length === 0) {
             Hobby.insertMany(hobbysTasks, function (err) {
                 if (err) {
@@ -230,7 +356,7 @@ app.get('/health', (req, res) => {
     // })
 
     Health.find({}, function (err, foundItems) {
-        
+
         if (foundItems.length === 0) {
             Health.insertMany(healthsTasks, function (err) {
                 if (err) {
@@ -252,15 +378,57 @@ app.get('/health', (req, res) => {
 })
 
 app.get('/finance', (req, res) => {
-    res.render('finance', {
-        finance: finance,
-        param: param
+    // res.render('finance', {
+    //     finance: finance,
+    //     param: param
+    // })
+
+    Finance.find({}, function (err, foundItems) {
+
+        if (foundItems.length === 0) {
+            Finance.insertMany(financeTasks, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(foundItems)
+                    console.log("Successfully saved default items to DB finance")
+                }
+            })
+
+            res.redirect("/finance")
+        } else {
+            res.render('finance', {
+                finance: foundItems,
+                param: param
+            })
+        }
     })
 })
 app.get('/fandf', (req, res) => {
-    res.render('fandf', {
-        fandf: fandf,
-        param: param
+    // res.render('fandf', {
+    //     fandf: fandf,
+    //     param: param
+    // })
+
+    Fandf.find({}, function (err, foundItems) {
+
+        if (foundItems.length === 0) {
+            Fandf.insertMany(fandfTasks, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(foundItems)
+                    console.log("Successfully saved default items to DB fandf")
+                }
+            })
+
+            res.redirect("/fandf")
+        } else {
+            res.render('fandf', {
+                fandf: foundItems,
+                param: param
+            })
+        }
     })
 })
 
@@ -279,21 +447,21 @@ app.post('/', (req, res) => {
     // const valueInput = req.body.name2;
     // arr.push(valueInput);
     // res.redirect('/')
-// old version
+    // old version
 
 
-const valueInput = req.body.name2;
-const listName = req.body.listName;
-console.log(req.body, valueInput)
-const item = new Item({
-    name:valueInput
-})
+    const valueInput = req.body.name2;
+    const listName = req.body.listName;
+    console.log(req.body, valueInput)
+    const item = new Item({
+        name: valueInput
+    })
 
 
-if(listName === "List"){
-item.save()
-res.redirect('/')
-}
+    if (listName === "List") {
+        item.save()
+        res.redirect('/')
+    }
 
 })
 
