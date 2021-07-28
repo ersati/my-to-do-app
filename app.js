@@ -295,13 +295,7 @@ app.get('/work', (req, res) => {
 })
 
 app.get('/self-development', (req, res) => {
-    // res.render('self-development', {
-    //     self: self,
-    //     param: param
-    // })
-
     Self.find({}, function (err, foundItems) {
-
         if (foundItems.length === 0) {
             Self.insertMany(selfsTasks, function (err) {
                 if (err) {
@@ -311,12 +305,11 @@ app.get('/self-development', (req, res) => {
                     console.log("Successfully saved default items to DB self")
                 }
             })
-
             res.redirect("/self-development")
         } else {
             res.render('self-development', {
                 self: foundItems,
-                param: param
+                param: 'self'
             })
         }
     })
@@ -544,9 +537,22 @@ app.post('/delete-fandf', (req, res) => {
 })
 
 app.post('/self', (req, res) => {
-    const valueInput = req.body.name2;
-    self.push(valueInput);
-    res.redirect('/self-development')
+    const valueInput = req.body.task;
+    // self.push(valueInput);
+    const header = req.body.param;
+    const item = new Self({
+        self: valueInput
+    })
+    if (valueInput !== '') {
+        item.save()
+        res.redirect('/self-development')
+    } else {
+        res.redirect('/self-development')
+    }
+
+    console.log(header, valueInput, req.body)
+
+
 })
 
 app.post('/delete-self', (req, res) => {
