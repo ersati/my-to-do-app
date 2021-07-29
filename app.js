@@ -475,9 +475,20 @@ app.post('/delete', (req, res) => {
 })
 
 app.post('/work', (req, res) => {
-    const valueInput = req.body.name2;
-    work.push(valueInput);
-    res.redirect('/work')
+    // const valueInput = req.body.name2;
+    // work.push(valueInput);
+    // res.redirect('/work')
+
+    const valueInput = req.body.task;
+    const item = new Work({
+        work: valueInput
+    })
+    if (valueInput !== '') {
+        item.save()
+        res.redirect('/work')
+    } else {
+        res.redirect('/work')
+    }
 })
 
 app.post('/delete-work', (req, res) => {
@@ -489,9 +500,21 @@ app.post('/delete-work', (req, res) => {
 
 
 app.post('/hobby', (req, res) => {
-    const valueInput = req.body.name2;
-    hobby.push(valueInput);
-    res.redirect('/hobby')
+    // const valueInput = req.body.name2;
+    // hobby.push(valueInput);
+    // res.redirect('/hobby')
+
+    const valueInput = req.body.task;
+    console.log(valueInput)
+    const item = new Hobby({
+        hobby: valueInput
+    })
+    if (valueInput !== '') {
+        item.save()
+        res.redirect('/hobby')
+    } else {
+        res.redirect('/hobby')
+    }
 })
 
 app.post('/delete-hobby', (req, res) => {
@@ -500,9 +523,21 @@ app.post('/delete-hobby', (req, res) => {
     res.redirect('/hobby')
 })
 app.post('/health', (req, res) => {
-    const valueInput = req.body.name2;
-    health.push(valueInput);
-    res.redirect('/health')
+    // const valueInput = req.body.name2;
+    // health.push(valueInput);
+    // res.redirect('/health')
+
+    const valueInput = req.body.task;
+    
+    const item = new Health({
+        health: valueInput
+    })
+    if (valueInput !== '') {
+        item.save()
+        res.redirect('/health')
+    } else {
+        res.redirect('/health')
+    }
 })
 
 app.post('/delete-health', (req, res) => {
@@ -512,9 +547,21 @@ app.post('/delete-health', (req, res) => {
 })
 
 app.post('/finance', (req, res) => {
-    const valueInput = req.body.name2;
-    finance.push(valueInput);
-    res.redirect('/finance')
+    // const valueInput = req.body.name2;
+    // finance.push(valueInput);
+    // res.redirect('/finance')
+
+    const valueInput = req.body.task;
+    
+    const item = new Finance({
+        finance: valueInput
+    })
+    if (valueInput !== '') {
+        item.save()
+        res.redirect('/finance')
+    } else {
+        res.redirect('/finance')
+    }
 })
 
 app.post('/delete-finance', (req, res) => {
@@ -525,9 +572,23 @@ app.post('/delete-finance', (req, res) => {
 
 
 app.post('/fandf', (req, res) => {
-    const valueInput = req.body.name2;
-    fandf.push(valueInput);
-    res.redirect('/fandf')
+    // const valueInput = req.body.name2;
+    // fandf.push(valueInput);
+    // res.redirect('/fandf')
+
+    const valueInput = req.body.task;
+    
+    const item = new Fandf({
+        fandf: valueInput
+    })
+    if (valueInput !== '') {
+        item.save()
+        res.redirect('/fandf')
+    } else {
+        res.redirect('/fandf')
+    }
+
+    console.log(valueInput, req.body)
 })
 
 app.post('/delete-fandf', (req, res) => {
@@ -537,8 +598,8 @@ app.post('/delete-fandf', (req, res) => {
 })
 
 app.post('/self', (req, res) => {
-    const valueInput = req.body.task;
     // self.push(valueInput);
+    const valueInput = req.body.task;
     const header = req.body.param;
     const item = new Self({
         self: valueInput
