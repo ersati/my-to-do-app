@@ -62,6 +62,7 @@ const task2 = new Item({
     name: "Press <--- to delete the file"
 })
 
+const defaultTask = [task, task1, task2]
 
 //Task Main Page
 
@@ -71,7 +72,7 @@ const tasksSchema = {
 const listSchema = {
     task: String
 }
-const List = mongoose.model("List", listSchema, 'lists')
+const List = mongoose.model("List", tasksSchema, 'lists')
 
 const hobb = new Item({
     list: "Hobby"
@@ -87,7 +88,6 @@ const fin = new Item({
 const listTask = [hobb, heal, fin]
 
 
-const defaultTask = [task, task1, task2]
 
 
 //Hobby
@@ -232,15 +232,17 @@ let param = '';
 const listArr = []
 
 const list = List.find({}, function (err, data) {
+  console.log(data)
     if (err) {
         console.log(err)
     } else {
         listArr.push(data)
-        console.log([listArr, ...data])
+        // console.log([listArr, ...data])
     }
 })
 
 app.get('/', (req, res) => {
+
     console.log(listArr[0])
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
@@ -256,7 +258,7 @@ app.get('/', (req, res) => {
         } else {
             res.render('list', {
                 people: foundItems,
-                list: listArr[0]
+                list: listArr
             })
         }
     })
