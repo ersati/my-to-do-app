@@ -11,7 +11,7 @@
         <li class="checklist">
             <input type="checkbox" name="complete" id="list<%=index%>">
             <label for="list<%=index%>"><%= element.health %></label> to jest index:
-            <input class="input-delete" type="checkbox" value="<%= index %>" name="checkbox"
+            <input class="input-delete" type="checkbox" value="<%= element._id %>" name="checkbox"
                 onChange="this.form.submit()">
         </li>
     </form>

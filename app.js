@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const e = require('express');
-const { join } = require('lodash');
+const {
+    join
+} = require('lodash');
 
 
 const app = express();
@@ -227,8 +229,6 @@ const self = [];
 const work = []
 let param = '';
 
-
-
 const listArr = []
 
 const list = List.find({}, function (err, data) {
@@ -239,10 +239,10 @@ const list = List.find({}, function (err, data) {
         console.log([listArr, ...data])
     }
 })
+
 app.get('/', (req, res) => {
-
+    console.log(listArr[0])
     Item.find({}, function (err, foundItems) {
-
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
                 if (err) {
@@ -252,7 +252,6 @@ app.get('/', (req, res) => {
                     console.log("Successfully saved default items to DB item")
                 }
             })
-
             res.redirect("/")
         } else {
             res.render('list', {
@@ -261,18 +260,10 @@ app.get('/', (req, res) => {
             })
         }
     })
-
-
-
 })
 
 app.get('/work', (req, res) => {
-    // res.render('work', {
-    //     work: work,
-    //     param: param
-    // })
     Work.find({}, function (err, foundItems) {
-
         if (foundItems.length === 0) {
             Work.insertMany(worksTasks, function (err) {
                 if (err) {
@@ -282,7 +273,6 @@ app.get('/work', (req, res) => {
                     console.log("Successfully saved default items to DB Work")
                 }
             })
-
             res.redirect("/work")
         } else {
             res.render('work', {
@@ -291,7 +281,6 @@ app.get('/work', (req, res) => {
             })
         }
     })
-
 })
 
 app.get('/self-development', (req, res) => {
@@ -316,12 +305,7 @@ app.get('/self-development', (req, res) => {
 })
 
 app.get('/hobby', (req, res) => {
-    // res.render('hobby', {
-    //     hobby: hobby,
-    //     param: param
-    // })
     Hobby.find({}, function (err, foundItems) {
-
         if (foundItems.length === 0) {
             Hobby.insertMany(hobbysTasks, function (err) {
                 if (err) {
@@ -331,7 +315,6 @@ app.get('/hobby', (req, res) => {
                     console.log("Successfully saved default items to DB hobby")
                 }
             })
-
             res.redirect("/hobby")
         } else {
             res.render('hobby', {
@@ -343,13 +326,7 @@ app.get('/hobby', (req, res) => {
 })
 
 app.get('/health', (req, res) => {
-    // res.render('health', {
-    //     health: health,
-    //     param: param
-    // })
-
     Health.find({}, function (err, foundItems) {
-
         if (foundItems.length === 0) {
             Health.insertMany(healthsTasks, function (err) {
                 if (err) {
@@ -359,7 +336,6 @@ app.get('/health', (req, res) => {
                     console.log("Successfully saved default items to DB health")
                 }
             })
-
             res.redirect("/health")
         } else {
             res.render('health', {
@@ -371,13 +347,7 @@ app.get('/health', (req, res) => {
 })
 
 app.get('/finance', (req, res) => {
-    // res.render('finance', {
-    //     finance: finance,
-    //     param: param
-    // })
-
     Finance.find({}, function (err, foundItems) {
-
         if (foundItems.length === 0) {
             Finance.insertMany(financeTasks, function (err) {
                 if (err) {
@@ -387,7 +357,6 @@ app.get('/finance', (req, res) => {
                     console.log("Successfully saved default items to DB finance")
                 }
             })
-
             res.redirect("/finance")
         } else {
             res.render('finance', {
@@ -397,14 +366,9 @@ app.get('/finance', (req, res) => {
         }
     })
 })
+
 app.get('/fandf', (req, res) => {
-    // res.render('fandf', {
-    //     fandf: fandf,
-    //     param: param
-    // })
-
     Fandf.find({}, function (err, foundItems) {
-
         if (foundItems.length === 0) {
             Fandf.insertMany(fandfTasks, function (err) {
                 if (err) {
@@ -414,7 +378,6 @@ app.get('/fandf', (req, res) => {
                     console.log("Successfully saved default items to DB fandf")
                 }
             })
-
             res.redirect("/fandf")
         } else {
             res.render('fandf', {
@@ -424,7 +387,6 @@ app.get('/fandf', (req, res) => {
         }
     })
 })
-
 
 app.get('/:paramName', (req, res) => {
     const paramName = req.params.paramName;
@@ -437,25 +399,16 @@ app.get('/:paramName', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-    // const valueInput = req.body.name2;
-    // arr.push(valueInput);
-    // res.redirect('/')
-    // old version
-
-
     const valueInput = req.body.name2;
     const listName = req.body.listName;
     console.log(req.body, valueInput)
     const item = new Item({
         name: valueInput
     })
-
-
     if (listName === "List") {
         item.save()
         res.redirect('/')
     }
-
 })
 
 app.post('/another-list', (req, res) => {
@@ -463,22 +416,25 @@ app.post('/another-list', (req, res) => {
     list.push(ownList);
     res.redirect('/')
 })
+
 app.post('/delete', (req, res) => {
     const deleteInput = req.body.checkbox
     const deleteOwnList = req.body.checkboxown
     if (deleteOwnList > -1) {
         list.splice(deleteOwnList, 1)
     } else {
-        arr.splice(deleteInput, 1);
+        Item.findByIdAndRemove(index, (err) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.redirect('/')
+            }
+        })
     }
     res.redirect('/')
 })
 
 app.post('/work', (req, res) => {
-    // const valueInput = req.body.name2;
-    // work.push(valueInput);
-    // res.redirect('/work')
-
     const valueInput = req.body.task;
     const item = new Work({
         work: valueInput
@@ -493,17 +449,16 @@ app.post('/work', (req, res) => {
 
 app.post('/delete-work', (req, res) => {
     const index = req.body.checkbox
-    work.splice(index, 1);
-    res.redirect('/work')
+    Work.findByIdAndRemove(index, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/work')
+        }
+    })
 })
 
-
-
 app.post('/hobby', (req, res) => {
-    // const valueInput = req.body.name2;
-    // hobby.push(valueInput);
-    // res.redirect('/hobby')
-
     const valueInput = req.body.task;
     console.log(valueInput)
     const item = new Hobby({
@@ -519,16 +474,17 @@ app.post('/hobby', (req, res) => {
 
 app.post('/delete-hobby', (req, res) => {
     const index = req.body.checkbox
-    hobby.splice(index, 1);
-    res.redirect('/hobby')
+    Hobby.findByIdAndRemove(index, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/hobby')
+        }
+    })
 })
-app.post('/health', (req, res) => {
-    // const valueInput = req.body.name2;
-    // health.push(valueInput);
-    // res.redirect('/health')
 
+app.post('/health', (req, res) => {
     const valueInput = req.body.task;
-    
     const item = new Health({
         health: valueInput
     })
@@ -542,17 +498,17 @@ app.post('/health', (req, res) => {
 
 app.post('/delete-health', (req, res) => {
     const index = req.body.checkbox
-    health.splice(index, 1);
-    res.redirect('/health')
+    Health.findByIdAndRemove(index, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/health')
+        }
+    })
 })
 
 app.post('/finance', (req, res) => {
-    // const valueInput = req.body.name2;
-    // finance.push(valueInput);
-    // res.redirect('/finance')
-
     const valueInput = req.body.task;
-    
     const item = new Finance({
         finance: valueInput
     })
@@ -566,18 +522,21 @@ app.post('/finance', (req, res) => {
 
 app.post('/delete-finance', (req, res) => {
     const index = req.body.checkbox
-    finance.splice(index, 1);
-    res.redirect('/finance')
+
+    Finance.findByIdAndRemove(index, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/finance')
+        }
+    })
 })
 
 
 app.post('/fandf', (req, res) => {
-    // const valueInput = req.body.name2;
-    // fandf.push(valueInput);
-    // res.redirect('/fandf')
 
     const valueInput = req.body.task;
-    
+
     const item = new Fandf({
         fandf: valueInput
     })
@@ -588,19 +547,24 @@ app.post('/fandf', (req, res) => {
         res.redirect('/fandf')
     }
 
-    console.log(valueInput, req.body)
+
 })
 
 app.post('/delete-fandf', (req, res) => {
     const index = req.body.checkbox
-    fandf.splice(index, 1);
-    res.redirect('/fandf')
+
+    Fandf.findByIdAndRemove(index, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/fandf')
+        }
+    })
 })
 
 app.post('/self', (req, res) => {
-    // self.push(valueInput);
     const valueInput = req.body.task;
-    const header = req.body.param;
+    
     const item = new Self({
         self: valueInput
     })
@@ -610,16 +574,18 @@ app.post('/self', (req, res) => {
     } else {
         res.redirect('/self-development')
     }
-
-    console.log(header, valueInput, req.body)
-
-
 })
 
 app.post('/delete-self', (req, res) => {
     const index = req.body.checkbox
-    self.splice(index, 1);
-    res.redirect('/self-development')
+
+    Self.findByIdAndRemove(index, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/self-development')
+        }
+    })
 })
 
 app.listen(3000, function () {

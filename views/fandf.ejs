@@ -10,8 +10,8 @@
     <form action="/delete-fandf" method="post">
         <li class="checklist">
             <input type="checkbox" name="complete" id="list<%=index%>">
-            <label for="list<%=index%>"><%= element.fandf %></label> to jest index:
-            <input class="input-delete" type="checkbox" value="<%= index %>" name="checkbox"
+            <label for="list<%=index%>"><%= element.fandf %></label> to jest index: <%= index %>
+            <input class="input-delete" type="checkbox" value="<%= element._id %>" name="checkbox"
                 onChange="this.form.submit()">
         </li>
     </form>
