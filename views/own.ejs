@@ -1,5 +1,11 @@
 <%- include('header'); -%>
 <h1><%= title %></h1>
 
+
+<form action="/another-list" method="post">
+    <input type="text" name="task">
+    <input type="submit" value="input" name="send">
+    <input type="hidden" name="param" value="<%=param %>">
+</form>
 <a href="/">Back to home</a>
 <% include('footer'); -%>

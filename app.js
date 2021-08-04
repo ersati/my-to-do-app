@@ -218,32 +218,63 @@ const thirdElWork = new Work({
 })
 const worksTasks = [firstElWork, secondElWork, thirdElWork]
 
-//Work
-const arr = []
-// const list = []
-const hobby = [];
-const health = [];
-const finance = [];
-const fandf = [];
-const self = [];
-const work = []
-let param = '';
+
 
 const listArr = []
 
 const list = List.find({}, function (err, data) {
-  console.log(data)
-    if (err) {
-        console.log(err)
-    } else {
-        listArr.push(data)
-        // console.log([listArr, ...data])
-    }
-})
+    console.log(data)
+    if (data.length === 0) {
+      List.insertMany(listTask, function(err){
+          if (err) {
+              console.log(err)
+          } else {
+              // console.log(data)
+              listArr.push(data)
+              console.log("Successfully saved default items to DB lists")
+          }
+      })
+  
+  } else {
+      if (err) {
+          console.log(err)
+      } else {
+          listArr.push(data)
+          // console.log([listArr, ...data])
+      }
+  }
+  })
 
 app.get('/', (req, res) => {
 
-    console.log(listArr[0])
+
+    const list = List.find({}, function (err, data) {
+        console.log(data)
+        if (data.length === 0) {
+          List.insertMany(listTask, function(err){
+              if (err) {
+                  console.log(err)
+              } else {
+                  // console.log(data)
+                  listArr.push(data)
+                  console.log("Successfully saved default items to DB lists")
+              }
+          })
+      
+      } else {
+          if (err) {
+              console.log(err)
+          } else {
+              listArr.push(data)
+              // console.log([listArr, ...data])
+          }
+      }
+      })
+
+
+
+
+    console.log(list)
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
@@ -258,7 +289,7 @@ app.get('/', (req, res) => {
         } else {
             res.render('list', {
                 people: foundItems,
-                list: listArr
+                list: listArr[0]
             })
         }
     })
@@ -279,7 +310,7 @@ app.get('/work', (req, res) => {
         } else {
             res.render('work', {
                 work: foundItems,
-                param: param
+                param: 'work'
             })
         }
     })
@@ -321,7 +352,7 @@ app.get('/hobby', (req, res) => {
         } else {
             res.render('hobby', {
                 hobby: foundItems,
-                param: param
+                param: 'hobby'
             })
         }
     })
@@ -342,7 +373,7 @@ app.get('/health', (req, res) => {
         } else {
             res.render('health', {
                 health: foundItems,
-                param: param
+                param: 'health'
             })
         }
     })
@@ -363,7 +394,7 @@ app.get('/finance', (req, res) => {
         } else {
             res.render('finance', {
                 finance: foundItems,
-                param: param
+                param: 'finance'
             })
         }
     })
@@ -415,7 +446,10 @@ app.post('/', (req, res) => {
 
 app.post('/another-list', (req, res) => {
     const ownList = req.body.ownList
-    list.push(ownList);
+    const item = new List({
+        list: ownList
+    })
+    item.save()
     res.redirect('/')
 })
 
