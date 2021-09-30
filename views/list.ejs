@@ -8,24 +8,29 @@
         <input type="submit" value="input" name="name1">
         <input type="hidden" name="listName" value="List"></input>
     </form>
+
+
+   
+    <ul>
+
+        <% people.forEach((element, index )=> { %>
+        <form action="/delete" method="post">
+            <li class="checklist"> 
+                <input type="checkbox" class='int'name="complete" id="list<%=index%>"> 
+                <label class='label-input' for="list<%=index%>"><%= element.name %>  </label> <span>to jest index:</span>
+                <input class="input-delete" type="checkbox"
+                    value="<%= element._id %>" name="checkbox" id="trash"onChange="this.form.submit()">
+                     <label for="trash"><i class="fa fa-trash"></i></label> 
+                    </li>
+        </form>
+    
+        <% }); %>
+    </ul>
+
 </section>
 
 
-<ul>
 
-    <% people.forEach((element, index )=> { %>
-    <form action="/delete" method="post">
-        <li class="checklist"> 
-            <input type="checkbox" name="complete" id="list<%=index%>"> 
-            <label for="list<%=index%>"><%= element.name %></label> to jest index: 
-            <input class="input-delete" type="checkbox"
-                value="<%= element._id %>" name="checkbox" onChange="this.form.submit()">
-                 
-                </li>
-    </form>
-
-    <% }); %>
-</ul>
 <section class="category-list">
     <ul id="own-list">
 

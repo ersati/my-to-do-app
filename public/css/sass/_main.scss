@@ -7,15 +7,15 @@ section{
     align-items: center;
     
 ul { 
-    list-style-type:none;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 0px;
+    margin-top: 60px;
+    // list-style-type:none;
+    // margin-block-start: 0;
+    // margin-block-end: 0;
+    // margin-inline-start: 0px;
+    // margin-inline-end: 0px;
+    // padding-inline-start: 0px;
     li { 
-        // padding: 5px 10px;
-        border: 1px solid black;
+       
         margin: 5px 0 ;
         border-bottom-left-radius: 5px;
         width: 300px ;
@@ -39,40 +39,50 @@ ul {
 form {
     text-align: center;
     display: flex;
+    // margin-bottom: 60px;
     input[type="text"]{
-        padding:5px 10px;
+        padding:5px 60px;
         margin:0px;
         border: none;
         background-color: transparent;
-        border-bottom: 2px solid black;
+        border-bottom: 4px solid var(--green);
         &:focus{
             border:none;
-            border-bottom: 3px solid black;
+            border-bottom: 2px solid var(--green);
         }
     }
     input[type="submit"]{
-        padding:5px 10px;
-        margin: 0px;
-        background: linear-gradient(#e66465, #9198e5);
+        font-family:'Pristina', sans-serif;
+        font-size: 30px;
+        padding:7px 30px;
+        margin: 0 0 0 30px;
+        background: linear-gradient(var(--lightYellow), var(--darkYellow));
         border: none;
-        box-shadow: 2px 2px 5px 0 linear-gradient(#e66465, #9198e5);
-        color: #111;
-        border-bottom-left-radius: 7px;
+        box-shadow: 10px 10px 6px 0 var(--lightYellow);
+        color: var(--green);
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 20px;
         cursor: pointer;
+        transition: .3s;
         &:hover{
-            color: white;
+            box-shadow: -3px -3px 6px 0 var(--lightYellow);
         }
     }
 }
 
 .headline {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 100px;
+    font-family: 'Pristina', sans-serif;
+    color: var(--green);
     
 }
 }
-
+section.all{
+    flex-grow: 6;
+}
 section.category-list {
+    flex-grow: 4;
+    flex-basis: 35%;
   ul#own-list {
     display: flex;
     flex-direction: column;

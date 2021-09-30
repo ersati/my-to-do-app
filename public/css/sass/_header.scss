@@ -1,10 +1,37 @@
+// /* Color Theme Swatches in RGBA */
+// .Grafika-1-rgba { color: rgba(48, 114, 77, 1); }
+// .Grafika-2-rgba { color: rgba(216, 179, 67, 1); }
+// .Grafika-3-rgba { color: rgba(242, 185, 79, 1); }
+// .Grafika-4-rgba { color: rgba(242, 176, 162, 1); }
+// .Grafika-5-rgba { color: rgba(242, 75, 60, 1); }
+
+
+:root{
+    --green: rgba(48, 114, 77, 1);
+    --lightYellow:rgba(216, 179, 67, 1); 
+    --darkYellow:rgba(242, 185, 79, 1);
+    --salmon:rgba(242, 176, 162, 1);
+    --red:rgba(242, 75, 60, 1); 
+    --background: #ffffff;
+    --text: rgba(48, 114, 77, 1);
+    --check: rgba(48, 114, 77, 1);
+    --disabled: rgba(242, 176, 162, 1);
+    --width: 40vw;
+    --height: auto;
+    --border-radius: 15px;
+}
+
+
 body { 
-    background-color: red; 
+    background-image: url(../../images/background.jpg);
+    // background-repeat: no-repeat;
     margin: 0 ;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    font-family: 'pristina-regular','Libre Franklin', sans-serif;
 }
