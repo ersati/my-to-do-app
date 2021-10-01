@@ -1,45 +1,46 @@
 section{
-    margin: 40px;
-    width: 75vw;
+   
+    width: 50vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     
+    
 ul { 
-    margin-top: 60px;
-    // list-style-type:none;
-    // margin-block-start: 0;
-    // margin-block-end: 0;
-    // margin-inline-start: 0px;
-    // margin-inline-end: 0px;
-    // padding-inline-start: 0px;
+    margin-top:60px;
     li { 
        
         margin: 5px 0 ;
-        border-bottom-left-radius: 5px;
+        border-bottom-left-radius: var(--border-radius);
+        border-top-right-radius: var(--border-radius);
         width: 300px ;
         transition: .3s;
-        background-color: yellowgreen;
+        background-color: var(--green);
         overflow: hidden;
-        box-shadow: 0 0 5px 0px grey;
+        box-shadow: 10px 10px 6px 0px var(--green);
+        &:hover{
+            box-shadow: 0 0 0 var(--green);
+        }
         &:hover a {
-           
-            transform: translateX(20px);
+            
+            
+            font-weight: bold;
+
         }
         a {
             padding: 5px 10px;
             text-decoration: none;
-            color: black;
+            color: var(--lightYellow);
             display: block;
-            background-color: red;
+            background-color: var(--green);
         }
     }
 }
 form {
     text-align: center;
     display: flex;
-    // margin-bottom: 60px;
+    
     input[type="text"]{
         padding:5px 60px;
         margin:0px;
@@ -74,15 +75,21 @@ form {
     font-size: 100px;
     font-family: 'Pristina', sans-serif;
     color: var(--green);
+   margin:0
     
 }
 }
 section.all{
-    flex-grow: 6;
+    width: 55vw;
+    margin-top: -100px;
+
 }
 section.category-list {
-    flex-grow: 4;
-    flex-basis: 35%;
+    width: 40vw;
+    .headline{
+        font-size: 55px;
+        margin-bottom:30px;
+    }
   ul#own-list {
     display: flex;
     flex-direction: column;
@@ -104,4 +111,30 @@ section.category-list {
     }
   }
     
+}
+
+.trash{
+    background:url(../../images/trash.svg);
+    height: 1.2rem;
+    width: 1rem;
+    display: block;
+    color: var(--red);
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    filter: var(--red);
+}
+input#add{
+    background: var(--green);
+    color:var(--lightYellow);
+}
+input#trash-section{
+    visibility: hidden;
+}
+.label__trash{
+    margin: 7px 7px 0 0
+}
+
+form[action="/another-list"]{
+    margin-bottom: 70px;
 }

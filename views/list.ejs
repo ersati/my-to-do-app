@@ -20,7 +20,7 @@
                 <label class='label-input' for="list<%=index%>"><%= element.name %>  </label> <span>to jest index:</span>
                 <input class="input-delete" type="checkbox"
                     value="<%= element._id %>" name="checkbox" id="trash"onChange="this.form.submit()">
-                     <label for="trash"><i class="fa fa-trash"></i></label> 
+                     <label for="trash"><i class="trash"></i></label> 
                     </li>
         </form>
     
@@ -45,7 +45,8 @@
             <li class='category own-category'> 
                 <a class="own-category__link"href="/<%= el %>"><%= el.list %></a> 
                 <label for="own-category__container-input"></label>
-                <input class="own-category__input" type="checkbox" value="<%= index %>" name="checkboxown" onChange="this.form.submit()"> 
+                <input class="own-category__input" type="checkbox" id='trash-section' value="<%= index %>" name="checkboxown" onChange="this.form.submit()"> 
+                <label class='label__trash' for="trash-section"><i class="trash"></i></label> 
                 <span class="own-category__span-input"></span>
             </li>
         </form>
