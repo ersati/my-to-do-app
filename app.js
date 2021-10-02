@@ -249,7 +249,7 @@ app.get('/', (req, res) => {
 
 
     const list = List.find({}, function (err, data) {
-        console.log(data)
+        // console.log(data)
         if (data.length === 0) {
           List.insertMany(listTask, function(err){
               if (err) {
@@ -274,14 +274,14 @@ app.get('/', (req, res) => {
 
 
 
-    console.log(list)
+    // console.log(list)
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
                 if (err) {
                     console.log(err)
                 } else {
-                    console.log(foundItems)
+                    // console.log(foundItems)
                     console.log("Successfully saved default items to DB item")
                 }
             })
@@ -456,17 +456,28 @@ app.post('/another-list', (req, res) => {
 app.post('/delete', (req, res) => {
     const deleteInput = req.body.checkbox
     const deleteOwnList = req.body.checkboxown
-    if (deleteOwnList > -1) {
-        list.splice(deleteOwnList, 1)
-    } else {
-        Item.findByIdAndRemove(index, (err) => {
-            if (err) {
+    console.log(deleteInput, deleteOwnList)
+    if(deleteInput){
+        Item.findByIdAndRemove(deleteInput, (err) => {
+            if(!err){
+                console.log('delete sukcesfully')
+                // res.redirect('/')
+            }else{
                 console.log(err)
-            } else {
-                res.redirect('/')
             }
         })
     }
+    // if (deleteOwnList > -1) {
+    //     list.splice(deleteOwnList, 1)
+    // } else {
+    //     Item.findByIdAndRemove(index, (err) => {
+    //         if (err) {
+    //             console.log(err)
+    //         } else {
+    //             res.redirect('/')
+    //         }
+    //     })
+    // }
     res.redirect('/')
 })
 
