@@ -11,7 +11,7 @@
     box-shadow: 10px 10px 6px var(--salmon);
     padding: 8px 15px;
     display: grid;
-    grid-template-columns: 30px auto 170px 15px 10px;
+    grid-template-columns: 30px auto 15px 10px;
     align-items: center;
     margin: 5px;
     label.label-input {
@@ -96,23 +96,23 @@
         }
       }
     }
-    .btn-delete{ 
-      width:40px;
-      background: transparent;
-      border: none;
-      // visibility: hidden;
-      // &:after{
-      //   content: "X" !important;
-      //   position: absolute;
-      //   border-radius: 50% !important;
-      // height: 15px !important;
-      // top: auto;
-      // border-radius: 2px;
-      // }
-  
-    }
+   
   }
-  
+  button.btn-delete{ 
+    width:40px;
+    background: transparent;
+    border: none;
+    // visibility: hidden;
+    // &:after{
+    //   content: "X" !important;
+    //   position: absolute;
+    //   border-radius: 50% !important;
+    // height: 15px !important;
+    // top: auto;
+    // border-radius: 2px;
+    // }
+
+  }
   @keyframes move {
     50% {
       padding-left: 8px;
