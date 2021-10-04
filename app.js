@@ -220,34 +220,14 @@ const worksTasks = [firstElWork, secondElWork, thirdElWork]
 
 
 
-const listArr = []
-
-const list = List.find({}, function (err, data) {
-    console.log(data)
-    if (data.length === 0) {
-      List.insertMany(listTask, function(err){
-          if (err) {
-              console.log(err)
-          } else {
-              // console.log(data)
-              listArr.push(data)
-              console.log("Successfully saved default items to DB lists")
-          }
-      })
-  
-  } else {
-      if (err) {
-          console.log(err)
-      } else {
-          listArr.push(data)
-          // console.log([listArr, ...data])
-      }
-  }
-  })
 
 app.get('/', (req, res) => {
 
+    const dat = {
+        people: '',
+        list:''
 
+    }
     const list = List.find({}, function (err, data) {
         // console.log(data)
         if (data.length === 0) {
@@ -265,14 +245,17 @@ app.get('/', (req, res) => {
           if (err) {
               console.log(err)
           } else {
-              listArr.push(data)
+            //   listArr.push(data)
+              dat.list = data;
+            //   console.log(dat)
+            //   console.log(dat)
               // console.log([listArr, ...data])
           }
       }
       })
 
 
-
+console.log(dat)
 
     // console.log(list)
     Item.find({}, function (err, foundItems) {
@@ -287,10 +270,9 @@ app.get('/', (req, res) => {
             })
             res.redirect("/")
         } else {
-            res.render('list', {
-                people: foundItems,
-                list: listArr[0]
-            })
+            dat.people = foundItems
+            console.log(dat)
+            res.render('list', dat)
         }
     })
 })
@@ -421,15 +403,15 @@ app.get('/fandf', (req, res) => {
     })
 })
 
-app.get('/:paramName', (req, res) => {
-    const paramName = req.params.paramName;
-    param = paramName
-    const namesTitle = listArr[0].map(item => item.list)
-    const title = namesTitle.filter(item => !(param.indexOf(item) == -1))
-    res.render('own', {
-        title: title
-    })
-})
+// app.get('/:paramName', (req, res) => {
+//     const paramName = req.params.paramName;
+//     param = paramName
+//     const namesTitle = listArr[0].map(item => item.list)
+//     const title = namesTitle.filter(item => !(param.indexOf(item) == -1))
+//     res.render('own', {
+//         title: title
+//     })
+// })
 
 app.post('/', (req, res) => {
     const valueInput = req.body.name2;
@@ -446,6 +428,7 @@ app.post('/', (req, res) => {
 
 app.post('/another-list', (req, res) => {
     const ownList = req.body.ownList
+    console.log(ownList)
     const item = new List({
         list: ownList
     })
@@ -453,7 +436,7 @@ app.post('/another-list', (req, res) => {
     res.redirect('/')
 })
 
-app.post('/delete', (req, res) => {
+app.post('/delete', function(req, res)  {
     const deleteInput = req.body.checkbox
     const deleteOwnList = req.body.checkboxown
     console.log(deleteInput, deleteOwnList)
@@ -461,23 +444,21 @@ app.post('/delete', (req, res) => {
         Item.findByIdAndRemove(deleteInput, (err) => {
             if(!err){
                 console.log('delete sukcesfully')
-                // res.redirect('/')
             }else{
                 console.log(err)
             }
         })
     }
-    // if (deleteOwnList > -1) {
-    //     list.splice(deleteOwnList, 1)
-    // } else {
-    //     Item.findByIdAndRemove(index, (err) => {
-    //         if (err) {
-    //             console.log(err)
-    //         } else {
-    //             res.redirect('/')
-    //         }
-    //     })
-    // }
+    if(deleteOwnList){
+        console.log(deleteOwnList)
+        List.findByIdAndRemove(deleteOwnList, (err) => {
+            if(!err){
+                console.log('delete own sukcesfully')
+            }else{
+                console.log(err)
+            }
+        })
+    }
     res.redirect('/')
 })
 

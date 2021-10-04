@@ -167,8 +167,10 @@ body {
           animation: firework .5s ease forwards .1s;
 }
 
-.checklist .input-delete {
-  visibility: hidden;
+.checklist .btn-delete {
+  width: 40px;
+  background: transparent;
+  border: none;
 }
 
 @-webkit-keyframes move {

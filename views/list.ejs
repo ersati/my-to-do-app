@@ -10,20 +10,22 @@
     </form>
 
 
-   
+
     <ul>
 
         <% people.forEach((element, index )=> { %>
         <form action="/delete" method="post">
-            <li class="checklist"> 
-                <input type="checkbox" class='int'name="complete" id="list<%=index%>"> 
-                <label class='label-input' for="list<%=index%>"><%= element.name %>  </label> <span>to jest index:</span>
-                <input class="input-delete" type="checkbox"
-                    value="<%= element._id %>" name="checkbox" id="trash"onChange="this.form.submit()">
-                     <label for="trash"><i class="trash"></i></label> 
-                    </li>
+            <li class="checklist">
+                <input type="checkbox" class='int' name="complete" id="list<%=index%>">
+                <label class='label-input' for="list<%=index%>"><%= element.name %> </label> <span>to jest index:
+                </span>
+                <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
+                    onChange="this.form.submit()">
+                    <i class="trash"></i>
+                </button>
+            </li>
         </form>
-    
+
         <% }); %>
     </ul>
 
@@ -42,11 +44,16 @@
 
         <% list.forEach((el,index )=> { %>
         <form action="/delete" method="post">
-            <li class='category own-category'> 
-                <a class="own-category__link"href="/<%= el %>"><%= el.list %></a> 
+            <li class='category own-category'>
+                <a class="own-category__link" href="/<%= el %>"><%= el.list %> <%= el._id %></a>
                 <label for="own-category__container-input"></label>
-                <input class="own-category__input" type="checkbox" id='trash-section' value="<%= index %>" name="checkboxown" onChange="this.form.submit()"> 
-                <label class='label__trash' for="trash-section"><i class="trash"></i></label> 
+                <button class="btn-delete" name="checkboxown" type="submit" value="<%= el._id%>"
+                    onChange="this.form.submit()">
+                    <i class="trash"></i>
+                </button>
+                <!-- <input class="own-category__input" type="checkbox" id='trash-section' value="<%= index %>"
+                    name="checkboxown" onChange="this.form.submit()">
+                <label class='label__trash' for="trash-section"><i class="trash"></i></label> -->
                 <span class="own-category__span-input"></span>
             </li>
         </form>
@@ -67,6 +74,10 @@
     console.log(ul)
     if (ul > 10) {
         add.disabled = true;
+        const p = document.createElement('p')
+        p.textContent = 'Limis of Section. Buy Premium'
+        document.querySelector('#own-list').appendChild(p)
+
     }
 </script>
 <%- include('footer'); -%>
