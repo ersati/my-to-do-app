@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const e = require('express');
 const {
-    join
+    join, identity
 } = require('lodash');
 
 
@@ -220,51 +220,39 @@ const worksTasks = [firstElWork, secondElWork, thirdElWork]
 
 
 
+const dat = {
+    people: '',
+    list: ''
+}
 
 app.get('/', (req, res) => {
 
-    const dat = {
-        people: '',
-        list:''
-
-    }
     const list = List.find({}, function (err, data) {
         // console.log(data)
         if (data.length === 0) {
-          List.insertMany(listTask, function(err){
-              if (err) {
-                  console.log(err)
-              } else {
-                  // console.log(data)
-                  listArr.push(data)
-                  console.log("Successfully saved default items to DB lists")
-              }
-          })
-      
-      } else {
-          if (err) {
-              console.log(err)
-          } else {
-            //   listArr.push(data)
-              dat.list = data;
-            //   console.log(dat)
-            //   console.log(dat)
-              // console.log([listArr, ...data])
-          }
-      }
-      })
+            List.insertMany(listTask, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    listArr.push(data)
+                    console.log("Successfully saved default items to DB lists")
+                }
+            })
+        } else {
+            if (err) {
+                console.log(err)
+            } else {
+                dat.list = data;
+            }
+        }
+    })
 
-
-console.log(dat)
-
-    // console.log(list)
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
                 if (err) {
                     console.log(err)
                 } else {
-                    // console.log(foundItems)
                     console.log("Successfully saved default items to DB item")
                 }
             })
@@ -403,19 +391,23 @@ app.get('/fandf', (req, res) => {
     })
 })
 
-// app.get('/:paramName', (req, res) => {
-//     const paramName = req.params.paramName;
-//     param = paramName
-//     const namesTitle = listArr[0].map(item => item.list)
-//     const title = namesTitle.filter(item => !(param.indexOf(item) == -1))
-//     res.render('own', {
-//         title: title
-//     })
-// })
+app.get('/:paramName', (req, res) => {
+    const paramName = req.params.paramName;
+    const {people, list} = dat
+    param = paramName
+    console.log(paramName)
+    const listArr = [...list]
+    const namesTitle = listArr.map(item => item.list)
+    const title = namesTitle.filter(item => !(param.indexOf(item) == -1))
+    res.render('own', {
+        title: title
+    })
+})
 
 app.post('/', (req, res) => {
     const valueInput = req.body.name2;
     const listName = req.body.listName;
+  
     console.log(req.body, valueInput)
     const item = new Item({
         name: valueInput
@@ -436,25 +428,25 @@ app.post('/another-list', (req, res) => {
     res.redirect('/')
 })
 
-app.post('/delete', function(req, res)  {
+app.post('/delete', function (req, res) {
     const deleteInput = req.body.checkbox
     const deleteOwnList = req.body.checkboxown
     console.log(deleteInput, deleteOwnList)
-    if(deleteInput){
+    if (deleteInput) {
         Item.findByIdAndRemove(deleteInput, (err) => {
-            if(!err){
+            if (!err) {
                 console.log('delete sukcesfully')
-            }else{
+            } else {
                 console.log(err)
             }
         })
     }
-    if(deleteOwnList){
+    if (deleteOwnList) {
         console.log(deleteOwnList)
         List.findByIdAndRemove(deleteOwnList, (err) => {
-            if(!err){
+            if (!err) {
                 console.log('delete own sukcesfully')
-            }else{
+            } else {
                 console.log(err)
             }
         })
@@ -592,7 +584,7 @@ app.post('/delete-fandf', (req, res) => {
 
 app.post('/self', (req, res) => {
     const valueInput = req.body.task;
-    
+
     const item = new Self({
         self: valueInput
     })

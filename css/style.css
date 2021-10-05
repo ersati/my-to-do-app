@@ -357,6 +357,82 @@ button.btn-delete {
   }
 }
 
+section.own-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+h1.headline {
+  font-size: 100px;
+  font-family: 'Pristina', sans-serif;
+  color: var(--green);
+  margin: 0;
+}
+
+input[type="submit"] {
+  font-family: 'Pristina', sans-serif;
+  font-size: 30px;
+  padding: 7px 30px;
+  margin: 0 0 0 30px;
+  background: -webkit-gradient(linear, left top, left bottom, from(var(--lightYellow)), to(var(--darkYellow)));
+  background: linear-gradient(var(--lightYellow), var(--darkYellow));
+  border: none;
+  -webkit-box-shadow: 10px 10px 6px 0 var(--lightYellow);
+          box-shadow: 10px 10px 6px 0 var(--lightYellow);
+  color: var(--green);
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  cursor: pointer;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+input[type="submit"]:hover {
+  -webkit-box-shadow: -3px -3px 6px 0 var(--lightYellow);
+          box-shadow: -3px -3px 6px 0 var(--lightYellow);
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 5px 60px;
+  margin: 0px;
+  border: none;
+  background-color: transparent;
+  border-bottom: 4px solid var(--green);
+}
+
+input[type="text"]:focus {
+  border: none;
+  border-bottom: 2px solid var(--green);
+}
+
+form {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.home-link {
+  background: var(--green);
+  color: var(--lightYellow);
+  text-decoration: none;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 15px;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.home-link:hover {
+  font-weight: bold;
+}
+
 section {
   width: 50vw;
   display: -webkit-box;
@@ -394,6 +470,7 @@ section ul li {
 section ul li:hover {
   -webkit-box-shadow: 0 0 0 var(--green);
           box-shadow: 0 0 0 var(--green);
+  font-weight: bold;
 }
 
 section ul li:hover a {
@@ -449,6 +526,7 @@ section form input[type="submit"] {
 section form input[type="submit"]:hover {
   -webkit-box-shadow: -3px -3px 6px 0 var(--lightYellow);
           box-shadow: -3px -3px 6px 0 var(--lightYellow);
+  font-weight: bold;
 }
 
 section .headline {

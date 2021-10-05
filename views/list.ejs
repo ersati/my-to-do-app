@@ -45,7 +45,7 @@
         <% list.forEach((el,index )=> { %>
         <form action="/delete" method="post">
             <li class='category own-category'>
-                <a class="own-category__link" href="/<%= el %>"><%= el.list %></a>
+                <a class="own-category__link" href="/<%= el.list %>"><%= el.list %></a>
                 <label for="own-category__container-input"></label>
                 <button class="btn-delete" name="checkboxown" type="submit" value="<%= el._id%>"
                     onChange="this.form.submit()">
@@ -68,16 +68,5 @@
 
     </ul>
 </section>
-<script>
-    const ul = document.querySelectorAll('#own-list li').length;
-    const add = document.querySelector('#add');
-    console.log(ul)
-    if (ul > 10) {
-        add.disabled = true;
-        const p = document.createElement('p')
-        p.textContent = 'Limis of Section. Buy Premium'
-        document.querySelector('#own-list').appendChild(p)
 
-    }
-</script>
 <%- include('footer'); -%>

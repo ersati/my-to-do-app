@@ -21,6 +21,7 @@ ul {
         box-shadow: 10px 10px 6px 0px var(--green);
         &:hover{
             box-shadow: 0 0 0 var(--green);
+            font-weight: bold;
         }
         &:hover a {
             
@@ -67,6 +68,7 @@ form {
         transition: .3s;
         &:hover{
             box-shadow: -3px -3px 6px 0 var(--lightYellow);
+            font-weight: bold;
         }
     }
 }
