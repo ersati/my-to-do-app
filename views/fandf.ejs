@@ -1,5 +1,7 @@
 <%- include('header'); -%>
-<h1>Friends and Family</h1>
+<section class="own-list">
+
+<h1 class='headline'>Friends and Family</h1>
 
 <form action="/fandf" method="post">
     <input type="text" name="task">
@@ -9,14 +11,16 @@
     <% fandf.forEach((element, index )=> { %>
     <form action="/delete-fandf" method="post">
         <li class="checklist">
-            <input type="checkbox" name="complete" id="list<%=index%>">
-            <label for="list<%=index%>"><%= element.fandf %></label> to jest index: <%= index %>
-            <input class="input-delete" type="checkbox" value="<%= element._id %>" name="checkbox"
+            <input class='int'  type="checkbox" name="complete" id="list<%=index%>">
+            <label class='label-input' for="list<%=index%>"><%= element.fandf %></label> to jest index: <%= index %>
+            <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
                 onChange="this.form.submit()">
+                <i class="trash"></i>
+            </button>
         </li>
     </form>
     <% }); %>
 </ul>
-<a href="/">Back to home</a>
-
+<a class="home-link" href="/">Back to home</a>
+</section>
 <%- include('footer'); -%>

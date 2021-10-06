@@ -1,5 +1,6 @@
 <%- include('header'); -%>
-<h1>Work</h1>
+<section class="own-list"></section>
+<h1 class='headline'>Work</h1>
 
 <form action="/work" method="post">
     <input type="text" name="task">
@@ -9,15 +10,17 @@
     <% work.forEach((element, index )=> { %>
     <form action="/delete-work" method="post">
         <li class="checklist">
-            <input type="checkbox" name="complete" id="list<%=index%>">
-            <label for="list<%=index%>"><%= element.work %></label> to jest index:
-            <input class="input-delete" type="checkbox" value="<%= element._id %>" name="checkbox"
+            <input class='int' type="checkbox" name="complete" id="list<%=index%>">
+            <label class='label-input' for="list<%=index%>"><%= element.work %></label> to jest index:
+            <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
                 onChange="this.form.submit()">
+                <i class="trash"></i>
+            </button>
         </li>
     </form>
     <% }); %>
 </ul>
-</ul>
-<a href="/">Back to home</a>
 
+<a class="home-link" href="/">Back to home</a>
+</section>
 <%- include('footer'); -%>

@@ -1,5 +1,6 @@
 <%- include('header'); -%>
-<h1>Health</h1>
+<section class="own-list"></section>
+<h1 class='headline'>Health</h1>
 
 <form action="/health" method="post">
     <input type="text" name="task">
@@ -9,14 +10,14 @@
     <% health.forEach((element, index )=> { %>
     <form action="/delete-health" method="post">
         <li class="checklist">
-            <input type="checkbox" name="complete" id="list<%=index%>">
-            <label for="list<%=index%>"><%= element.health %></label> to jest index:
+            <input class='int' type="checkbox" name="complete" id="list<%=index%>">
+            <label class='label-input' for="list<%=index%>"><%= element.health %></label> to jest index:
             <input class="input-delete" type="checkbox" value="<%= element._id %>" name="checkbox"
                 onChange="this.form.submit()">
         </li>
     </form>
     <% }); %>
 </ul>
-<a href="/">Back to home</a>
-
+<a class="home-link" href="/">Back to home</a>
+</section>
 <%- include('footer'); -%>

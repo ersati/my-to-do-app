@@ -12,8 +12,9 @@ inputText.forEach(int => int.addEventListener('click', (e)=> {
     const intValue = int.previousElementSibling
     const p = document.createElement('p');
     p.textContent ='ivalid';
-    
-    console.log('clicken', intValue.value)
+    console.log(p)
+    document.querySelector('section').appendChild(p)
+    console.log('clicken', intValue.value, p)
 }))
 //     console.log(inputText)
 // function validation(e, int){

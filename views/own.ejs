@@ -1,5 +1,6 @@
 <%- include('header'); -%>
-<h1><%= title %></h1>
+<section class="own-list"></section>
+<h1 class='headline'><%= title %></h1>
 
 
 <form action="/another-list" method="post">
@@ -7,5 +8,6 @@
     <input type="submit" value="input" name="send">
     <input type="hidden" name="param" value="<%=param %>">
 </form>
-<a href="/">Back to home</a>
+<a class="home-link" href="/">Back to home</a>
+</section>
 <% include('footer'); -%>
