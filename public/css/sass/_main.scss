@@ -140,3 +140,10 @@ input#trash-section{
 form[action="/another-list"]{
     margin-bottom: 70px;
 }
+.invalid{
+    background-color: var(--salmon);
+    color: var(--red);
+    padding: 15px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+}

@@ -4,43 +4,20 @@
 <script>
     const ul = document.querySelectorAll('#own-list li').length;
     const add = document.querySelector('#add');
-//     const inputText = document.querySelectorAll('input[type="text"]');
+
 const inputText = document.querySelectorAll('input[type="submit"]');
 
 inputText.forEach(int => int.addEventListener('click', (e)=> {
-    e.preventDefault()
     const intValue = int.previousElementSibling
-    const p = document.createElement('p');
-    p.textContent ='ivalid';
-    console.log(p)
-    document.querySelector('section').appendChild(p)
-    console.log('clicken', intValue.value, p)
+    console.log('ok')
+    if(intValue.value == ''){
+        e.preventDefault()
+        int.closest('form').insertAdjacentHTML('afterend', '<p class="invalid">Invalid text</p>')
+        console.log('inside')
+    }
+    console.log('clicken', intValue.value)
 }))
-//     console.log(inputText)
-// function validation(e, int){
-   
-//     if (int.value == '') {
-//         console.log(e)
-//         // e.preventDefault()
-//         const p = document.createElement('p')
-//         p.textContent = 'Invalid text'
-//         console.log(p)
-//         return document.querySelector('form').appendChild(p)
-    
-//     }}
-//    inputText.forEach(int => int.addEventListener('input', (e)=> console.log('click')))
 
-
-    // inputText.forEach(int => int.addEventListener('change', (e)=>{
-    //     console.log(int, int.value)
-    //     if(int.value == ''){
-    //         e.preventDefault()
-    //         const p = document.createElement('p')
-    //         p.textContent = 'Invalid text'
-    //         document.querySelector('form').appendChild(p)
-    //     }
-    // }))
-    // console.log(ul)
     if (ul > 10) {
         add.disabled = true;
         const p = document.createElement('p')
