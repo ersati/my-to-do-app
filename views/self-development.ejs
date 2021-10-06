@@ -13,7 +13,7 @@
     <form action="/delete-self" method="post">
         <li class="checklist">
             <input class='int'  type="checkbox" name="complete" id="list<%=index%>">
-            <label class='label-input'  for="list<%=index%>"><%= element.self %></label> to jest index: <%= index %>
+            <label class='label-input'  for="list<%=index%>"><%= element.self %></label> 
             <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
                 onChange="this.form.submit()">
                 <i class="trash"></i>

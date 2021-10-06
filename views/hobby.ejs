@@ -12,7 +12,7 @@
             <form action="/delete-hobby" method="post">
                 <li class="checklist">
                     <input type="checkbox"  class='int' name="complete" id="list<%=index%>">
-                    <label class='label-input' for="list<%=index%>"><%= element.hobby %></label> to jest index:
+                    <label class='label-input' for="list<%=index%>"><%= element.hobby %></label> 
                     <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
                         onChange="this.form.submit()">
                         <i class="trash"></i>

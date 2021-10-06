@@ -1,5 +1,5 @@
 <%- include('header'); -%>
-<section class="own-list"></section>
+<section class="own-list">
 <h1 class='headline'>Health</h1>
 
 <form action="/health" method="post">
@@ -11,7 +11,7 @@
     <form action="/delete-health" method="post">
         <li class="checklist">
             <input class='int' type="checkbox" name="complete" id="list<%=index%>">
-            <label class='label-input' for="list<%=index%>"><%= element.health %></label> to jest index:
+            <label class='label-input' for="list<%=index%>"><%= element.health %></label> 
             <input class="input-delete" type="checkbox" value="<%= element._id %>" name="checkbox"
                 onChange="this.form.submit()">
         </li>
