@@ -5,18 +5,18 @@
     const ul = document.querySelectorAll('#own-list li').length;
     const add = document.querySelector('#add');
 
-const inputText = document.querySelectorAll('input[type="submit"]');
+    const inputText = document.querySelectorAll('input[type="submit"]');
 
-inputText.forEach(int => int.addEventListener('click', (e)=> {
-    const intValue = int.previousElementSibling
-    console.log('ok')
-    if(intValue.value == ''){
-        e.preventDefault()
-        int.closest('form').insertAdjacentHTML('afterend', '<p class="invalid">Invalid text</p>')
-        console.log('inside')
-    }
-    console.log('clicken', intValue.value)
-}))
+    inputText.forEach(int => int.addEventListener('click', (e) => {
+        const intValue = int.previousElementSibling
+        console.log('ok')
+        if (intValue.value == '') {
+            e.preventDefault()
+            int.closest('form').insertAdjacentHTML('afterend', '<p class="invalid">Invalid text</p>')
+            console.log('inside')
+        }
+        console.log('clicken', intValue.value)
+    }))
 
     if (ul > 10) {
         add.disabled = true;
