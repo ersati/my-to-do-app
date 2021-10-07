@@ -41,182 +41,186 @@ db.once("open", function () {
 
 //Mongoose Connection
 
-//Task Main Page
-
-const itemsSchema = {
-    name: String,
-    list: String
-}
-
-const Item = mongoose.model("Item", itemsSchema, 'tasks')
-
-
-const task = new Item({
-    name: "Hello everyone"
-})
-const task1 = new Item({
-    name: "Press the Add button to add tasks"
-})
-
-const task2 = new Item({
-    name: "Press <--- to delete the file"
-})
-
-const defaultTask = [task, task1, task2]
+const Item = require("./modules/Items/ItemModel.js");
+const defaultTask = require("./modules/Items/ItemTask.js");
 
 //Task Main Page
 
-const tasksSchema = {
-    list: String
-}
-const listSchema = {
-    task: String
-}
-const List = mongoose.model("List", tasksSchema, 'lists')
+// const itemsSchema = {
+//     name: String,
+//     list: String
+// }
 
-const hobb = new Item({
-    list: "Hobby"
-})
+// const Item = mongoose.model("Item", itemsSchema, 'tasks')
 
-const heal = new Item({
-    list: "Health"
-})
 
-const fin = new Item({
-    list: "Finance"
-})
-const listTask = [hobb, heal, fin]
+// const task = new Item({
+//     name: "Hello everyone"
+// })
+// const task1 = new Item({
+//     name: "Press the Add button to add tasks"
+// })
+
+// const task2 = new Item({
+//     name: "Press <--- to delete the file"
+// })
+
+// const defaultTask = [task, task1, task2]
+
+//Task Main Page
+
+// const tasksSchema = {
+//     list: String
+// }
+// const listSchema = {
+//     task: String
+// }
+const List = require("./modules/List/ListModel.js")
+
+// const hobb = new Item({
+//     list: "Hobby"
+// })
+
+// const heal = new Item({
+//     list: "Health"
+// })
+
+// const fin = new Item({
+//     list: "Finance"
+// })
+const listTask = require("./modules/Items/ItemListTasks.js")
 
 
 
 
 //Hobby
 
-const hobbySchema = {
-    hobby: String
-}
-const Hobby = mongoose.model('Hobby', hobbySchema, 'hobby')
+// const hobbySchema = {
+//     hobby: String
+// }
+const Hobby = require("./modules/Hobby/HobbyModel.js")
 
-const firstElHobby = new Hobby({
-    hobby: "Hello everyone in Hobby section"
-})
+// const firstElHobby = new Hobby({
+//     hobby: "Hello everyone in Hobby section"
+// })
 
-const secondElHobby = new Hobby({
-    hobby: "Press the Add button to add tasks in Hobby section"
-})
+// const secondElHobby = new Hobby({
+//     hobby: "Press the Add button to add tasks in Hobby section"
+// })
 
-const thirdElHobby = new Hobby({
-    hobby: "Press <--- to delete the file in Hobby section"
-})
-const hobbysTasks = [firstElHobby, secondElHobby, thirdElHobby]
+// const thirdElHobby = new Hobby({
+//     hobby: "Press <--- to delete the file in Hobby section"
+// })
+const hobbysTasks = require("./modules/Hobby/HobbyTasks")
+
 
 //Hobby
 
 //Health
 
-const healthsSchema = {
-    health: String
-}
-const Health = mongoose.model('Health', healthsSchema, 'health')
+// const healthsSchema = {
+//     health: String
+// }
+const Health = require("./modules/Health/HealthModel")
 
-const firstElHealth = new Health({
-    health: "Hello everyone in health section"
-})
+// const firstElHealth = new Health({
+//     health: "Hello everyone in health section"
+// })
 
-const secondElHealth = new Health({
-    health: "Press the Add button to add tasks in health section"
-})
+// const secondElHealth = new Health({
+//     health: "Press the Add button to add tasks in health section"
+// })
 
-const thirdElHealth = new Health({
-    health: "Press <--- to delete the file in health section"
-})
-const healthsTasks = [firstElHealth, secondElHealth, thirdElHealth]
+// const thirdElHealth = new Health({
+//     health: "Press <--- to delete the file in health section"
+// })
+const healthsTasks = require("./modules/Health/HealthTasks")
 //Heatlh
 
 //Finance
 
-const financeSchema = {
-    finance: String
-}
-const Finance = mongoose.model('Finance', financeSchema, 'finance')
+// const financeSchema = {
+//     finance: String
+// }
+const Finance = require("./modules/Finance/FinanceModel")
 
-const firstElFinance = new Finance({
-    finance: "Hello everyone in Finance section"
-})
+// const firstElFinance = new Finance({
+//     finance: "Hello everyone in Finance section"
+// })
 
-const secondElFinance = new Finance({
-    finance: "Press the Add button to add tasks in Finance section"
-})
+// const secondElFinance = new Finance({
+//     finance: "Press the Add button to add tasks in Finance section"
+// })
 
-const thirdElFinance = new Finance({
-    finance: "Press <--- to delete the file in Finance section"
-})
-const financeTasks = [firstElFinance, secondElFinance, thirdElFinance]
+// const thirdElFinance = new Finance({
+//     finance: "Press <--- to delete the file in Finance section"
+// })
+const financeTasks = require("./modules/Finance/FinanceTasks")
 
 
 //Finance
 
 
 // Friends and Family
-const fandfSchema = {
-    fandf: String
-}
-const Fandf = mongoose.model('Fandf', fandfSchema, 'fandf')
+// const fandfSchema = {
+//     fandf: String
+// }
+const Fandf = require("./modules/FriendsAndFamily/FModel")
 
-const firstElFandf = new Fandf({
-    fandf: "Hello everyone in Fandf section"
-})
+// const firstElFandf = new Fandf({
+//     fandf: "Hello everyone in Fandf section"
+// })
 
-const secondElFandf = new Fandf({
-    fandf: "Press the Add button to add tasks in Fandf section"
-})
+// const secondElFandf = new Fandf({
+//     fandf: "Press the Add button to add tasks in Fandf section"
+// })
 
-const thirdElFandf = new Fandf({
-    fandf: "Press <--- to delete the file in Fandf section"
-})
-const fandfTasks = [firstElFandf, secondElFandf, thirdElFandf]
+// const thirdElFandf = new Fandf({
+//     fandf: "Press <--- to delete the file in Fandf section"
+// })
+const fandfTasks = require("./modules/FriendsAndFamily/FTask")
 //Friends and Family 
 
 
 //self development
-const selfsSchema = {
-    self: String
-}
-const Self = mongoose.model('Self', selfsSchema, 'self')
+// const selfsSchema = {
+//     self: String
+// }
+const Self = require("./modules/SelfDevelopment/SelfModel")
 
-const firstElSelf = new Self({
-    self: "Hello everyone in Self section"
-})
+// const firstElSelf = new Self({
+//     self: "Hello everyone in Self section"
+// })
 
-const secondElSelf = new Self({
-    self: "Press the Add button to add tasks in Self section"
-})
+// const secondElSelf = new Self({
+//     self: "Press the Add button to add tasks in Self section"
+// })
 
-const thirdElSelf = new Self({
-    self: "Press <--- to delete the file in Self section"
-})
-const selfsTasks = [firstElSelf, secondElSelf, thirdElSelf]
+// const thirdElSelf = new Self({
+//     self: "Press <--- to delete the file in Self section"
+// })
+const selfsTasks = require("./modules/SelfDevelopment/SelfTask")
 
 //self development
 
 // Work
-const worksSchema = {
-    work: String
-}
-const Work = mongoose.model('Work', worksSchema, 'work')
+// const worksSchema = {
+//     work: String
+// }
+const Work = require("./modules/Work/WorkModel")
 
-const firstElWork = new Work({
-    work: "Hello everyone in Work section"
-})
+// const firstElWork = new Work({
+//     work: "Hello everyone in Work section"
+// })
 
-const secondElWork = new Work({
-    work: "Press the Add button to add tasks in Work section"
-})
+// const secondElWork = new Work({
+//     work: "Press the Add button to add tasks in Work section"
+// })
 
-const thirdElWork = new Work({
-    work: "Press <--- to delete the file in Work section"
-})
-const worksTasks = [firstElWork, secondElWork, thirdElWork]
+// const thirdElWork = new Work({
+//     work: "Press <--- to delete the file in Work section"
+// })
+const worksTasks = require("./modules/Work/WorkTasks")
 
 
 
