@@ -1,0 +1,4 @@
+module.exports = {
+    people: '',
+    list: ''
+}
