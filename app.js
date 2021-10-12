@@ -1,30 +1,20 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
-const e = require('express');
 const {
     join,
     identity
 } = require('lodash');
-
-
 const app = express();
-
 
 app.set('view engine', 'ejs');
 app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
-
 app.use('/favicon.ico', express.static('images/favicon.ico'));
-
-
 app.use(express.static("public"))
 
 // Mongoose Connection 
-
-
 mongoose.connect("mongodb://localhost:27017/todolistDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -39,10 +29,6 @@ db.once("open", function () {
     console.log("Connection Successful!");
 });
 //Mongoose Connection
-
-const Fandf = require("./modules/FriendsAndFamily/FModel")
-const fandfTasks = require("./modules/FriendsAndFamily/FTask")
-//Friends and Family 
 
 const dat = require("./routes/data")
 
@@ -62,19 +48,96 @@ app.get('/health', health)
 app.get('/finance', finance)
 app.get('/fandf', fandf)
 
+
+
+var UserSchema = {
+    name: {type:String}
+};
+
+var UserModel = mongoose.model('UserModel',UserSchema);
+
+const firstEl = new UserModel({
+    name: "Hello everyone in Own section"
+})
+
+const secondEl = new UserModel({
+    name: "Press the Add button to add tasks in Own section"
+})
+
+const thirdEl = new UserModel({
+    name: "Press <--- to delete the file in Own section"
+})
+
+const allTask = [firstEl, secondEl, thirdEl]
 app.get('/:paramName', (req, res) => {
     const paramName = req.params.paramName;
     const {
         people,
-        list
+        list, 
+        own
     } = dat
-    param = paramName
+   const obj = {
+       own: ''
+   }
     console.log(paramName)
+  
+     const item = UserModel.find({}, function(err, tasks){
+      if(tasks.length === 0){
+          UserModel.insertMany(allTask, function(err){
+              if(!err){
+                  console.log('succesfully add task')
+                  obj.own = tasks
+              }
+              else{console.log(err)}
+          })
+      }else {
+          if(!err){
+               dat.own = tasks
+              console.log(dat.own)
+          }else {
+              console.log(err)
+          }
+      }
+  })
+//   console.dir(obj, item)
+    //Find The Title from the param arrays.
     const listArr = [...list]
     const namesTitle = listArr.map(item => item.list)
-    const title = namesTitle.filter(item => !(param.indexOf(item) == -1))
+    const title = namesTitle.filter(item => !(paramName.indexOf(item) == -1))
     res.render('own', {
-        title: title
+        title: title,
+        paramName: paramName,
+        tasks: own
+    })
+})
+
+app.post('/:paramName', function (req, res){
+    const paramName = req.params.paramName;
+    console.log(paramName)
+    const valueInput = req.body.task;
+    console.log(valueInput)
+    const item = new UserModel({
+        name: valueInput
+    })
+    if (valueInput !== '') {
+        item.save()
+        
+        res.redirect(`/:${paramName}`)
+    } else {
+        res.redirect(`/:${paramName}`)
+    }
+})
+
+app.post('/delete/:paramName', function (req, res){
+    const paramName = req.params.paramName;
+    console.log(paramName)
+    const index = req.body.checkbox
+    UserModel.findByIdAndRemove(index, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect(`/:${paramName}`)
+        }
     })
 })
 
