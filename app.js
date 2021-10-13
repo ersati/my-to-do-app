@@ -30,6 +30,9 @@ db.once("open", function () {
 });
 //Mongoose Connection
 
+
+
+
 const dat = require("./routes/data")
 
 const {main, addTasktoMain, addList, deleteMain} = require("./routes/main")
@@ -50,11 +53,14 @@ app.get('/fandf', fandf)
 
 
 
-var UserSchema = {
+const userSchema = {
     name: {type:String}
 };
 
-var UserModel = mongoose.model('UserModel',UserSchema);
+
+
+
+const UserModel = mongoose.model('UserModel',userSchema);
 
 const firstEl = new UserModel({
     name: "Hello everyone in Own section"
@@ -69,6 +75,15 @@ const thirdEl = new UserModel({
 })
 
 const allTask = [firstEl, secondEl, thirdEl]
+
+const paramSchema = {
+    list: String,
+    tasks: [userSchema]
+}
+
+const ParamModel = mongoose.model('ParamModel', paramSchema)
+
+
 app.get('/:paramName', (req, res) => {
     const paramName = req.params.paramName;
     const {
@@ -81,65 +96,90 @@ app.get('/:paramName', (req, res) => {
    }
     console.log(paramName)
   
-     const item = UserModel.find({}, function(err, tasks){
-      if(tasks.length === 0){
-          UserModel.insertMany(allTask, function(err){
-              if(!err){
-                  console.log('succesfully add task')
-                  obj.own = tasks
-              }
-              else{console.log(err)}
-          })
-      }else {
-          if(!err){
-               dat.own = tasks
-              console.log(dat.own)
-          }else {
-              console.log(err)
-          }
-      }
-  })
+    ParamModel.findOne({list: paramName}, function(err, result){
+        if(!err){
+            if(!result){
+                console.log('doesnt exist')
+                const l = new ParamModel({
+                    list: paramName,
+                    tasks: allTask
+                })
+                l.save()
+            }
+            else{
+                console.log('exist')
+                console.log(result.tasks)
+                res.render('own', {
+                    title: result.list,
+                    paramName: paramName,
+                    tasks: result.tasks
+                })
+            }
+        }  else {
+          console.log(err)
+        }
+    })
+
+    
+//      const item = UserModel.find({}, function(err, tasks){
+//       if(tasks.length === 0){
+//           UserModel.insertMany(allTask, function(err){
+//               if(!err){
+//                   console.log('succesfully add task')
+//                   obj.own = tasks
+//               }
+//               else{console.log(err)}
+//           })
+//       }else {
+//           if(!err){
+//                dat.own = tasks
+//               console.log(dat.own)
+//           }else {
+//               console.log(err)
+//           }
+//       }
+//   })
 //   console.dir(obj, item)
     //Find The Title from the param arrays.
     const listArr = [...list]
     const namesTitle = listArr.map(item => item.list)
     const title = namesTitle.filter(item => !(paramName.indexOf(item) == -1))
-    res.render('own', {
-        title: title,
-        paramName: paramName,
-        tasks: own
-    })
+    // res.render('own', {
+    //     title: title,
+    //     paramName: paramName,
+    //     tasks: own
+    // })
 })
 
-app.post('/:paramName', function (req, res){
-    const paramName = req.params.paramName;
-    console.log(paramName)
-    const valueInput = req.body.task;
-    console.log(valueInput)
-    const item = new UserModel({
-        name: valueInput
-    })
-    if (valueInput !== '') {
-        item.save()
+// app.post('/:paramName', function (req, res){
+//     const paramName = req.params.paramName;
+//     console.log(paramName)
+//     const valueInput = req.body.task;
+//     console.log(valueInput)
+//     const item = new UserModel({
+//         name: valueInput
+//     })
+//     if (valueInput !== '') {
+//         item.save()
         
-        res.redirect(`/:${paramName}`)
-    } else {
-        res.redirect(`/:${paramName}`)
-    }
-})
+//         res.redirect(`/:${paramName}`)
+//     } else {
+//         res.redirect(`/:${paramName}`)
+//     }
+// })
 
-app.post('/delete/:paramName', function (req, res){
-    const paramName = req.params.paramName;
-    console.log(paramName)
-    const index = req.body.checkbox
-    UserModel.findByIdAndRemove(index, (err) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.redirect(`/:${paramName}`)
-        }
-    })
-})
+// app.post('/delete/:paramName', function (req, res){
+//     const paramName = req.params.paramName;
+//     console.log(paramName)
+//     const index = req.body.checkbox
+//     UserModel.findByIdAndRemove(index, (err) => {
+//         if (err) {
+//             console.log(err)
+//         } else {
+//             res.redirect(`/:${paramName}`)
+//         }
+//     })
+// })
 
 app.post('/', addTasktoMain)
 app.post('/another-list', addList)
