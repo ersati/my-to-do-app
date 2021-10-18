@@ -1,1 +1,1 @@
-module.exports = {name: {type:String}}
+module.exports = {name: String}
