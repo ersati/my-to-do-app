@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require("mongoose");
-const {
-    join,
-    identity
-} = require('lodash');
+const _ = require('lodash');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -30,10 +27,7 @@ db.once("open", function () {
 });
 //Mongoose Connection
 
-
-
-
-const dat = require("./routes/data")
+// const dat = require("./routes/data")
 
 const {main, addTasktoMain, addList, deleteMain} = require("./routes/main")
 const {work, addWork, deleteWork} = require("./routes/work")
@@ -56,10 +50,6 @@ app.get('/fandf', fandf)
 const userSchema = {
     name: {type:String}
 };
-
-
-
-
 const UserModel = mongoose.model('UserModel',userSchema);
 
 const firstEl = new UserModel({
@@ -84,18 +74,10 @@ const paramSchema = {
 const ParamModel = mongoose.model('ParamModel', paramSchema)
 
 
-app.get('/:paramName', (req, res) => {
+app.get('/cat/:paramName', (req, res) => {
     const paramName = req.params.paramName;
-    const {
-        people,
-        list, 
-        own
-    } = dat
-   const obj = {
-       own: ''
-   }
-    console.log(paramName)
   
+    console.log(paramName)
     ParamModel.findOne({list: paramName}, function(err, result){
         if(!err){
             if(!result){
@@ -120,67 +102,35 @@ app.get('/:paramName', (req, res) => {
         }
     })
 
-    
-//      const item = UserModel.find({}, function(err, tasks){
-//       if(tasks.length === 0){
-//           UserModel.insertMany(allTask, function(err){
-//               if(!err){
-//                   console.log('succesfully add task')
-//                   obj.own = tasks
-//               }
-//               else{console.log(err)}
-//           })
-//       }else {
-//           if(!err){
-//                dat.own = tasks
-//               console.log(dat.own)
-//           }else {
-//               console.log(err)
-//           }
-//       }
-//   })
-//   console.dir(obj, item)
-    //Find The Title from the param arrays.
-    const listArr = [...list]
-    const namesTitle = listArr.map(item => item.list)
-    const title = namesTitle.filter(item => !(paramName.indexOf(item) == -1))
-    // res.render('own', {
-    //     title: title,
-    //     paramName: paramName,
-    //     tasks: own
-    // })
 })
 
-// app.post('/:paramName', function (req, res){
-//     const paramName = req.params.paramName;
-//     console.log(paramName)
-//     const valueInput = req.body.task;
-//     console.log(valueInput)
-//     const item = new UserModel({
-//         name: valueInput
-//     })
-//     if (valueInput !== '') {
-//         item.save()
-        
-//         res.redirect(`/:${paramName}`)
-//     } else {
-//         res.redirect(`/:${paramName}`)
-//     }
-// })
+app.post('/cat/:paramName', function (req, res){
+    const paramName = req.params.paramName;
+    const valueInput = req.body.task;
+    const item = new UserModel({
+        name: valueInput
+    })
+    ParamModel.findOne({list: paramName}, function(err, foundList){
+        if(foundList){
+            foundList.tasks.push(item);
+            foundList.save();
+            res.redirect('/cat/' + paramName)
+        }
+    })
+})
 
-// app.post('/delete/:paramName', function (req, res){
-//     const paramName = req.params.paramName;
-//     console.log(paramName)
-//     const index = req.body.checkbox
-//     UserModel.findByIdAndRemove(index, (err) => {
-//         if (err) {
-//             console.log(err)
-//         } else {
-//             res.redirect(`/:${paramName}`)
-//         }
-//     })
-// })
+app.post('/delete-own', function(req,res){
+    const itemId = req.body.checkbox;
+    const listName = req.body.listName;
+    if(listName){
+        ParamModel.findOneAndUpdate({list: listName}, {$pull: {tasks:{_id: itemId}}}, function(err, foundItem){
+            if(!err){
+                res.redirect('/cat/' + listName)
+            }
+        })
+    }
 
+})
 app.post('/', addTasktoMain)
 app.post('/another-list', addList)
 app.post('/delete', deleteMain)

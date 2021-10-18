@@ -45,7 +45,7 @@
         <% list.forEach((el,index )=> { %>
         <form action="/delete" method="post">
             <li class='category own-category'>
-                <a class="own-category__link" href="/<%= el.list %>"><%= el.list %></a>
+                <a class="own-category__link" href="/cat/<%= el.list %>"><%= el.list %></a>
                 <label for="own-category__container-input"></label>
                 <button class="btn-delete" name="checkboxown" type="submit" value="<%= el._id%>"
                     onChange="this.form.submit()">

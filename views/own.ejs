@@ -3,9 +3,9 @@
 <h1 class='headline'><%= title %></h1>
 
 
-<form action="/<%= title %>" method="post">
+<form action="/cat/<%= title %>" method="post">
     <input type="text" name="task">
-    <input type="submit" value="input" name="send">
+    <input type="submit" value="Add" name="send">
     <input type="hidden" name="paramName" value="<%=paramName %>">
 </form>
 
@@ -21,6 +21,7 @@
                     <i class="trash"></i>
                 </button>
             </li>
+    <input type="hidden" name="listName" value="<%=paramName %>">
         </form>
         <% }); %>
     </ul>

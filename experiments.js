@@ -99,3 +99,34 @@ app.get('/:paramName', (req, res) => {
         paramName: paramName
     })
 })
+
+
+
+//      const item = UserModel.find({}, function(err, tasks){
+//       if(tasks.length === 0){
+//           UserModel.insertMany(allTask, function(err){
+//               if(!err){
+//                   console.log('succesfully add task')
+//                   obj.own = tasks
+//               }
+//               else{console.log(err)}
+//           })
+//       }else {
+//           if(!err){
+//                dat.own = tasks
+//               console.log(dat.own)
+//           }else {
+//               console.log(err)
+//           }
+//       }
+//   })
+//   console.dir(obj, item)
+    //Find The Title from the param arrays.
+    // const listArr = [...list]
+    // const namesTitle = listArr.map(item => item.list)
+    // const title = namesTitle.filter(item => !(paramName.indexOf(item) == -1))
+    // res.render('own', {
+    //     title: title,
+    //     paramName: paramName,
+    //     tasks: own
+    // })

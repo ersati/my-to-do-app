@@ -2,14 +2,13 @@ const dat = require("./data")
 const Item = require("../modules/Items/ItemModel.js");
 const defaultTask = require("../modules/Items/ItemTask.js");
 const listTask = require("../modules/Items/ItemListTasks.js")
-
+const _ = require('lodash');
 //Task Main Page
 const List = require("../modules/List/ListModel.js")
 
 const main = (req, res) => {
 
     const list = List.find({}, function (err, data) {
-        // console.log(data)
         if (data.length === 0) {
             List.insertMany(listTask, function (err) {
                 if (err) {
@@ -40,7 +39,6 @@ const main = (req, res) => {
             res.redirect("/")
         } else {
             dat.people = foundItems
-            console.log(dat)
             res.render('list', dat)
         }
     })
@@ -49,8 +47,6 @@ const main = (req, res) => {
 const addTasktoMain = (req, res) => {
     const valueInput = req.body.name2;
     const listName = req.body.listName;
-
-    console.log(req.body, valueInput)
     const item = new Item({
         name: valueInput
     })
@@ -61,7 +57,7 @@ const addTasktoMain = (req, res) => {
 }
 
 const addList = (req, res) => {
-    const ownList = req.body.ownList
+    const ownList = _.capitalize(req.body.ownList)
     console.log(ownList)
     const item = new List({
         list: ownList
@@ -84,7 +80,6 @@ const deleteMain = function (req, res) {
         })
     }
     if (deleteOwnList) {
-        console.log(deleteOwnList)
         List.findByIdAndRemove(deleteOwnList, (err) => {
             if (!err) {
                 console.log('delete own sukcesfully')
@@ -96,4 +91,9 @@ const deleteMain = function (req, res) {
     res.redirect('/')
 }
 
-module.exports={main, addTasktoMain, addList, deleteMain}
+module.exports = {
+    main,
+    addTasktoMain,
+    addList,
+    deleteMain
+}
