@@ -10,7 +10,6 @@ app.use(express.urlencoded({
 }))
 app.use('/favicon.ico', express.static('images/favicon.ico'));
 app.use(express.static("public"))
-
 // Mongoose Connection 
 mongoose.connect("mongodb://localhost:27017/todolistDB", {
     useNewUrlParser: true,
@@ -19,9 +18,7 @@ mongoose.connect("mongodb://localhost:27017/todolistDB", {
     useFindAndModify: false
 })
 var db = mongoose.connection;
-
 db.on("error", console.error.bind(console, "connection error:"));
-
 db.once("open", function () {
     console.log("Connection Successful!");
 });

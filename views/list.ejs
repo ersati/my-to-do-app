@@ -8,40 +8,28 @@
         <input type="submit" value="input" name="name1">
         <input type="hidden" name="listName" value="List"></input>
     </form>
-
-
-
     <ul>
-
         <% people.forEach((element, index )=> { %>
         <form action="/delete" method="post">
             <li class="checklist">
                 <input type="checkbox" class='int' name="complete" id="list<%=index%>">
                 <label class='label-input' for="list<%=index%>"><%= element.name %> </label>
-                 <!-- <span>to jest index:  </span> -->
                 <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
                     onChange="this.form.submit()">
                     <i class="trash"></i>
                 </button>
             </li>
         </form>
-
         <% }); %>
     </ul>
-
 </section>
-
-
-
 <section class="category-list">
     <ul id="own-list">
-
         <p class='headline'>Create your own list </p>
         <form action="/another-list" method="post">
             <input type="text" name="ownList" id="">
             <input type="submit" value="add" id='add'>
         </form>
-
         <% list.forEach((el,index )=> { %>
         <form action="/delete" method="post">
             <li class='category own-category'>
@@ -51,11 +39,9 @@
                     onChange="this.form.submit()">
                     <i class="trash"></i>
                 </button>
-                <!-- <input class="own-category__input" type="checkbox" id='trash-section' value="<%= index %>"
-                    name="checkboxown" onChange="this.form.submit()">
-                <label class='label__trash' for="trash-section"><i class="trash"></i></label> -->
                 <span class="own-category__span-input"></span>
             </li>
+            <input type="hidden" name="hiddenList" value="<%= el.list %>"></input>
         </form>
         <% }); %>
         <li class='category category-work'><a href="/work">Work</a></li>
@@ -64,8 +50,6 @@
         <li class='category category-fandf'><a href="/fandf">Family & friends</a></li>
         <li class='category category-hobby'><a href="/hobby">Hobby</a></li>
         <li class='category category-health'><a href="/health">Health</a></li>
-
-
     </ul>
 </section>
 

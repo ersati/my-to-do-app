@@ -1,5 +1,7 @@
 module.exports = {
     people: '',
     list: '',
-    own: ''
+    own: '',
+    id: ''
+
 }
