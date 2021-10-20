@@ -56,6 +56,9 @@ form {
     input[type="submit"]{
         font-family:'Pristina', sans-serif;
         font-size: 30px;
+        @media (max-width: 1200px){
+            font-size: 15px;
+        }
         padding:7px 30px;
         margin: 0 0 0 30px;
         background: linear-gradient(var(--lightYellow), var(--darkYellow));
@@ -75,6 +78,9 @@ form {
 
 .headline {
     font-size: 100px;
+    @media (max-width: 1200px){
+        font-size: 40px;
+    }
     font-family: 'Pristina', sans-serif;
     color: var(--green);
    margin:0
@@ -84,6 +90,9 @@ form {
 section.all{
     width: 55vw;
     margin-top: -100px;
+    @media (max-width: 1200px){
+        margin-top: 0;
+    }
 
 }
 section.category-list {
