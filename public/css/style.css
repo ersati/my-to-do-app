@@ -44,6 +44,15 @@ body {
         -ms-flex-direction: column;
             flex-direction: column;
   }
+  section.all {
+    margin-top: 0;
+  }
+  section .headline {
+    font-size: 40px;
+  }
+  section form input[type="submit"] {
+    font-size: 15px;
+  }
 }
 
 .checklist {
@@ -383,6 +392,12 @@ h1.headline {
   margin: 0;
 }
 
+@media (max-width: 1200px) {
+  h1.headline {
+    font-size: 40px;
+  }
+}
+
 input[type="submit"] {
   font-family: 'Pristina', sans-serif;
   font-size: 30px;
@@ -532,6 +547,12 @@ section form input[type="submit"] {
   transition: .3s;
 }
 
+@media (max-width: 1200px) {
+  section form input[type="submit"] {
+    font-size: 15px;
+  }
+}
+
 section form input[type="submit"]:hover {
   -webkit-box-shadow: -3px -3px 6px 0 var(--lightYellow);
           box-shadow: -3px -3px 6px 0 var(--lightYellow);
@@ -545,9 +566,21 @@ section .headline {
   margin: 0;
 }
 
+@media (max-width: 1200px) {
+  section .headline {
+    font-size: 40px;
+  }
+}
+
 section.all {
   width: 55vw;
   margin-top: -100px;
+}
+
+@media (max-width: 1200px) {
+  section.all {
+    margin-top: 0;
+  }
 }
 
 section.category-list {
