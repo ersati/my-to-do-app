@@ -9,6 +9,9 @@ section{
     
 ul { 
     margin-top:60px;
+    @media (max-width: 1200px){
+        padding-left:0
+    }
     li { 
        
         margin: 5px 0 ;
@@ -44,6 +47,9 @@ form {
     
     input[type="text"]{
         padding:5px 60px;
+        @media (max-width: 1200px){
+            padding:5px 33px;
+        }
         margin:0px;
         border: none;
         background-color: transparent;
@@ -80,6 +86,7 @@ form {
     font-size: 100px;
     @media (max-width: 1200px){
         font-size: 40px;
+        margin: 20px 0;
     }
     font-family: 'Pristina', sans-serif;
     color: var(--green);
@@ -106,6 +113,9 @@ section.category-list {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @media (max-width: 1200px){
+        padding-left: 0;
+    }
 
     .own-category { 
         display: flex;

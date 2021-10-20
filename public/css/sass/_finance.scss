@@ -1,12 +1,16 @@
 section.own-list{
     display: flex;
     flex-direction: column;
+    @media (max-width: 1200px){
+        min-height: 100vh;
+    }
 }
 
 h1.headline {
     font-size: 100px;
     @media (max-width: 1200px){
         font-size: 40px;
+        margin: 20px 0;
     }
     font-family: 'Pristina', sans-serif;
     color: var(--green);

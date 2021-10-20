@@ -5,6 +5,9 @@
     background: var(--background);
     width: var(--width);
     height: var(--height);
+    @media (max-width: 1200px){
+      width: 70vw;
+  }
     border-top-right-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
     position: relative;
