@@ -78,6 +78,12 @@ body {
   margin: 5px;
 }
 
+@media (max-width: 1200px) {
+  .checklist {
+    width: 70vw;
+  }
+}
+
 .checklist label.label-input {
   color: var(--text);
   position: relative;
@@ -385,6 +391,12 @@ section.own-list {
           flex-direction: column;
 }
 
+@media (max-width: 1200px) {
+  section.own-list {
+    min-height: 100vh;
+  }
+}
+
 h1.headline {
   font-size: 100px;
   font-family: 'Pristina', sans-serif;
@@ -395,6 +407,7 @@ h1.headline {
 @media (max-width: 1200px) {
   h1.headline {
     font-size: 40px;
+    margin: 20px 0;
   }
 }
 
@@ -478,6 +491,12 @@ section ul {
   margin-top: 60px;
 }
 
+@media (max-width: 1200px) {
+  section ul {
+    padding-left: 0;
+  }
+}
+
 section ul li {
   margin: 5px 0;
   border-bottom-left-radius: var(--border-radius);
@@ -522,6 +541,12 @@ section form input[type="text"] {
   border: none;
   background-color: transparent;
   border-bottom: 4px solid var(--green);
+}
+
+@media (max-width: 1200px) {
+  section form input[type="text"] {
+    padding: 5px 33px;
+  }
 }
 
 section form input[type="text"]:focus {
@@ -569,6 +594,7 @@ section .headline {
 @media (max-width: 1200px) {
   section .headline {
     font-size: 40px;
+    margin: 20px 0;
   }
 }
 
@@ -606,6 +632,12 @@ section.category-list ul#own-list {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+@media (max-width: 1200px) {
+  section.category-list ul#own-list {
+    padding-left: 0;
+  }
 }
 
 section.category-list ul#own-list .own-category {
