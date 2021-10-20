@@ -11,7 +11,10 @@ app.use(express.urlencoded({
 app.use('/favicon.ico', express.static('images/favicon.ico'));
 app.use(express.static("public"))
 // Mongoose Connection 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
+
+// mongodb+srv://<username>:<password>@cluster0.zikdv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+// mongodb://localhost:27017
+mongoose.connect("mongodb+srv://admin-peter:moja92@cluster0.zikdv.mongodb.net/todolistDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -60,6 +63,12 @@ app.post('/delete-finance',deleteFinance)
 app.post('/delete-fandf', deleteFandf)
 app.post('/delete-self',deleteSelf)
 
-app.listen(3000, function () {
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
+app.listen(port, function () {
     console.log('serwer is working on port 3000')
 })
