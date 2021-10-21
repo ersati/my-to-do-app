@@ -9,7 +9,7 @@ const secondElHobby = new Hobby({
 })
 
 const thirdElHobby = new Hobby({
-    hobby: "Press <--- to delete the file in Hobby section"
+    hobby: "Press ---> to delete the file in Hobby section"
 })
 
 module.exports = [firstElHobby, secondElHobby, thirdElHobby]

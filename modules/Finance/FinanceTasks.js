@@ -9,6 +9,6 @@ const secondElFinance = new Finance({
 })
 
 const thirdElFinance = new Finance({
-    finance: "Press <--- to delete the file in Finance section"
+    finance: "Press ---> to delete the file in Finance section"
 })
 module.exports = [firstElFinance, secondElFinance, thirdElFinance]

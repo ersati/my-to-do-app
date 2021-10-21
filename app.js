@@ -20,6 +20,12 @@ mongoose.connect("mongodb+srv://admin-peter:moja92@cluster0.zikdv.mongodb.net/to
     useCreateIndex: true,
     useFindAndModify: false
 })
+// mongoose.connect("mongodb://localhost:27017/todolistDB", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true,
+//     useFindAndModify: false
+// })
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {

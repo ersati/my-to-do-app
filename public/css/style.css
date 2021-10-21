@@ -13,6 +13,13 @@
   --border-radius: 15px;
 }
 
+@font-face {
+  font-family: pristina-regular;
+  url: "../../font/PRISTINA.TTF";
+  src: url("../../font/PRISTINA.TTF") format("embedded-opentype"), url("../../font/PRISTINA.TTF") format("woff2"), url("../../font/PRISTINA.TTF") format("woff"), url("../../font/PRISTINA.TTF") format("truetype"), url("../../font/PRISTINA.TTF") format("svg");
+  /* Legacy iOS */
+}
+
 body {
   background-image: url(../../images/background.jpg);
   background-repeat: no-repeat;

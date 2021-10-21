@@ -9,6 +9,6 @@ const secondElSelf = new Self({
 })
 
 const thirdElSelf = new Self({
-    self: "Press <--- to delete the file in Self section"
+    self: "Press ---> to delete the file in Self section"
 })
 module.exports = [firstElSelf, secondElSelf, thirdElSelf]

@@ -9,7 +9,7 @@ const task1 = new Item({
 })
 
 const task2 = new Item({
-    name: "Press <--- to delete the file"
+    name: "Press ---> to delete the file"
 })
 
 module.exports =  [task, task1, task2]

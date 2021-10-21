@@ -9,7 +9,7 @@ const secondEl = new UserModel({
 })
 
 const thirdEl = new UserModel({
-    name: "Press <--- to delete the file in Own section"
+    name: "Press ---> to delete the file in Own section"
 })
 
 module.exports = [firstEl, secondEl, thirdEl]
