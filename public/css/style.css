@@ -406,7 +406,7 @@ section.own-list {
 
 h1.headline {
   font-size: 100px;
-  font-family: 'Pristina', sans-serif;
+  font-family: 'Pristina', 'pristina-regular', sans-serif;
   color: var(--green);
   margin: 0;
 }
@@ -419,7 +419,7 @@ h1.headline {
 }
 
 input[type="submit"] {
-  font-family: 'Pristina', sans-serif;
+  font-family: 'Pristina', 'pristina-regular', sans-serif;
   font-size: 30px;
   padding: 7px 30px;
   margin: 0 0 0 30px;
@@ -562,7 +562,7 @@ section form input[type="text"]:focus {
 }
 
 section form input[type="submit"] {
-  font-family: 'Pristina', sans-serif;
+  font-family: 'Pristina', 'pristina-regular', sans-serif;
   font-size: 30px;
   padding: 7px 30px;
   margin: 0 0 0 30px;
@@ -593,8 +593,8 @@ section form input[type="submit"]:hover {
 
 section .headline {
   font-size: 100px;
-  font-family: 'Pristina', sans-serif;
-  color: var(--green);
+  font-family: 'Pristina', 'pristina-regular', sans-serif;
+  color: var(--lightYellow);
   margin: 0;
 }
 
@@ -639,6 +639,7 @@ section.category-list ul#own-list {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  font-family: 'Libre Franklin', sans-serif;
 }
 
 @media (max-width: 1200px) {
@@ -718,5 +719,6 @@ footer {
   line-height: 2;
   letter-spacing: 0.6em;
   font-weight: 900;
+  font-family: 'Libre Franklin',sans-serif;
 }
 /*# sourceMappingURL=style.css.map */
