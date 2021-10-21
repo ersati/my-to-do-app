@@ -1,24 +1,29 @@
-section.own-list{
+section.own-list {
     display: flex;
     flex-direction: column;
-    @media (max-width: 1200px){
+
+    @media (max-width: 1200px) {
         min-height: 100vh;
     }
 }
 
 h1.headline {
     font-size: 100px;
-    @media (max-width: 1200px){
+
+    @media (max-width: 1200px) {
         font-size: 40px;
         margin: 20px 0;
     }
-    font-family: 'Pristina', sans-serif;
+
+    font-family: 'Pristina',
+    'pristina-regular',
+    sans-serif;
     color: var(--green);
     margin: 0
 }
 
 input[type="submit"] {
-    font-family: 'Pristina', sans-serif;
+    font-family: 'Pristina', 'pristina-regular', sans-serif;
     font-size: 30px;
     padding: 7px 30px;
     margin: 0 0 0 30px;
@@ -54,15 +59,17 @@ form {
     text-align: center;
     display: flex;
 }
-.home-link{
+
+.home-link {
     background: var(--green);
-    color:var(--lightYellow);
+    color: var(--lightYellow);
     text-decoration: none;
     border-bottom-left-radius: 20px;
-        border-top-right-radius: 20px;
-        padding: 15px;
-        transition: .3s;
-    &:hover{
+    border-top-right-radius: 20px;
+    padding: 15px;
+    transition: .3s;
+
+    &:hover {
         font-weight: bold;
     }
 }
