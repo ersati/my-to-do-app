@@ -9,6 +9,6 @@ const secondElWork = new Work({
 })
 
 const thirdElWork = new Work({
-    work: "Press <--- to delete the file in Work section"
+    work: "Press ---> to delete the file in Work section"
 })
-module.require = [firstElWork, secondElWork, thirdElWork]
+module.exports = [firstElWork, secondElWork, thirdElWork]

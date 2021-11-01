@@ -8,7 +8,6 @@
   },
   "author": "Piotr Pacewicz",
   "license": "ISC",
-
   "engines": {
     "node": "12.12.0"
   },

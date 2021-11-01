@@ -9,6 +9,6 @@ const secondElHealth = new Health({
 })
 
 const thirdElHealth = new Health({
-    health: "Press <--- to delete the file in health section"
+    health: "Press ---> to delete the file in health section"
 })
 module.exports = [firstElHealth, secondElHealth, thirdElHealth]

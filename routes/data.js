@@ -1,6 +1,6 @@
 module.exports = {
     people: '',
-    list: '',
+    // list: '',
     own: '',
     id: ''
 

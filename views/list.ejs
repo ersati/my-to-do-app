@@ -30,20 +30,22 @@
             <input type="text" name="ownList" id="">
             <input type="submit" value="add" id='add'>
         </form>
-        <% list.forEach((el,index )=> { %>
-        <form action="/delete" method="post">
-            <li class='category own-category'>
-                <a class="own-category__link" href="/cat/<%= el.list %>"><%= el.list %></a>
-                <label for="own-category__container-input"></label>
-                <button class="btn-delete" name="checkboxown" type="submit" value="<%= el._id%>"
-                    onChange="this.form.submit()">
-                    <i class="trash"></i>
-                </button>
-                <span class="own-category__span-input"></span>
-            </li>
-            <input type="hidden" name="hiddenList" value="<%= el.list %>"></input>
-        </form>
-        <% }); %>
+        
+
+        <% id.forEach((el,index )=> { %>
+            <form action="/delete" method="post">
+                <li class='category own-category'>
+                    <a class="own-category__link" href="/cat/<%= el.list %>"><%= el.list %></a>
+                    <label for="own-category__container-input"></label>
+                    <button class="btn-delete" name="checkboxown" type="submit" value="<%= el._id%>"
+                        onChange="this.form.submit()">
+                        <i class="trash"></i>
+                    </button>
+                    <span class="own-category__span-input"></span>
+                </li>
+                <input type="hidden" name="hiddenList" value="<%= el._id %>"></input>
+            </form>
+            <% }); %>
         <li class='category category-work'><a href="/work">Work</a></li>
         <li class='category category-finance'><a href="/finance">Finance</a></li>
         <li class='category category-self'><a href="/self-development">Self Development</a></li>

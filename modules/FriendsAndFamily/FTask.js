@@ -9,6 +9,6 @@ const secondElFandf = new Fandf({
 })
 
 const thirdElFandf = new Fandf({
-    fandf: "Press <--- to delete the file in Fandf section"
+    fandf: "Press ---> to delete the file in Fandf section"
 })
 module.exports = [firstElFandf, secondElFandf, thirdElFandf]

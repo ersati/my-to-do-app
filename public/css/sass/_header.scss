@@ -20,6 +20,15 @@
     --height: auto;
     --border-radius: 15px;
 }
+@font-face {
+    font-family: pristina-regular;
+    url:('../../font/PRISTINA.TTF');
+    src: url('../../font/PRISTINA.TTF') format('embedded-opentype'), /* Internet Explorer */
+    url('../../font/PRISTINA.TTF') format('woff2'), /* Super Modern Browsers */
+    url('../../font/PRISTINA.TTF') format('woff'), /* Pretty Modern Browsers */
+    url('../../font/PRISTINA.TTF')  format('truetype'), /* Safari, Android, iOS */
+    url('../../font/PRISTINA.TTF') format('svg'); /* Legacy iOS */
+}
 
 
 body { 

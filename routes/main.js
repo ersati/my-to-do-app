@@ -6,24 +6,16 @@ const _ = require('lodash');
 //Task Main Page
 const List = require("../modules/List/ListModel.js")
 const ParamModel = require("../modules/ParamModel/ParamModel")
+const allTask = require('../modules/UserModel/UserTasks')
 
 const main = (req, res) => {
-
-    const list = List.find({}, function (err, data) {
+    ParamModel.find({}, function (err, ids){
         if(!err){
-            dat.list = data;
+            dat.id = ids
         }else {
             console.log(err)
         }
-        ParamModel.find({}, function (err, ids){
-            if(!err){
-                dat.id = ids
-            }else {
-                console.log(err)
-            }
-        })
     })
-
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
             Item.insertMany(defaultTask, function (err) {
@@ -56,10 +48,21 @@ const addTasktoMain = (req, res) => {
 const addList = (req, res) => {
     const ownList = _.capitalize(req.body.ownList)
     console.log(ownList)
-    const item = new List({
-        list: ownList
+    ParamModel.findOne({list: ownList}, function(err, foundItem){
+        if(!err){
+            if(!foundItem){
+                const item = new ParamModel({
+                    list: ownList,
+                    tasks: allTask
+                })
+                item.save()
+            }
+        }else {
+            console.log('addlist in mainjs:' + err)
+        }
     })
-    item.save()
+
+    
 
     res.redirect('/')
 }
@@ -79,15 +82,7 @@ const deleteMain = function (req, res) {
         })
     }
     if (deleteOwnList) {
-        console.log(hidList)
-        List.findByIdAndRemove(deleteOwnList, (err) => {
-            if (!err) {
-                console.log('delete own sukcesfully')
-            } else {
-                console.log(err)
-            }
-        })
-        ParamModel.findOneAndRemove({list: hidList}, function (err, obj){
+      ParamModel.findOneAndRemove({_id: hidList}, function (err, obj){
             if(!err){
                 console.log(`deleted: ${obj}`)
             }else {
