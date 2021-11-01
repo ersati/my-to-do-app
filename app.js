@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const mongoose = require("mongoose");
 const _ = require('lodash');
@@ -11,7 +13,13 @@ app.use(express.urlencoded({
 app.use('/favicon.ico', express.static('images/favicon.ico'));
 app.use(express.static("public"))
 // Mongoose Connection 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
+
+// mongoose.connect("mongodb://localhost:27017/todolistDB", {
+
+// mongodb+srv://<username>:<password>@cluster0.zikdv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+// mongodb://localhost:27017
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.zikdv.mongodb.net/todolistDB`, {
+
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
