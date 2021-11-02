@@ -4,6 +4,19 @@ const express = require('express');
 const mongoose = require("mongoose");
 const _ = require('lodash');
 const app = express();
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+
+app.use(session({
+    secret: "Hexagon Task Manager.",
+    resave: false,
+    saveUninitialized: false,
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.set('view engine', 'ejs');
 app.use(express.json())
@@ -36,7 +49,27 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
     console.log("Connection Successful!");
 });
+
+// mongoose.set("setCreateIndex", true)
 //Mongoose Connection
+
+//USER Schema
+
+const userSchema = new mongoose.Schema({
+    email: String,
+    password: String
+})
+userSchema.plugin(passportLocalMongoose);
+
+
+const User  = new mongoose.model("User", userSchema)
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 const {
     main,
@@ -79,6 +112,20 @@ const {
     addOwn,
     deleteOwn
 } = require('./routes/own')
+
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
+
 app.get('/', main)
 app.get('/work', work)
 app.get('/self-development', self)
