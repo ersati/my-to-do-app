@@ -1,0 +1,16 @@
+<%- include('header'); -%>
+
+<form action="/register" method="post">
+
+    <div class="form__wrapper">
+        <label for="user">User:</label>
+        <input type="text" name="user" id="">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="">
+        <input type="submit" value="Register">
+        <p>If you have account go to<a href="/login">Log on</a></p>
+    </div>
+    
+    </form>
+
+<%- include('footer'); -%>

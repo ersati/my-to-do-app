@@ -114,6 +114,26 @@ const {
 } = require('./routes/own')
 
 
+
+//LOGIN AND REGISTER SECTION
+
+app.get("/login", function(req,res){
+    res.render("login");
+})
+
+app.get("/register", function(req,res){
+    res.render("register");
+})
+app.post("/login", function(req,res){
+    
+})
+
+app.post("/register", function(req,res){
+    
+})
+
+
+//GOOGLE
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
@@ -123,9 +143,9 @@ app.get('/auth/google/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
+//GOOGLE
 
-
-
+//LOGIN AND REGISTER SECTION
 app.get('/', main)
 app.get('/work', work)
 app.get('/self-development', self)

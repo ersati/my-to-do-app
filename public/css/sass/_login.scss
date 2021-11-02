@@ -1,0 +1,21 @@
+div.form__wrapper {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+    input[type="submit"]{
+        padding: 0;
+    }
+    input[type="password"] {
+        padding: 5px 60px;
+        margin: 0px;
+        border: none;
+        background-color: transparent;
+        border-bottom: 4px solid var(--green);
+    }
+    input{
+        margin: 5px 0;
+    }
+}
+
