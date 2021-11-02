@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(passportLocalMongoose);
 
 
-const User  = new mongoose.model("User", userSchema)
+const User = new mongoose.model("User", userSchema)
 
 passport.use(User.createStrategy());
 
@@ -117,32 +117,82 @@ const {
 
 //LOGIN AND REGISTER SECTION
 
-app.get("/login", function(req,res){
+app.get("/login", function (req, res) {
     res.render("login");
 })
 
-app.get("/register", function(req,res){
+app.get("/register", function (req, res) {
     res.render("register");
 })
-app.post("/login", function(req,res){
-    
+
+app.get("/home", function (req, res) {
+    if (req.isAuthenticated()) {
+        res.render("home")
+    } else {
+        res.redirect('/login')
+    }
 })
 
-app.post("/register", function(req,res){
-    
+app.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect('/login');
+
+})
+app.post("/login", function (req, res) {
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+    })
+
+    req.login(user, function (err) {
+        if (err) {
+            console.log(err)
+            res.redirect('/login')
+        } else {
+            passport.authenticate("local", {
+                successRedirect: '/home',
+                failureRedirect: '/login',
+                failureFlash: 'Invalid username or password.'
+            })(req, res, function () {
+
+
+                res.redirect('/home')
+            })
+        }
+    })
+})
+
+app.post("/register", function (req, res) {
+    User.register({
+        username: req.body.username
+    }, req.body.password, function (err, user) {
+        if (err) {
+            console.log(err);
+            res.redirect("/register");
+        } else {
+            passport.authenticate("local")(req, res, function () {
+                res.redirect("/home")
+            })
+
+        }
+    })
 })
 
 
 //GOOGLE
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+    passport.authenticate('google', {
+        scope: ['profile']
+    }));
 
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+app.get('/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/login'
+    }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/');
+    });
 //GOOGLE
 
 //LOGIN AND REGISTER SECTION
