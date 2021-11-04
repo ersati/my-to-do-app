@@ -63,6 +63,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     googleId:String,
     facebookId:String,
+    generalTasks:String,
 })
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate)
@@ -174,7 +175,43 @@ app.get("/register", function (req, res) {
 })
 
 app.get("/home", function (req, res) {
+
+    const task = new User({
+        generalTasks: "Hello everyone"
+    })
+    const task1 = new User({
+        generalTasks: "Press the Add button to add tasks"
+    })
+    
+    const task2 = new User({
+        generalTasks: "Press ---> to delete the file"
+    })
+    const allTasks =[task, task1, task2]
+
+
+
     if (req.isAuthenticated()) {
+        // console.log(req.user._id)
+        // User.find({}, function(err, foundTasks){
+        //     console.log(foundTasks)
+        // })
+
+
+
+        User.findOne({_id: req.user._id}, function(err, foundUser){
+            console.log(foundUser)
+            if(!foundUser.generalTasks) {
+                User.insertMany(allTasks, function (err) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log("Successfully saved default items to DB item")
+                    }
+                })
+                console.log(foundUser.generalTasks)
+            }
+            
+        })
         res.render("home")
     } else {
         res.redirect('/login')
