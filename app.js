@@ -35,18 +35,18 @@ app.use(express.static("public"))
 
 // mongodb+srv://<username>:<password>@cluster0.zikdv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 // mongodb://localhost:27017
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.zikdv.mongodb.net/todolistDB`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-})
-// mongoose.connect("mongodb://localhost:27017/todolistDB", {
+// mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.zikdv.mongodb.net/todolistDB`, {
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true,
 //     useCreateIndex: true,
 //     useFindAndModify: false
 // })
+mongoose.connect("mongodb://localhost:27017/todolistDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+})
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
@@ -57,20 +57,38 @@ db.once("open", function () {
 //Mongoose Connection
 
 //USER Schema
-
+const typeOfTaskSchema = new mongoose.Schema({
+    // mainTask: Array, 
+    // hobby:Array,
+    // work:Array
+    name: String,
+    tasks: Array
+})
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     googleId:String,
     facebookId:String,
-    generalTasks:String,
+    // generalTasks:Array,
+    generalTasks:[typeOfTaskSchema]
+    // generalTasks:[
+    //     {mTask: Array}, 
+    //     {hob:Array},
+    //     {wor:Array},
+    // ]
 })
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate)
 
 
 const User = new mongoose.model("User", userSchema)
+const taskSchema = new mongoose.Schema({
+    mainTask: String,
+    hobby: String,
+    work:String
+})
 
+const Task = new mongoose.model("Do", taskSchema)
 passport.use(User.createStrategy());
 
 // passport.serializeUser(User.serializeUser());
@@ -160,7 +178,8 @@ const {
     own,
     addOwn,
     deleteOwn
-} = require('./routes/own')
+} = require('./routes/own');
+const { findOne } = require('./modules/Items/ItemModel');
 
 
 
@@ -176,16 +195,51 @@ app.get("/register", function (req, res) {
 
 app.get("/home", function (req, res) {
 
-    const task = new User({
-        generalTasks: "Hello everyone"
+    const task = new Task({
+        mainTask: "Hello everyone",
+        
     })
-    const task1 = new User({
-        generalTasks: "Press the Add button to add tasks"
+    const task1 = new Task({
+        mainTask: "Press the Add button to add tasks",
+       
     })
     
-    const task2 = new User({
-        generalTasks: "Press ---> to delete the file"
+    const task2 = new Task({
+        mainTask: "Press ---> to delete the file",
+        
     })
+
+    const taskh = new Task({
+       
+        hobby: "Hello everyone"
+    })
+    const taskh1 = new Task({
+        
+        hobby: "Press the Add button to add tasks"
+    })
+    
+    const taskh2 = new Task({
+       
+        hobby: "Press the Add button to add tasks"
+    })
+
+    const taskw = new Task({
+       
+        work: "Hello everyone"
+    })
+    const taskw1 = new Task({
+        
+        work: "Press the Add button to add tasks"
+    })
+    
+    const taskw2 = new Task({
+       
+        work: "Press the Add button to add tasks"
+    })
+    const t = "Hello everyone"
+    const t2 = "Press the Add button to add tasks"
+    const t3 = "Press ---> to delete the file"
+
     const allTasks =[task, task1, task2]
 
 
@@ -197,21 +251,82 @@ app.get("/home", function (req, res) {
         // })
 
 
-
-        User.findOne({_id: req.user._id}, function(err, foundUser){
-            console.log(foundUser)
-            if(!foundUser.generalTasks) {
-                User.insertMany(allTasks, function (err) {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        console.log("Successfully saved default items to DB item")
-                    }
-                })
-                console.log(foundUser.generalTasks)
+         User.findById({_id: req.user._id}, function(err, profile){
+            if(!err){
+                console.log('before')
+                if(profile.generalTasks.length === 0){
+                    console.log('hello')
+                    User.findOneAndUpdate({_id: req.user._id}, {
+                        // generalTasks: [{hob:[taskh, taskh1, taskh2]}, {wor:[taskw, taskw1, taskw2]} ],
+                        generalTasks: [{name: 'hobby', tasks:[taskh, taskh1, taskh2]}, {name: 'work', tasks:[taskw, taskw1, taskw2]} ],
+                        // generalTasks:[task, task1, task2]
+                    }, { upsert: true },  function( err, doc ) {
+                        // console.log( doc )
+                        
+                    })
+                }
+                
             }
-            
         })
+
+      
+      
+        // User.findOneAndUpdate({_id: req.user._id}, {
+        //     // generalTasks: [{hob:[taskh, taskh1, taskh2]}, {wor:[taskw, taskw1, taskw2]} ],
+        //     generalTasks: [{name: 'hobby', tasks:[taskh, taskh1, taskh2]}, {name: 'work', tasks:[taskw, taskw1, taskw2]} ],
+        //     // generalTasks:[task, task1, task2]
+        // }, { upsert: true },  function( err, doc ) {
+        //     // console.log( doc )
+            
+        // })
+
+
+
+
+        // let update = { $inc: { number: 1 } };
+        // let update = {$exists:true, $size:0};
+        // const opts = { runValidators: true,
+        //     upsert: true };
+        // User.findOneAndUpdate({_id: req.user._id}, update,
+        //     opts,  function( err, doc ) {
+        //     console.log( doc )
+        //         console.log(`before: ${doc.generalTasks.length === 0}`)
+        //     if(doc.generalTasks.length === 0){
+        //         console.log(`after: ${doc.generalTasks.length === 0}`)
+        //         update = { $push: [{name: 'hobby', tasks:[taskh, taskh1, taskh2]}, {name: 'work', tasks:[taskw, taskw1, taskw2]}] };
+        //     User.findOneAndUpdate({_id: req.user._id}, update, opts, function(error) {
+        //       // This will never error either even though the array will have at
+        //       // least 2 elements.
+        //       console.log(error)
+        //     });
+
+        //     }
+            
+        // })
+        // let data = User.findOne({_id: req.user._id})
+
+        // console.log(data.generalTasks)
+
+        //   User.findOneAndUpdate({_id: req.user._id}, {
+        //     // generalTasks: [{mainTask:[task, task1, task2]}, {hobby:[task, task1, task2]} ],
+        //     generalTasks:[taskh, taskh1, taskh2]
+        // }, { upsert: true },  function( err, doc ) {
+        //     console.log( doc )
+        //   })
+        // User.findOne({_id: req.user._id}, function(err, foundUser){
+        //     console.log(foundUser)
+        //     if(foundUser.generalTasks.length === 0) {
+        //         // foundUser.generalTasks.push(task, task1, task2)
+        //         const item = new User ({ 
+        //             _id: req.user._id,
+        //             generalTasks: [task, task1, task2]
+        //         })
+        //         item.save()
+                
+        //     }
+    // })
+            
+            // console.log(foundUser.generalTasks)
         res.render("home")
     } else {
         res.redirect('/login')
