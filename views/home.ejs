@@ -2,8 +2,55 @@
 
 <h1>You Succed Log in</h1>
 
+<section class="all">
+    <h1 class='headline'>Task for Today </h1>
+    <form action="/home" method="post">
+        <input type="text" name="addTask">
+        <input type="submit" value="input" name="submitTask">
+        <input type="hidden" name="listName" value="List"></input>
+    </form>
+    <ul>
+        <% mainTasks.forEach((element, index )=> { %>
+        <form action="/home-delete" method="post">
+            <li class="checklist">
+                <input type="checkbox" class='int' name="complete" id="list<%=index%>">
+                <label class='label-input' for="list<%=index%>"><%= element.task %> </label>
+                <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
+                    onChange="this.form.submit()">
+                    <i class="trash"></i>
+                </button>
+            </li>
+        </form>
+        <% }); %>
+    </ul>
+</section>
 
 
+<section class="category-list">
+    <ul id="own-list">
+        <p class='headline'>Create your own list </p>
+        <form action="/another-list" method="post">
+            <input type="text" name="ownList">
+            <input type="submit" value="add" id='add'>
+        </form>
+        
+
+        <% lists.forEach((el,index )=> { %>
+            <form action="/delete" method="post">
+                <li class='category own-category'>
+                    <a class="own-category__link" href="/cat/<%= el %>"><%= el.indexOf('-') > -1 ? el.split('-').join(' ') : el %></a>
+                    <label for="own-category__container-input"></label>
+                    <button class="btn-delete" name="checkboxown" type="submit" value="<%= el%>"
+                        onChange="this.form.submit()">
+                        <i class="trash"></i>
+                    </button>
+                    <span class="own-category__span-input"></span>
+                </li>
+                <input type="hidden" name="hiddenList" value="<%= el %>"></input>
+            </form>
+            <% }); %>
+    </ul>
+</section>
 
 <a href="/logout" role="button">Log out</a>
 <%- include('footer'); -%>

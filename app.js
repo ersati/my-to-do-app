@@ -67,10 +67,11 @@ const typeOfTaskSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
-    googleId:String,
-    facebookId:String,
+    googleId: String,
+    facebookId: String,
+    isTaskArrEmpty: Boolean,
     // generalTasks:Array,
-    generalTasks:[typeOfTaskSchema]
+    generalTasks: [typeOfTaskSchema]
     // generalTasks:[
     //     {mTask: Array}, 
     //     {hob:Array},
@@ -85,7 +86,8 @@ const User = new mongoose.model("User", userSchema)
 const taskSchema = new mongoose.Schema({
     mainTask: String,
     hobby: String,
-    work:String
+    work: String,
+    task: String,
 })
 
 const Task = new mongoose.model("Do", taskSchema)
@@ -93,30 +95,33 @@ passport.use(User.createStrategy());
 
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user.id);
-  });
-  
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
+});
+
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
     });
-  });
+});
 
 
 //GOOGLE
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/hexagon",
-    userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    //   console.log(profile)
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
+        clientID: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        callbackURL: "http://localhost:3000/auth/google/hexagon",
+        userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+    },
+    function (accessToken, refreshToken, profile, cb) {
+        //   console.log(profile)
+        User.findOrCreate({
+            googleId: profile.id,
+            isTaskArrEmpty: true
+        }, function (err, user) {
+            return cb(err, user);
+        });
+    }
 ));
 
 
@@ -125,15 +130,18 @@ passport.use(new GoogleStrategy({
 
 //FACEBOOK
 passport.use(new FacebookStrategy({
-    clientID: process.env.FB_CLIENT_ID,
-    clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/hexagon"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
+        clientID: process.env.FB_CLIENT_ID,
+        clientSecret: process.env.FB_CLIENT_SECRET,
+        callbackURL: "http://localhost:3000/auth/facebook/hexagon"
+    },
+    function (accessToken, refreshToken, profile, cb) {
+        User.findOrCreate({
+            facebookId: profile.id,
+            isTaskArrEmpty: true
+        }, function (err, user) {
+            return cb(err, user);
+        });
+    }
 ));
 //FACEBOOK
 
@@ -179,14 +187,19 @@ const {
     addOwn,
     deleteOwn
 } = require('./routes/own');
-const { findOne } = require('./modules/Items/ItemModel');
+const {
+    findOne
+} = require('./modules/Items/ItemModel');
+const {
+    create
+} = require('lodash');
 
 
 
 //LOGIN AND REGISTER SECTION
 
 app.get("/login", function (req, res) {
-    res.render("login");
+    res.render("login", {msg:'Welcome'});
 })
 
 app.get("/register", function (req, res) {
@@ -195,139 +208,82 @@ app.get("/register", function (req, res) {
 
 app.get("/home", function (req, res) {
 
-    const task = new Task({
-        mainTask: "Hello everyone",
-        
-    })
-    const task1 = new Task({
-        mainTask: "Press the Add button to add tasks",
-       
-    })
+    function createTaskObj(taskName) {
+
+        const firstTask = new Task({
+            task: "Hello everyone"
+        })
+        const secondTask = new Task({
+            task: `Press the Add button to add ${taskName}`
+        })
+        const thirdTask = new Task({
+            task: "Press ---> to delete the file"
+        })
+        return {
+            name: taskName,
+            tasks: [firstTask, secondTask, thirdTask]
+        }
+    }
+    const hobby = createTaskObj('Hobby');
+    const work = createTaskObj('Work');
+    const mainTask = createTaskObj('Main-task');
+    const finance = createTaskObj('Finance');
+    const health = createTaskObj('Health');
+    const friendsAndFamily = createTaskObj('Friends-and-Family')
+    const selfDevelopment = createTaskObj('Self-Development')
     
-    const task2 = new Task({
-        mainTask: "Press ---> to delete the file",
-        
-    })
-
-    const taskh = new Task({
-       
-        hobby: "Hello everyone"
-    })
-    const taskh1 = new Task({
-        
-        hobby: "Press the Add button to add tasks"
-    })
-    
-    const taskh2 = new Task({
-       
-        hobby: "Press the Add button to add tasks"
-    })
-
-    const taskw = new Task({
-       
-        work: "Hello everyone"
-    })
-    const taskw1 = new Task({
-        
-        work: "Press the Add button to add tasks"
-    })
-    
-    const taskw2 = new Task({
-       
-        work: "Press the Add button to add tasks"
-    })
-    const t = "Hello everyone"
-    const t2 = "Press the Add button to add tasks"
-    const t3 = "Press ---> to delete the file"
-
-    const allTasks =[task, task1, task2]
-
-
+    const allTasksObj = [mainTask, work, hobby, finance, health, friendsAndFamily, selfDevelopment]
 
     if (req.isAuthenticated()) {
-        // console.log(req.user._id)
-        // User.find({}, function(err, foundTasks){
-        //     console.log(foundTasks)
-        // })
 
-
-         User.findById({_id: req.user._id}, function(err, profile){
-            if(!err){
-                console.log('before')
-                if(profile.generalTasks.length === 0){
-                    console.log('hello')
-                    User.findOneAndUpdate({_id: req.user._id}, {
-                        // generalTasks: [{hob:[taskh, taskh1, taskh2]}, {wor:[taskw, taskw1, taskw2]} ],
-                        generalTasks: [{name: 'hobby', tasks:[taskh, taskh1, taskh2]}, {name: 'work', tasks:[taskw, taskw1, taskw2]} ],
-                        // generalTasks:[task, task1, task2]
-                    }, { upsert: true },  function( err, doc ) {
-                        // console.log( doc )
-                        
+        User.findById({
+            _id: req.user._id
+        }, function (err, profile) {
+            if (!err) {
+                if (profile.generalTasks.length === 0 && profile.isTaskArrEmpty) {
+                    User.findOneAndUpdate({
+                        _id: req.user._id
+                    }, {
+                        isTaskArrEmpty: false,
+                        generalTasks: allTasksObj
+                    }, {
+                        upsert: true
+                    }, function (err, doc) {
+                        console.log(doc)
                     })
+                    res.render('login', {msg: 'You succesfully register, please log in'})
                 }
-                
+                if(!profile.isTaskArrEmpty){
+                    const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
+                    const listOfTasks = profile.generalTasks.filter(el => {
+                        if (el.name === 'Main-task') {
+                            return false
+                        }
+                        return true
+                    }).map(el => el.name);
+                    res.render("home", {mainTasks: tasks, lists: listOfTasks})
+                    console.log(listOfTasks)
+                }
             }
         })
 
-      
-      
-        // User.findOneAndUpdate({_id: req.user._id}, {
-        //     // generalTasks: [{hob:[taskh, taskh1, taskh2]}, {wor:[taskw, taskw1, taskw2]} ],
-        //     generalTasks: [{name: 'hobby', tasks:[taskh, taskh1, taskh2]}, {name: 'work', tasks:[taskw, taskw1, taskw2]} ],
-        //     // generalTasks:[task, task1, task2]
-        // }, { upsert: true },  function( err, doc ) {
-        //     // console.log( doc )
-            
-        // })
 
-
-
-
-        // let update = { $inc: { number: 1 } };
-        // let update = {$exists:true, $size:0};
-        // const opts = { runValidators: true,
-        //     upsert: true };
-        // User.findOneAndUpdate({_id: req.user._id}, update,
-        //     opts,  function( err, doc ) {
-        //     console.log( doc )
-        //         console.log(`before: ${doc.generalTasks.length === 0}`)
-        //     if(doc.generalTasks.length === 0){
-        //         console.log(`after: ${doc.generalTasks.length === 0}`)
-        //         update = { $push: [{name: 'hobby', tasks:[taskh, taskh1, taskh2]}, {name: 'work', tasks:[taskw, taskw1, taskw2]}] };
-        //     User.findOneAndUpdate({_id: req.user._id}, update, opts, function(error) {
-        //       // This will never error either even though the array will have at
-        //       // least 2 elements.
-        //       console.log(error)
-        //     });
-
+        // User.findById({
+        //     _id: req.user._id
+        // }, function (err, profile) {
+        //     if (!err) {
+        //         const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
+        //         const listOfTasks = profile.generalTasks.filter(el => {
+        //             if (el.name === 'mainTask') {
+        //                 return false
+        //             }
+        //             return true
+        //         }).map(el => el.name);
+        //         res.render("home", {mainTasks: tasks, lists: listOfTasks})
+        //         console.log(listOfTasks)
         //     }
-            
         // })
-        // let data = User.findOne({_id: req.user._id})
-
-        // console.log(data.generalTasks)
-
-        //   User.findOneAndUpdate({_id: req.user._id}, {
-        //     // generalTasks: [{mainTask:[task, task1, task2]}, {hobby:[task, task1, task2]} ],
-        //     generalTasks:[taskh, taskh1, taskh2]
-        // }, { upsert: true },  function( err, doc ) {
-        //     console.log( doc )
-        //   })
-        // User.findOne({_id: req.user._id}, function(err, foundUser){
-        //     console.log(foundUser)
-        //     if(foundUser.generalTasks.length === 0) {
-        //         // foundUser.generalTasks.push(task, task1, task2)
-        //         const item = new User ({ 
-        //             _id: req.user._id,
-        //             generalTasks: [task, task1, task2]
-        //         })
-        //         item.save()
-                
-        //     }
-    // })
-            
-            // console.log(foundUser.generalTasks)
-        res.render("home")
+        
     } else {
         res.redirect('/login')
     }
@@ -354,8 +310,6 @@ app.post("/login", function (req, res) {
                 failureRedirect: '/login',
                 failureFlash: 'Invalid username or password.'
             })(req, res, function () {
-
-
                 res.redirect('/home')
             })
         }
@@ -364,7 +318,8 @@ app.post("/login", function (req, res) {
 
 app.post("/register", function (req, res) {
     User.register({
-        username: req.body.username
+        username: req.body.username,
+        isTaskArrEmpty: true
     }, req.body.password, function (err, user) {
         if (err) {
             console.log(err);
@@ -398,14 +353,16 @@ app.get('/auth/google/hexagon',
 
 //FB
 app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+    passport.authenticate('facebook'));
 
 app.get('/auth/facebook/hexagon',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/home');
-  });
+    passport.authenticate('facebook', {
+        failureRedirect: '/login'
+    }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/home');
+    });
 
 //FB
 //LOGIN AND REGISTER SECTION
