@@ -45,6 +45,11 @@
        js.src = "https://connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
+
+     const hash = window.location.hash;
+  if(hash.length > 0 && hash.includes("#/")) {
+    window.location.replace(window.location.href.replace('#/',''));
+  }
   </script>
 </head>
 

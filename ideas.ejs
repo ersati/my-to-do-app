@@ -1,26 +1,13 @@
-<%- include('header'); -%>
-
-<h1>You Succed Log in</h1>
-
-<a href="/your-task">Your Task</a>
-
-
-
-
-<a href="/logout" role="button">Log out</a>
-
-
-
 <section class="all">
     <h1 class='headline'>Task for Today </h1>
-    <form action="/your" method="post">
+    <form action="/home" method="post">
         <input type="text" name="addTask">
         <input type="submit" value="input" name="submitTask">
         <input type="hidden" name="listName" value="List"></input>
     </form>
     <ul>
         <% mainTasks.forEach((element, index )=> { %>
-        <form action="/your-delete" method="post">
+        <form action="/home-delete" method="post">
             <li class="checklist">
                 <input type="checkbox" class='int' name="complete" id="list<%=index%>">
                 <label class='label-input' for="list<%=index%>"><%= element.task %> </label>
@@ -42,6 +29,8 @@
             <input type="text" name="ownList">
             <input type="submit" value="add" id='add'>
         </form>
+        
+
         <% lists.forEach((el,index )=> { %>
             <form action="/delete" method="post">
                 <li class='category own-category'>
@@ -58,10 +47,3 @@
             <% }); %>
     </ul>
 </section>
-
-
-
-
-
-
-<%- include('footer'); -%>
