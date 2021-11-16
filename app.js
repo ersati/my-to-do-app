@@ -331,13 +331,32 @@ app.get('/category/:paramName', (req, res) => {
                     tasks: tasks
                 })
             }
-
-
-
         } else {
             console.log(err)
         }
     })
+})
+
+app.post('/category/:paramName', (req,res) => {
+    const categoryName = req.params.paramName;
+    const taskValue = req.body.task
+    const newTask = new Task({
+        task: taskValue
+    })
+
+    User.findById({
+        _id: req.user._id
+    }, function (err, profile) {
+        if(profile){
+            const {tasks} = profile.generalTasks.find((el) => el.name === categoryName)
+            console.log(tasks, profile)
+            tasks.push(newTask)
+            profile.save()
+            res.redirect(`/category/${categoryName}`)
+        }
+
+    })
+
 })
 app.get("/logout", function (req, res) {
     req.logout();
