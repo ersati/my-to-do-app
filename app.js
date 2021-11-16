@@ -56,35 +56,35 @@ db.once("open", function () {
 //Mongoose Connection
 
 //USER Schema
-// const typeOfTaskSchema = new mongoose.Schema({
-//     name: String,
-//     tasks: Array
-// })
-// const CategoryTask = new mongoose.model('Category', typeOfTaskSchema)
-// const userSchema = new mongoose.Schema({
-//     email: String,
-//     password: String,
-//     googleId: String,
-//     facebookId: String,
-//     isTaskArrEmpty: Boolean,
-//     generalTasks: [typeOfTaskSchema]
+const typeOfTaskSchema = new mongoose.Schema({
+    name: String,
+    tasks: Array
+})
+const CategoryTask = new mongoose.model('Category', typeOfTaskSchema)
+const userSchema = new mongoose.Schema({
+    email: String,
+    password: String,
+    googleId: String,
+    facebookId: String,
+    isTaskArrEmpty: Boolean,
+    generalTasks: [typeOfTaskSchema]
   
-// })
-const userSchema = require('./modules/Users/USchema')
+})
+// const userSchema = require('./modules/Users/USchema')
 
-const User =require('./modules/Users/UModel');
-const Task =require('./modules/Users/TaskModel');
-const CategoryTask = require('./modules/Users/CategoryModel')
+// const User =require('./modules/Users/UModel');
+// const Task =require('./modules/Users/TaskModel');
+// const CategoryTask = require('./modules/Users/CategoryModel')
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate)
 
 
-// const User = new mongoose.model("User", userSchema)
-// const taskSchema = new mongoose.Schema({
-//   task: String,
-// })
+const User = new mongoose.model("User", userSchema)
+const taskSchema = new mongoose.Schema({
+  task: String,
+})
 
-// const Task = new mongoose.model("Do", taskSchema)
+const Task = new mongoose.model("Do", taskSchema)
 
 
 
@@ -191,7 +191,7 @@ const {
 const {
     create
 } = require('lodash');
-const {customCategory} = require('./routes/categories')
+// const {customCategory} = require('./routes/categories')
 
 
 //LOGIN AND REGISTER SECTION
@@ -314,7 +314,31 @@ app.get('/your-task', function(req,res){
             }
         })
 })
-app.get('/category/:paramName', customCategory)
+app.get('/category/:paramName', (req, res) => {
+    const id = req.user._id
+    const {paramName} = req.params
+    User.findById({ _id: id}, function(err, profile){
+        if(!err) {
+            const isCategoryExists = profile.generalTasks.some(el => el.name === paramName)
+            if(!isCategoryExists){
+                res.redirect('/home')
+            }
+            if(isCategoryExists){
+            const {tasks , name } = profile.generalTasks.find(el => el.name === paramName)
+                res.render('customCategory', {
+                    title: name,
+                    paramName: paramName,
+                    tasks: tasks
+                })
+            }
+
+
+
+        } else {
+            console.log(err)
+        }
+    })
+})
 app.get("/logout", function (req, res) {
     req.logout();
     res.redirect('/login');

@@ -1,0 +1,31 @@
+<%- include('header'); -%>
+<section class="own-list">
+<h1 class='headline'><%= title %></h1>
+
+
+<form action="/category/<%= title %>" method="post">
+    <input type="text" name="task">
+    <input type="submit" value="Add" name="send">
+    <input type="hidden" name="paramName" value="<%=paramName%>">
+</form>
+
+
+<ul>
+    <% tasks.forEach((element, index )=> { %>
+        <form action="/delete-own" method="post">
+            <li class="checklist">
+                <input type="checkbox"  class='int' name="complete" id="list<%=index%>">
+                <label class='label-input' for="list<%=index%>"><%= element.task %></label> 
+                <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
+                    onChange="this.form.submit()">
+                    <i class="trash"></i>
+                </button>
+            </li>
+    <input type="hidden" name="listName" value="<%=paramName %>">
+        </form>
+        <% }); %>
+    </ul>
+
+<a class="home-link" href="/home">Back to home</a>
+</section>
+<%- include('footer'); -%>
