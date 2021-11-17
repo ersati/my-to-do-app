@@ -2,10 +2,6 @@
 
 <h1>You Succed Log in</h1>
 
-<a href="/your-task">Your Task</a>
-
-
-
 
 <a href="/logout" role="button">Log out</a>
 
@@ -20,11 +16,11 @@
     </form>
     <ul>
         <% mainTasks.forEach((element, index )=> { %>
-        <form action="/your-delete" method="post">
+        <form action="/home/delete" method="post">
             <li class="checklist">
                 <input type="checkbox" class='int' name="complete" id="list<%=index%>">
                 <label class='label-input' for="list<%=index%>"><%= element.task %> </label>
-                <button class="btn-delete" name="checkbox" type="submit" value="<%= element._id %>"
+                <button class="btn-delete" name="idElement" type="submit" value="<%= element._id %>"
                     onChange="this.form.submit()">
                     <i class="trash"></i>
                 </button>
@@ -38,30 +34,24 @@
 <section class="category-list">
     <ul id="own-list">
         <p class='headline'>Create your own list </p>
-        <form action="/another-list" method="post">
-            <input type="text" name="ownList">
+        <form action="/create-category" method="post">
+            <input type="text" name="customCategory">
             <input type="submit" value="add" id='add'>
         </form>
         <% lists.forEach((el,index )=> { %>
-            <form action="/delete" method="post">
+            <form action="/delete-category" method="post">
                 <li class='category own-category'>
                     <a class="own-category__link" href="/category/<%= el %>"><%= el.indexOf('-') > -1 ? el.split('-').join(' ') : el %></a>
                     <label for="own-category__container-input"></label>
-                    <button class="btn-delete" name="checkboxown" type="submit" value="<%= el%>"
+                    <button class="btn-delete" name="catName" type="submit" value="<%= el%>"
                         onChange="this.form.submit()">
                         <i class="trash"></i>
                     </button>
                     <span class="own-category__span-input"></span>
                 </li>
-                <input type="hidden" name="hiddenList" value="<%= el %>"></input>
+                <input type="hidden" name="category-name" value="<%= el %>"></input>
             </form>
             <% }); %>
     </ul>
 </section>
-
-
-
-
-
-
 <%- include('footer'); -%>

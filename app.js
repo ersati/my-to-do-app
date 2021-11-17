@@ -86,9 +86,6 @@ const taskSchema = new mongoose.Schema({
 
 const Task = new mongoose.model("Do", taskSchema)
 
-
-
-
 passport.use(User.createStrategy());
 
 // passport.serializeUser(User.serializeUser());
@@ -142,8 +139,6 @@ passport.use(new FacebookStrategy({
     }
 ));
 //FACEBOOK
-
-
 const {
     main,
     addTasktoMain,
@@ -193,9 +188,7 @@ const {
 } = require('lodash');
 // const {customCategory} = require('./routes/categories')
 
-
 //LOGIN AND REGISTER SECTION
-
 app.get("/login", function (req, res) {
     res.render("login", {msg:'Welcome'});
 })
@@ -203,24 +196,22 @@ app.get("/login", function (req, res) {
 app.get("/register", function (req, res) {
     res.render("register");
 })
-
+function createTaskObj(taskName) {
+    const firstTask = new Task({
+        task: "Hello everyone"
+    })
+    const secondTask = new Task({
+        task: `Press the Add button to add ${taskName}`
+    })
+    const thirdTask = new Task({
+        task: "Press ---> to delete the file"
+    })
+    return new CategoryTask({
+        name: taskName,
+        tasks: [firstTask, secondTask, thirdTask]
+    })
+}
 app.get("/home", function (req, res) {
- 
-    function createTaskObj(taskName) {
-        const firstTask = new Task({
-            task: "Hello everyone"
-        })
-        const secondTask = new Task({
-            task: `Press the Add button to add ${taskName}`
-        })
-        const thirdTask = new Task({
-            task: "Press ---> to delete the file"
-        })
-        return new CategoryTask({
-            name: taskName,
-            tasks: [firstTask, secondTask, thirdTask]
-        })
-    }
     const hobby = createTaskObj('Hobby');
     const work = createTaskObj('Work');
     const mainTask = createTaskObj('Main-task');
@@ -228,18 +219,11 @@ app.get("/home", function (req, res) {
     const health = createTaskObj('Health');
     const friendsAndFamily = createTaskObj('Friends-and-Family')
     const selfDevelopment = createTaskObj('Self-Development')
-    const allTasksObj = [mainTask, work, hobby, finance, health, friendsAndFamily, selfDevelopment]
-  
     if (req.isAuthenticated()) {
-
-
-        
         User.findById({
             _id: req.user._id
         }, function (err, profile) {
             if (!err) {
-               
-            
                 if (profile.generalTasks.length === 0) {
                     profile.generalTasks.push(mainTask, work, hobby, finance, health, friendsAndFamily, selfDevelopment);
                     profile.isTaskArrEmpty = false;
@@ -273,46 +257,83 @@ app.get("/home", function (req, res) {
     }
 })
 app.post('/your', function (req,res){
-
-    
     const valueInput = req.body.addTask;
     const item = new Task({
         task: valueInput
     })
-
     User.findById({
         _id: req.user._id
     }, function (err, profile) {
         if(profile){
             const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
-            console.log(tasks, profile)
             tasks.push(item)
             profile.save()
-            res.redirect('/your-task')
+            res.redirect('/home')
         }
-
     })
-
 })
-app.get('/your-task', function(req,res){
 
-    
-        User.findById({
-            _id: req.user._id
-        }, function (err, profile) {
-            if (!err) {
-                if(!profile.isTaskArrEmpty){
-                    const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
-                    const listOfTasks = profile.generalTasks.filter(el => {
-                        if (el.name === 'Main-task') {
-                            return false
-                        }
-                        return true
-                    }).map(el => el.name);
-                    res.render("your", {mainTasks: tasks, lists: listOfTasks})
+
+
+app.post('/home/delete', function (req, res){
+    const id = req.body.idElement;
+    const category = 'Main-task'
+    const query = {
+        _id: req.user._id
+    }
+    if(category){
+        User.findById(query, function (err, profile){
+            if(profile){
+                const {tasks} = profile.generalTasks.find((el) => el.name === category)
+                const idTask = tasks.findIndex(el => el._id == id)
+                if(idTask !== -1){
+                    tasks.splice(idTask, 1);
+                }else { 
+                    console.log('no elements to delete')
                 }
+                profile.save()
+                res.redirect(`/home`)
             }
         })
+    }
+})
+app.post('/create-category', (req,res) => {
+    const nameOfNewCategory = req.body.customCategory;
+    const query = {
+        _id: req.user._id
+    }
+    User.findById(query, function (err, profile){
+        if(!err){
+            const isCategoryExists = profile.generalTasks.some(el => el.name === nameOfNewCategory)
+            if(!isCategoryExists){
+                const newCategory = createTaskObj(nameOfNewCategory)
+                profile.generalTasks.push(newCategory)
+                profile.save()
+            }
+        }
+    })
+    res.redirect('/home')
+})
+
+app.post('/delete-category', (req,res) => {
+    const category = req.body.catName;
+    const query = {
+        _id: req.user._id
+    }
+if(category){
+    User.findById(query, function (err, profile){
+        if(!err){
+            const idCategory = profile.generalTasks.findIndex(el => el.name == category)
+            if(idCategory !== -1){
+                profile.generalTasks.splice(idCategory, 1);
+            }else { 
+                console.log('no elements to delete')
+            }
+            profile.save()
+            res.redirect(`/home`)
+        }
+    })
+}
 })
 app.get('/category/:paramName', (req, res) => {
     const id = req.user._id
@@ -349,7 +370,6 @@ app.post('/category/:paramName', (req,res) => {
     }, function (err, profile) {
         if(profile){
             const {tasks} = profile.generalTasks.find((el) => el.name === categoryName)
-            console.log(tasks, profile)
             tasks.push(newTask)
             profile.save()
             res.redirect(`/category/${categoryName}`)
@@ -357,6 +377,31 @@ app.post('/category/:paramName', (req,res) => {
 
     })
 
+})
+
+app.post('/category/:paramName/delete', (req,res) => {
+    const id = req.body.idElement;
+    const category = req.body.listName;
+    const query = {
+        _id: req.user._id
+    }
+    if(category){
+        User.findById(query, function (err, profile){
+            if(profile){
+                const {tasks} = profile.generalTasks.find((el) => el.name === category)
+                const idTask = tasks.findIndex(el => el._id == id)
+                if(idTask !== -1){
+                    tasks.splice(idTask, 1);
+                }else { 
+                    console.log('no elements to delete')
+                }
+                profile.save()
+                res.redirect(`/category/${category}`)
+            }
+        })
+
+        
+    }
 })
 app.get("/logout", function (req, res) {
     req.logout();
