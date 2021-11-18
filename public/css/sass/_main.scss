@@ -97,7 +97,7 @@ section {
 
     .headline {
         font-size: 100px;
-
+        margin-top: 50px;
         @media (max-width: 1200px) {
             font-size: 40px;
             margin: 20px 0;
@@ -112,10 +112,9 @@ section {
 }
 
 section.all {
-    width: 55vw;
-    margin-top: -100px;
-
-    @media (max-width: 1200px) {
+    width: 55vw;   
+    margin-top:50px;    
+@media (max-width: 1200px) {
         margin-top: 0;
     }
 
@@ -135,7 +134,9 @@ section.category-list {
         justify-content: center;
         align-items: center;
         font-family: 'Libre Franklin', sans-serif;
-
+        .list__form{
+            margin-bottom: 50px;
+        }
         @media (max-width: 1200px) {
             padding-left: 0;
         }

@@ -1,9 +1,7 @@
 <%- include('header'); -%>
 
-<h1>You Succed Log in</h1>
 
-
-<a href="/logout" role="button">Log out</a>
+<a class='logout'href="/logout" role="button">Log out</a>
 
 
 
@@ -20,6 +18,8 @@
             <li class="checklist">
                 <input type="checkbox" class='int' name="complete" id="list<%=index%>">
                 <label class='label-input' for="list<%=index%>"><%= element.task %> </label>
+                <span class="category__date"><%= element.date ? `Created: ${new Date(element.date).
+                    toLocaleString('en-UK')}` : null %></span>
                 <button class="btn-delete" name="idElement" type="submit" value="<%= element._id %>"
                     onChange="this.form.submit()">
                     <i class="trash"></i>
@@ -34,7 +34,7 @@
 <section class="category-list">
     <ul id="own-list">
         <p class='headline'>Create your own list </p>
-        <form action="/create-category" method="post">
+        <form class='list__form'action="/create-category" method="post">
             <input type="text" name="customCategory">
             <input type="submit" value="add" id='add'>
         </form>

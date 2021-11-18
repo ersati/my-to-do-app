@@ -32,8 +32,9 @@
 
 
 body { 
-    background-image: url(../../images/background.jpg);
-    background-repeat: no-repeat;
+    // background-image: url(../../images/background.jpg);
+    background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+    // background-repeat: no-repeat;
     background-size: cover;
     margin: 0 ;
     padding: 0;

@@ -1,0 +1,30 @@
+.social-media__wrapper {
+    background-color: var(--salmon);
+    padding: 5px;
+    margin: 15px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+    .google,
+    .facebook {
+        padding: 10px;
+        text-align: center;
+        a{
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a.google-link {
+            color: #DB4437;
+        }
+
+        a.facebook-link {
+            color: #3b5998;
+        }
+
+        i {
+            margin-right: 10px;
+            font-size: 30px;
+        }
+    }
+   
+}

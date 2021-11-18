@@ -1,15 +1,15 @@
 <%- include('header'); -%>
-
-<h1><%= msg ? msg : 'Welcome' %></h1>
+<div class="login">
+<h1 class='login__header login__text-color'><%= msg ? msg : 'Welcome' %></h1>
 <form action="/login" method="post">
 
 <div class="form__wrapper">
-    <label for="username">User:</label>
+    <label class='login__text-color'for="username">User:</label>
     <input type="text" name="username" id="">
-    <label for="password">Password</label>
+    <label class='login__text-color' for="password">Password</label>
     <input type="password" name="password" id="">
     <input type="submit" value="Login">
-    <p>If you havent account go to<a href="/register">Sign up</a></p>
+    <p class='login__text-color'>If you havent account go to<a href="/register">Sign up</a></p>
     
 </div>
 
@@ -30,5 +30,5 @@
         </a>
     </div>
 </div>
-
+</div>
 <%- include('footer'); -%>

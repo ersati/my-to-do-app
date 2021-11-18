@@ -82,6 +82,7 @@ userSchema.plugin(findOrCreate)
 const User = new mongoose.model("User", userSchema)
 const taskSchema = new mongoose.Schema({
   task: String,
+  date: Date
 })
 
 const Task = new mongoose.model("Do", taskSchema)
@@ -212,6 +213,20 @@ function createTaskObj(taskName) {
     })
 }
 app.get("/home", function (req, res) {
+
+    function generateDate () {
+        const timeStampt = new Date();
+        const generatedDate = new Date().
+  toLocaleString('en-UK')
+        console.log(generatedDate)
+    }
+
+    generateDate()
+
+
+
+
+
     const hobby = createTaskObj('Hobby');
     const work = createTaskObj('Work');
     const mainTask = createTaskObj('Main-task');
@@ -259,7 +274,8 @@ app.get("/home", function (req, res) {
 app.post('/your', function (req,res){
     const valueInput = req.body.addTask;
     const item = new Task({
-        task: valueInput
+        task: valueInput,
+        date: new Date().toLocaleString('en-UK')
     })
     User.findById({
         _id: req.user._id
@@ -349,7 +365,7 @@ app.get('/category/:paramName', (req, res) => {
                 res.render('customCategory', {
                     title: name,
                     paramName: paramName,
-                    tasks: tasks
+                    tasks: tasks,
                 })
             }
         } else {
@@ -362,7 +378,8 @@ app.post('/category/:paramName', (req,res) => {
     const categoryName = req.params.paramName;
     const taskValue = req.body.task
     const newTask = new Task({
-        task: taskValue
+        task: taskValue,
+        date: new Date().toLocaleString('en-UK')
     })
 
     User.findById({
