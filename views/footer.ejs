@@ -25,7 +25,13 @@
         document.querySelector('#own-list').appendChild(p)
 
     }
+    const sectionList = document.querySelector('section.category-list')
+    const sectionMain = document.querySelector('section.all')
+    sectionList.addEventListener('click', ()=>{
+sectionList.style.transform = 'translate(0px,0px) rotate(0deg)';
+sectionMain.style.transform = 'translateX(0px)';
 
+    })
  
  
 

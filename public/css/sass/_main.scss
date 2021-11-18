@@ -113,9 +113,14 @@ section {
 
 section.all {
     width: 55vw;   
-    margin-top:50px;    
+    margin-top:50px;  
+    /* Feature*/
+transform: translateX(400px);
+transition: .8s;
+/* Feature*/  
 @media (max-width: 1200px) {
         margin-top: 0;
+        transform: translateX(0px);
     }
 
 }
@@ -123,9 +128,19 @@ section.all {
 section.category-list {
     width: 40vw;
 
+/* Feature*/
+transform: translate(400px, 100px) rotate(-90deg);
+transition: .8s;
+
+@media (max-width: 1200px) {
+    margin-top: 0;
+    transform: translate(0px, 0px) rotate(0deg);
+}
+/* Feature*/
     .headline {
         font-size: 55px;
         margin-bottom: 30px;
+        cursor:pointer;
     }
 
     ul#own-list {

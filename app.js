@@ -214,19 +214,6 @@ function createTaskObj(taskName) {
 }
 app.get("/home", function (req, res) {
 
-    function generateDate () {
-        const timeStampt = new Date();
-        const generatedDate = new Date().
-  toLocaleString('en-UK')
-        console.log(generatedDate)
-    }
-
-    generateDate()
-
-
-
-
-
     const hobby = createTaskObj('Hobby');
     const work = createTaskObj('Work');
     const mainTask = createTaskObj('Main-task');
