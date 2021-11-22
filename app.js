@@ -27,6 +27,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 app.use('/favicon.ico', express.static('images/favicon.ico'));
+app.use("/public", express.static('./public/'));
 app.use(express.static("public"))
 // Mongoose Connection 
 

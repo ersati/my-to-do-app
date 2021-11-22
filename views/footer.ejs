@@ -1,41 +1,9 @@
 <footer>
     Copyrights Piotr Pacewicz
 </footer>
-<script>
-    const ul = document.querySelectorAll('#own-list li').length;
-    const add = document.querySelector('#add');
 
-    const inputText = document.querySelectorAll('input[type="submit"]');
-
-    inputText.forEach(int => int.addEventListener('click', (e) => {
-        const intValue = int.previousElementSibling
-        console.log('ok')
-        if (intValue.value == '') {
-            e.preventDefault()
-            int.closest('form').insertAdjacentHTML('afterend', '<p class="invalid">Invalid text</p>')
-            console.log('inside')
-        }
-        console.log('clicken', intValue.value)
-    }))
-
-    if (ul > 10) {
-        add.disabled = true;
-        const p = document.createElement('p')
-        p.textContent = 'Limis of Section. Buy Premium'
-        document.querySelector('#own-list').appendChild(p)
-
-    }
-    const sectionList = document.querySelector('section.category-list')
-    const sectionMain = document.querySelector('section.all')
-    sectionList.addEventListener('click', ()=>{
-sectionList.style.transform = 'translate(0px,0px) rotate(0deg)';
-sectionMain.style.transform = 'translateX(0px)';
-
-    })
- 
- 
-
-</script>
+<script src="../public/js/sections.js"></script>
+<script src="../public/js/validation.js"></script>
 
 </body>
 
