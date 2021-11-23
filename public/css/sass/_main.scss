@@ -93,6 +93,7 @@ section {
                 font-weight: bold;
             }
         }
+        
     }
 
     .headline {
@@ -130,6 +131,9 @@ section {
 input#add {
     background: var(--green);
     color: var(--lightYellow);
+}
+input#add:disabled{
+    background-color: var(--red);
 }
 
 input#trash-section {

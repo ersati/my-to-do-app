@@ -9,7 +9,11 @@
     <h1 class='headline'>Task for Today </h1>
     <form action="/your" method="post">
         <input type="text" name="addTask">
+        <div class="wrapper__micro">
+            <i class="fas fa-microphone-alt"></i>
+        </div>
         <input type="submit" value="input" name="submitTask">
+        
         <input type="hidden" name="listName" value="List"></input>
     </form>
     <ul>
@@ -32,8 +36,8 @@
 
 
 <section class="category-list">
+    <p class='headline'>Create your own list </p>
     <ul id="own-list">
-        <p class='headline'>Create your own list </p>
         <form class='list__form'action="/create-category" method="post">
             <input type="text" name="customCategory">
             <input type="submit" value="add" id='add'>

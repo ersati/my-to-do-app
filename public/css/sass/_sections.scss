@@ -25,10 +25,12 @@ section.category-list {
     /* Feature*/
     transform: translate(30vw, 100px) rotate(-90deg);
     transition: .8s;
+    padding-top: 20vh;
 
     @media (max-width: 1200px) {
         margin-top: 0;
         transform: translate(0px, 0px) rotate(0deg);
+        padding-top: 0vh;
     }
 
     /* Feature*/
@@ -37,7 +39,12 @@ section.category-list {
         margin-bottom: 30px;
         cursor: pointer;
     }
-
+    &.active-list ul {
+        visibility:visible;
+    }
+    ul {
+        visibility: hidden;
+    }
     ul#own-list {
         display: flex;
         flex-direction: column;
