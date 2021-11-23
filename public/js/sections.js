@@ -2,7 +2,7 @@ const sections = document.querySelectorAll('section');
 const sectionList = document.querySelector('section.category-list')
 const sectionMain = document.querySelector('section.all')
 
-if(sections.length){
+if(sections.length > 1){
 
     function updateClasses() {
         const allClasses = JSON.parse(localStorage.getItem('sectionClasses'));

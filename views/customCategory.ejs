@@ -5,6 +5,9 @@
 <a class='logout'href="/logout" role="button">Log out</a>
 <form action="/category/<%= title %>" method="post">
     <input type="text" name="task">
+    <div class="wrapper__micro">
+        <i class="fas fa-microphone-alt"></i>
+    </div>
     <input type="submit" value="Add" name="send">
     <input type="hidden" name="categoryName" value="<%=paramName%>">
 </form>
