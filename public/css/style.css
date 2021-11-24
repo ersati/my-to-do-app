@@ -68,6 +68,12 @@ section.all.active-task {
           transform: translateX(0px);
 }
 
+.headline {
+  font-size: 55px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
 section.category-list {
   width: 40vw;
   /* Feature*/
@@ -91,12 +97,6 @@ section.category-list.active-list {
             transform: translate(0px, 0px) rotate(0deg);
     padding-top: 0vh;
   }
-}
-
-section.category-list .headline {
-  font-size: 55px;
-  margin-bottom: 30px;
-  cursor: pointer;
 }
 
 section.category-list.active-list ul {

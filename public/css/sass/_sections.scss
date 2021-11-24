@@ -15,6 +15,11 @@ section.all {
     }
 }
 
+.headline {
+    font-size: 55px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
 
 section.category-list {
     &.active-list {
@@ -34,11 +39,7 @@ section.category-list {
     }
 
     /* Feature*/
-    .headline {
-        font-size: 55px;
-        margin-bottom: 30px;
-        cursor: pointer;
-    }
+  
     &.active-list ul {
         visibility:visible;
     }
