@@ -18,7 +18,16 @@ All of them categories is important to keep them in balance. When person keep th
 
 Also User Can modify the app and categories to own puprose. Aplication can be use to create projects, or other tasks.
 
-##Technologies & packeges:
+## ScreenShots
+
+- Hidden Categories list
+  ![](header.png)
+- Categories list
+  ![](headercategory.png)
+- Login
+  ![](login.png)
+
+## Technologies & packeges:
 
 - NodeJs (express)
 - EJS
@@ -28,13 +37,6 @@ Also User Can modify the app and categories to own puprose. Aplication can be us
 - MongoDB (mongoose)
 - Javascript ES6
 - passportjs
-
-- Hidden Categories list
-  ![](header.png)
-- Categories list
-  ![](headercategory.png)
-- Login
-  ![](login.png)
 
 ## Installation
 
@@ -88,7 +90,7 @@ DB_PASS=password
 
 - User can create/delete task task and categories by tapping or saying. App register voice when user clicks microphone next to input. When app register wrong user can click again on microphone. User need to click input/add button to add task to the tasks/list.
 
--On desktop Category is hidden in the right corner. To open categories User need to click on create your own list headline.
+- On desktop Category is hidden in the right corner. To open categories User need to click on create your own list headline.
 
 <!-- ## Development setup
 
