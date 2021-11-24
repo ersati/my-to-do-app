@@ -2,15 +2,39 @@
 
 > Application to help you keep balance in your life.
 
-[![NPM Version][npm-image]][npm-url]
+Live Solution:
+Code:
 
-One to two paragraph statement about your product and what it does.
-Hidden Categories list
-![](header.png)
-Categories list
-![](headercategory.png)
-Login
-![](login.png)
+Hexagon Task Manager you can use to separate your task between 6 categories:
+
+- Work
+- Health;
+- Hobby
+- Family and Friends
+- Self Development
+- Finance
+
+All of them categories is important to keep them in balance. When person keep them in balance can reach pure hapiness.
+
+Also User Can modify the app and categories to own puprose. Aplication can be use to create projects, or other tasks.
+
+##Technologies & packeges:
+
+- NodeJs (express)
+- EJS
+- Sass
+- Express
+- dotenv
+- MongoDB (mongoose)
+- Javascript ES6
+- passportjs
+
+- Hidden Categories list
+  ![](header.png)
+- Categories list
+  ![](headercategory.png)
+- Login
+  ![](login.png)
 
 ## Installation
 
@@ -57,10 +81,10 @@ DB_PASS=password
 
 ## Usage example
 
--Create User on :
-/register
--Login User on :
-/login
+- Create User on :
+  /register
+- Login User on :
+  /login
 
 - User can create/delete task task and categories by tapping or saying. App register voice when user clicks microphone next to input. When app register wrong user can click again on microphone. User need to click input/add button to add task to the tasks/list.
 
