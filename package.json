@@ -1,7 +1,7 @@
 {
   "name": "my-to-do-app",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.2.0",
+  "description": "Hexagon Task Manager to improve you balance in your life.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
