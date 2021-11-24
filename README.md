@@ -2,8 +2,8 @@
 
 > Application to help you keep balance in your life.
 
-Live Solution:
-Code:
+> Live Solution: https://evening-island-15995.herokuapp.com/
+> Code: https://github.com/ersati/my-to-do-app
 
 Hexagon Task Manager you can use to separate your task between 6 categories:
 
