@@ -1,6 +1,6 @@
 const micro = document.querySelector('.wrapper__micro');
 const input = document.querySelector('input[type="text"]')
-
+if(micro){
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
@@ -16,3 +16,4 @@ recognition.addEventListener('result', e=> {
 micro.addEventListener('click', (e) => {
     recognition.start()
 })
+}
