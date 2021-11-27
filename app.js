@@ -56,12 +56,14 @@ db.once("open", function () {
 
 //Mongoose Connection
 
+const typeOfTaskSchema = require('./modules/Users/CategorySchema')
+const CategoryTask = require('./modules/Users/CategoryModel')
 //USER Schema
-const typeOfTaskSchema = new mongoose.Schema({
-    name: String,
-    tasks: Array
-})
-const CategoryTask = new mongoose.model('Category', typeOfTaskSchema)
+// const typeOfTaskSchema = new mongoose.Schema({
+//     name: String,
+//     tasks: Array
+// })
+// const CategoryTask = new mongoose.model('Category', typeOfTaskSchema)
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
