@@ -1,10 +1,38 @@
+section.own-list {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 1200px) {
+        min-height: 100vh;
+    }
+}
+
+h1.headline {
+    font-size: 100px;
+
+    @media (max-width: 1200px) {
+        font-size: 40px;
+        margin: 20px 0;
+    }
+
+    font-family: 'Pristina',
+    'pristina-regular',
+    sans-serif;
+    color: var(--green);
+    margin: 0
+}
+
+
+
 section.all {
     width: 55vw;
     margin-top: 50px;
     /* Feature*/
     transform: translateX(30vw);
     transition: .8s;
-
+    @media (max-width:1500px){
+        transform: translateX(20vw);
+    }
     /* Feature*/
     @media (max-width: 1200px) {
         margin-top: 0;
@@ -30,7 +58,7 @@ section.category-list {
     /* Feature*/
     transform: translate(30vw, 100px) rotate(-90deg);
     transition: .8s;
-    padding-top: 20vh;
+    padding-top: 15vh;
 
     @media (max-width: 1200px) {
         margin-top: 0;

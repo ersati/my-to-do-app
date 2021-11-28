@@ -99,11 +99,13 @@ section {
     .headline {
         font-size: 100px;
         margin-top: 50px;
+        @media (max-width: 1500px){
+            font-size: 60px;
+            margin-top: 20px;
+        }
         @media (max-width: 1200px) {
             font-size: 40px;
-            margin: 20px 0;
         }
-
         font-family: 'Pristina',
         'pristina-regular',
         sans-serif;
