@@ -45,4 +45,8 @@ body {
     align-items: center;
     font-family: 'pristina-regular','Libre Franklin', sans-serif;
     overflow: hidden;
+    @media (max-width: 1200px){
+        overflow: visible;
+
+    }
 }

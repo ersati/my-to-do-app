@@ -45,6 +45,12 @@ body {
   overflow: hidden;
 }
 
+@media (max-width: 1200px) {
+  body {
+    overflow: visible;
+  }
+}
+
 @-webkit-keyframes move {
   50% {
     padding-left: 8px;
