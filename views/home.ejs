@@ -12,7 +12,7 @@
         <div class="wrapper__micro">
             <i class="fas fa-microphone-alt"></i>
         </div>
-        <input type="submit" value="input" name="submitTask">
+        <input type="submit" value="Task" name="submitTask">
         
         <input type="hidden" name="listName" value="List"></input>
     </form>
@@ -40,7 +40,7 @@
     <ul id="own-list">
         <form class='list__form'action="/create-category" method="post">
             <input type="text" name="customCategory">
-            <input type="submit" value="add" id='add'>
+            <input type="submit" value="Category" id='add'>
         </form>
         <% lists.forEach((el,index )=> { %>
             <form action="/delete-category" method="post">
