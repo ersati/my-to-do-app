@@ -1,20 +1,70 @@
 
 const User =require('../modules/Users/UModel');
 const Task =require('../modules/Users/TaskModel');
+const {createTaskObj} = require('../helpers/createTask')
 
-const customCategory = (req, res) => {
-    User.findById({ _id: req.user._id}, function(err, profile){
-        if(!err) {
-           console.log( profile.generalTasks.some(el => el.name === req.params.paramName))
+const homePageTasks = (req, res) => {
 
+    const hobby = createTaskObj('Hobby');
+    const work = createTaskObj('Work');
+    const mainTask = createTaskObj('Main-task');
+    const finance = createTaskObj('Finance');
+    const health = createTaskObj('Health');
+    const friendsAndFamily = createTaskObj('Friends-and-Family')
+    const selfDevelopment = createTaskObj('Self-Development')
+    if (req.isAuthenticated()) {
+        User.findById({
+            _id: req.user._id
+        }, function (err, profile) {
+            if (!err) {
+                if (profile.generalTasks.length === 0) {
+                    profile.generalTasks.push(mainTask, work, hobby, finance, health, friendsAndFamily, selfDevelopment);
+                    profile.isTaskArrEmpty = false;
+                    profile.save()
+                    // User.findOneAndUpdate({
+                    //     _id: req.user._id
+                    // }, {
+                    //     isTaskArrEmpty: false,
+                    //     generalTasks: allTasksObj
+                    // },  
+                    // function (err, doc) {
+                    // })
+                }
+                if(!profile.isTaskArrEmpty){
+                    const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
+                    const listOfTasks = profile.generalTasks.filter(el => {
+                        if (el.name === 'Main-task') {
+                            return false
+                        }
+                        return true
+                    }).map(el => el.name);
+                    res.render("home", {mainTasks: tasks, lists: listOfTasks})
+                }
 
+            }
+        })
 
-
-        } else {
-            console.log(err)
-        }
-    })
+        // res.render("home")
+    } else {
+        res.redirect('/login')
+    }
 }
+
+
+
+// const customCategory = (req, res) => {
+//     User.findById({ _id: req.user._id}, function(err, profile){
+//         if(!err) {
+//            console.log( profile.generalTasks.some(el => el.name === req.params.paramName))
+
+
+
+
+//         } else {
+//             console.log(err)
+//         }
+//     })
+// }
 
 
 // const ParamModel = require('../modules/ParamModel/ParamModel');
@@ -86,6 +136,6 @@ const customCategory = (req, res) => {
 //     }
 // }
 
-// module.exports = {
-//     customCategory
-// }
+module.exports = {
+    homePageTasks
+}

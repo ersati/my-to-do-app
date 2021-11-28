@@ -59,41 +59,18 @@ db.once("open", function () {
 const typeOfTaskSchema = require('./modules/Users/CategorySchema')
 const CategoryTask = require('./modules/Users/CategoryModel')
 //USER Schema
-// const typeOfTaskSchema = new mongoose.Schema({
-//     name: String,
-//     tasks: Array
-// })
-// const CategoryTask = new mongoose.model('Category', typeOfTaskSchema)
-const userSchema = new mongoose.Schema({
-    email: String,
-    password: String,
-    googleId: String,
-    facebookId: String,
-    isTaskArrEmpty: Boolean,
-    generalTasks: [typeOfTaskSchema]
-  
-})
-// const userSchema = require('./modules/Users/USchema')
 
-// const User =require('./modules/Users/UModel');
-// const Task =require('./modules/Users/TaskModel');
-// const CategoryTask = require('./modules/Users/CategoryModel')
+const userSchema = require('./modules/Users/USchema')
+
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate)
 
-
-const User = new mongoose.model("User", userSchema)
-const taskSchema = new mongoose.Schema({
-  task: String,
-  date: Date
-})
-
-const Task = new mongoose.model("Do", taskSchema)
+const User = require('./modules/Users/UModel');
+const Task = require('./modules/Users/TaskModel');
 
 passport.use(User.createStrategy());
 
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
@@ -113,7 +90,7 @@ passport.use(new GoogleStrategy({
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
-          console.log(profile)
+        //   console.log(profile)
         User.findOrCreate({
             googleId: profile.id,
         }, function (err, user) {
@@ -190,7 +167,8 @@ const {
 const {
     create
 } = require('lodash');
-// const {customCategory} = require('./routes/categories')
+const {homePageTasks} = require('./routes/categories')
+const {createTaskObj} = require('./helpers/createTask');
 
 //LOGIN AND REGISTER SECTION
 app.get("/login", function (req, res) {
@@ -200,67 +178,56 @@ app.get("/login", function (req, res) {
 app.get("/register", function (req, res) {
     res.render("register");
 })
-function createTaskObj(taskName) {
-    const firstTask = new Task({
-        task: "Hello everyone"
-    })
-    const secondTask = new Task({
-        task: `Press the Add button to add ${taskName}`
-    })
-    const thirdTask = new Task({
-        task: "Press ---> to delete the file"
-    })
-    return new CategoryTask({
-        name: taskName,
-        tasks: [firstTask, secondTask, thirdTask]
-    })
-}
-app.get("/home", function (req, res) {
 
-    const hobby = createTaskObj('Hobby');
-    const work = createTaskObj('Work');
-    const mainTask = createTaskObj('Main-task');
-    const finance = createTaskObj('Finance');
-    const health = createTaskObj('Health');
-    const friendsAndFamily = createTaskObj('Friends-and-Family')
-    const selfDevelopment = createTaskObj('Self-Development')
-    if (req.isAuthenticated()) {
-        User.findById({
-            _id: req.user._id
-        }, function (err, profile) {
-            if (!err) {
-                if (profile.generalTasks.length === 0) {
-                    profile.generalTasks.push(mainTask, work, hobby, finance, health, friendsAndFamily, selfDevelopment);
-                    profile.isTaskArrEmpty = false;
-                    profile.save()
-                    // User.findOneAndUpdate({
-                    //     _id: req.user._id
-                    // }, {
-                    //     isTaskArrEmpty: false,
-                    //     generalTasks: allTasksObj
-                    // },  
-                    // function (err, doc) {
-                    // })
-                }
-                if(!profile.isTaskArrEmpty){
-                    const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
-                    const listOfTasks = profile.generalTasks.filter(el => {
-                        if (el.name === 'Main-task') {
-                            return false
-                        }
-                        return true
-                    }).map(el => el.name);
-                    res.render("home", {mainTasks: tasks, lists: listOfTasks})
-                }
 
-            }
-        })
+app.get("/home", homePageTasks
+// function (req, res) {
 
-        // res.render("home")
-    } else {
-        res.redirect('/login')
-    }
-})
+//     const hobby = createTaskObj('Hobby');
+//     const work = createTaskObj('Work');
+//     const mainTask = createTaskObj('Main-task');
+//     const finance = createTaskObj('Finance');
+//     const health = createTaskObj('Health');
+//     const friendsAndFamily = createTaskObj('Friends-and-Family')
+//     const selfDevelopment = createTaskObj('Self-Development')
+//     if (req.isAuthenticated()) {
+//         User.findById({
+//             _id: req.user._id
+//         }, function (err, profile) {
+//             if (!err) {
+//                 if (profile.generalTasks.length === 0) {
+//                     profile.generalTasks.push(mainTask, work, hobby, finance, health, friendsAndFamily, selfDevelopment);
+//                     profile.isTaskArrEmpty = false;
+//                     profile.save()
+//                     // User.findOneAndUpdate({
+//                     //     _id: req.user._id
+//                     // }, {
+//                     //     isTaskArrEmpty: false,
+//                     //     generalTasks: allTasksObj
+//                     // },  
+//                     // function (err, doc) {
+//                     // })
+//                 }
+//                 if(!profile.isTaskArrEmpty){
+//                     const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
+//                     const listOfTasks = profile.generalTasks.filter(el => {
+//                         if (el.name === 'Main-task') {
+//                             return false
+//                         }
+//                         return true
+//                     }).map(el => el.name);
+//                     res.render("home", {mainTasks: tasks, lists: listOfTasks})
+//                 }
+
+//             }
+//         })
+
+//         // res.render("home")
+//     } else {
+//         res.redirect('/login')
+//     }
+// }
+)
 app.post('/your', function (req,res){
     const valueInput = req.body.addTask;
     const item = new Task({
