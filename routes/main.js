@@ -9,6 +9,10 @@ const ParamModel = require("../modules/ParamModel/ParamModel")
 const allTask = require('../modules/UserModel/UserTasks')
 
 const main = (req, res) => {
+    if (req.user) {
+        res.redirect('/home')
+    }
+
     ParamModel.find({}, function (err, ids){
         if(!err){
             dat.id = ids
