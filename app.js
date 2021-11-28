@@ -19,8 +19,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 app.set('view engine', 'ejs');
 app.use(express.json())
 app.use(express.urlencoded({
@@ -55,33 +53,21 @@ db.once("open", function () {
 });
 
 //Mongoose Connection
-
-const typeOfTaskSchema = require('./modules/Users/CategorySchema')
-const CategoryTask = require('./modules/Users/CategoryModel')
 //USER Schema
-
 const userSchema = require('./modules/Users/USchema')
-
-
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate)
 
 const User = require('./modules/Users/UModel');
-const Task = require('./modules/Users/TaskModel');
-
 passport.use(User.createStrategy());
-
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
-
 passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
         done(err, user);
     });
 });
-
-
 //GOOGLE
 passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,
@@ -98,11 +84,7 @@ passport.use(new GoogleStrategy({
         });
     }
 ));
-
-
 //GOOGLE
-
-
 //FACEBOOK
 passport.use(new FacebookStrategy({
         clientID: process.env.FB_CLIENT_ID,
@@ -120,6 +102,117 @@ passport.use(new FacebookStrategy({
     }
 ));
 //FACEBOOK
+//Version 2.0
+const {
+    homePageTasks,
+    createTaskInHome,
+    deleteTaskinHome,
+    createCategories,
+    deleteCategories
+} = require('./routes/home')
+
+const {
+    getTaskFromDynamicCategory,
+    addTaskToDynamicCategory,
+    deleteTaskFromDynamicCategory
+} = require('./routes/dynamic-categories')
+//Version 2.0
+//LOGIN AND REGISTER SECTION
+app.get("/login", function (req, res) {
+    res.render("login", {
+        msg: 'Welcome'
+    });
+})
+
+app.get("/register", function (req, res) {
+    res.render("register");
+})
+
+app.get("/home", homePageTasks)
+app.post('/home', createTaskInHome)
+app.post('/home/delete', deleteTaskinHome)
+app.post('/create-category', createCategories)
+app.post('/delete-category', deleteCategories)
+
+app.get('/category/:paramName', getTaskFromDynamicCategory)
+app.post('/category/:paramName', addTaskToDynamicCategory)
+app.post('/category/:paramName/delete', deleteTaskFromDynamicCategory)
+
+app.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect('/login');
+
+})
+app.post("/login", function (req, res) {
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+    })
+
+    req.login(user, function (err) {
+        if (err) {
+            console.log(err)
+            res.redirect('/login')
+        } else {
+            passport.authenticate("local", {
+                successRedirect: '/home',
+                failureRedirect: '/login',
+                failureFlash: 'Invalid username or password.'
+            })(req, res, function () {
+                res.redirect('/home')
+            })
+        }
+    })
+})
+
+app.post("/register", function (req, res) {
+    User.register({
+        username: req.body.username,
+        isTaskArrEmpty: true
+    }, req.body.password, function (err, user) {
+        if (err) {
+            console.log(err);
+            res.redirect("/register");
+        } else {
+            passport.authenticate("local")(req, res, function () {
+                res.redirect("/home")
+            })
+
+        }
+    })
+})
+//GOOGLE
+app.get('/auth/google',
+    passport.authenticate('google', {
+        scope: ['profile']
+    }));
+
+app.get('/auth/google/hexagon',
+    passport.authenticate('google', {
+        failureRedirect: '/login'
+    }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/home');
+    });
+//GOOGLE
+//FB
+app.get('/auth/facebook',
+    passport.authenticate('facebook'));
+
+app.get('/auth/facebook/hexagon',
+    passport.authenticate('facebook', {
+        failureRedirect: '/login'
+    }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/home');
+    });
+
+//FB
+//LOGIN AND REGISTER SECTION
+
+// Version 1.0
 const {
     main,
     addTasktoMain,
@@ -167,293 +260,8 @@ const {
 const {
     create
 } = require('lodash');
-const {homePageTasks} = require('./routes/categories')
-const {createTaskObj} = require('./helpers/createTask');
-
-//LOGIN AND REGISTER SECTION
-app.get("/login", function (req, res) {
-    res.render("login", {msg:'Welcome'});
-})
-
-app.get("/register", function (req, res) {
-    res.render("register");
-})
-
-
-app.get("/home", homePageTasks
-// function (req, res) {
-
-//     const hobby = createTaskObj('Hobby');
-//     const work = createTaskObj('Work');
-//     const mainTask = createTaskObj('Main-task');
-//     const finance = createTaskObj('Finance');
-//     const health = createTaskObj('Health');
-//     const friendsAndFamily = createTaskObj('Friends-and-Family')
-//     const selfDevelopment = createTaskObj('Self-Development')
-//     if (req.isAuthenticated()) {
-//         User.findById({
-//             _id: req.user._id
-//         }, function (err, profile) {
-//             if (!err) {
-//                 if (profile.generalTasks.length === 0) {
-//                     profile.generalTasks.push(mainTask, work, hobby, finance, health, friendsAndFamily, selfDevelopment);
-//                     profile.isTaskArrEmpty = false;
-//                     profile.save()
-//                     // User.findOneAndUpdate({
-//                     //     _id: req.user._id
-//                     // }, {
-//                     //     isTaskArrEmpty: false,
-//                     //     generalTasks: allTasksObj
-//                     // },  
-//                     // function (err, doc) {
-//                     // })
-//                 }
-//                 if(!profile.isTaskArrEmpty){
-//                     const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
-//                     const listOfTasks = profile.generalTasks.filter(el => {
-//                         if (el.name === 'Main-task') {
-//                             return false
-//                         }
-//                         return true
-//                     }).map(el => el.name);
-//                     res.render("home", {mainTasks: tasks, lists: listOfTasks})
-//                 }
-
-//             }
-//         })
-
-//         // res.render("home")
-//     } else {
-//         res.redirect('/login')
-//     }
-// }
-)
-app.post('/your', function (req,res){
-    const valueInput = req.body.addTask;
-    const item = new Task({
-        task: valueInput,
-        date: new Date().toLocaleString('en-UK')
-    })
-    User.findById({
-        _id: req.user._id
-    }, function (err, profile) {
-        if(profile){
-            const {tasks} = profile.generalTasks.find((el) => el.name === 'Main-task')
-            tasks.push(item)
-            profile.save()
-            res.redirect('/home')
-        }
-    })
-})
-
-
-
-app.post('/home/delete', function (req, res){
-    const id = req.body.idElement;
-    const category = 'Main-task'
-    const query = {
-        _id: req.user._id
-    }
-    if(category){
-        User.findById(query, function (err, profile){
-            if(profile){
-                const {tasks} = profile.generalTasks.find((el) => el.name === category)
-                const idTask = tasks.findIndex(el => el._id == id)
-                if(idTask !== -1){
-                    tasks.splice(idTask, 1);
-                }else { 
-                    console.log('no elements to delete')
-                }
-                profile.save()
-                res.redirect(`/home`)
-            }
-        })
-    }
-})
-app.post('/create-category', (req,res) => {
-    const nameOfNewCategory = req.body.customCategory;
-    const query = {
-        _id: req.user._id
-    }
-    User.findById(query, function (err, profile){
-        if(!err){
-            const isCategoryExists = profile.generalTasks.some(el => el.name === nameOfNewCategory)
-            if(!isCategoryExists){
-                const newCategory = createTaskObj(nameOfNewCategory)
-                profile.generalTasks.push(newCategory)
-                profile.save()
-            }
-        }
-    })
-    res.redirect('/home')
-})
-
-app.post('/delete-category', (req,res) => {
-    const category = req.body.catName;
-    const query = {
-        _id: req.user._id
-    }
-if(category){
-    User.findById(query, function (err, profile){
-        if(!err){
-            const idCategory = profile.generalTasks.findIndex(el => el.name == category)
-            if(idCategory !== -1){
-                profile.generalTasks.splice(idCategory, 1);
-            }else { 
-                console.log('no elements to delete')
-            }
-            profile.save()
-            res.redirect(`/home`)
-        }
-    })
-}
-})
-app.get('/category/:paramName', (req, res) => {
-    const id = req.user._id
-    const {paramName} = req.params
-    User.findById({ _id: id}, function(err, profile){
-        if(!err) {
-            const isCategoryExists = profile.generalTasks.some(el => el.name === paramName)
-            if(!isCategoryExists){
-                res.redirect('/home')
-            }
-            if(isCategoryExists){
-            const {tasks , name } = profile.generalTasks.find(el => el.name === paramName)
-                res.render('customCategory', {
-                    title: name,
-                    paramName: paramName,
-                    tasks: tasks,
-                })
-            }
-        } else {
-            console.log(err)
-        }
-    })
-})
-
-app.post('/category/:paramName', (req,res) => {
-    const categoryName = req.params.paramName;
-    const taskValue = req.body.task
-    const newTask = new Task({
-        task: taskValue,
-        date: new Date().toLocaleString('en-UK')
-    })
-
-    User.findById({
-        _id: req.user._id
-    }, function (err, profile) {
-        if(profile){
-            const {tasks} = profile.generalTasks.find((el) => el.name === categoryName)
-            tasks.push(newTask)
-            profile.save()
-            res.redirect(`/category/${categoryName}`)
-        }
-
-    })
-
-})
-
-app.post('/category/:paramName/delete', (req,res) => {
-    const id = req.body.idElement;
-    const category = req.body.listName;
-    const query = {
-        _id: req.user._id
-    }
-    if(category){
-        User.findById(query, function (err, profile){
-            if(profile){
-                const {tasks} = profile.generalTasks.find((el) => el.name === category)
-                const idTask = tasks.findIndex(el => el._id == id)
-                if(idTask !== -1){
-                    tasks.splice(idTask, 1);
-                }else { 
-                    console.log('no elements to delete')
-                }
-                profile.save()
-                res.redirect(`/category/${category}`)
-            }
-        })
-
-        
-    }
-})
-app.get("/logout", function (req, res) {
-    req.logout();
-    res.redirect('/login');
-
-})
-app.post("/login", function (req, res) {
-    const user = new User({
-        username: req.body.username,
-        password: req.body.password,
-    })
-
-    req.login(user, function (err) {
-        if (err) {
-            console.log(err)
-            res.redirect('/login')
-        } else {
-            passport.authenticate("local", {
-                successRedirect: '/home',
-                failureRedirect: '/login',
-                failureFlash: 'Invalid username or password.'
-            })(req, res, function () {
-                res.redirect('/home')
-            })
-        }
-    })
-})
-
-app.post("/register", function (req, res) {
-    User.register({
-        username: req.body.username,
-        isTaskArrEmpty: true
-    }, req.body.password, function (err, user) {
-        if (err) {
-            console.log(err);
-            res.redirect("/register");
-        } else {
-            passport.authenticate("local")(req, res, function () {
-                res.redirect("/home")
-            })
-
-        }
-    })
-})
-
-
-//GOOGLE
-app.get('/auth/google',
-    passport.authenticate('google', {
-        scope: ['profile']
-    }));
-
-app.get('/auth/google/hexagon',
-    passport.authenticate('google', {
-        failureRedirect: '/login'
-    }),
-    function (req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/home');
-    });
-//GOOGLE
-
-
-//FB
-app.get('/auth/facebook',
-    passport.authenticate('facebook'));
-
-app.get('/auth/facebook/hexagon',
-    passport.authenticate('facebook', {
-        failureRedirect: '/login'
-    }),
-    function (req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/home');
-    });
-
-//FB
-//LOGIN AND REGISTER SECTION
+// Version 1.0
+//version 1.0
 app.get('/', main)
 app.get('/work', work)
 app.get('/self-development', self)
@@ -481,7 +289,7 @@ app.post('/delete-health', deleteHealth)
 app.post('/delete-finance', deleteFinance)
 app.post('/delete-fandf', deleteFandf)
 app.post('/delete-self', deleteSelf)
-
+//version 1.0
 
 let port = process.env.PORT;
 if (port == null || port == "") {
