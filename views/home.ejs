@@ -5,20 +5,20 @@
 
 
 
-<section class="all">
-    <h1 class='headline'>Task for Today </h1>
-    <form action="/home" method="post">
-        <input type="text" name="addTask">
+<section class="all general-task">
+    <h1 class='headline general-task__headline'>Task for Today </h1>
+    <form class='general-task__form--add' action="/home" method="post">
+        <input class='general-task__task'type="text" name="addTask">
         <div class="wrapper__micro">
-            <i class="fas fa-microphone-alt"></i>
+            <span class="fas fa-microphone-alt wrapper__micro__icon"></span>
         </div>
-        <input type="submit" value="Task" name="submitTask">
+        <input class='general-task__submit-task' type="submit" value="Task" name="submitTask">
         
-        <input type="hidden" name="listName" value="List"></input>
+        <input class='general-task__hidden-list' type="hidden" name="listName" value="List"></input>
     </form>
     <ul>
         <% mainTasks.forEach((element, index )=> { %>
-        <form action="/home/delete" method="post">
+            <form class='general-task__form--delete' action="/home/delete" method="post">
             <li class="checklist">
                 <input type="checkbox" class='int' name="complete" id="list<%=index%>">
                 <label class='label-input' for="list<%=index%>"><%= element.task %> </label>
@@ -29,7 +29,7 @@
                     <i class="trash"></i>
                 </button>
             </li>
-        </form>
+            </form>
         <% }); %>
     </ul>
 </section>

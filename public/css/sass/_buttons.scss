@@ -1,0 +1,24 @@
+
+
+
+.btn{
+    font-family: 'Corinthia', sans-serif;
+    font-size: 30px;
+    margin: 0 0 0 30px;
+    cursor: pointer;
+    transition: .3s;
+    border: none;
+    padding: 7px 30px;
+    box-shadow: 10px 10px 6px 0 var(--lightYellow);
+    border-bottom-left-radius: var(--radius-btn);
+    border-top-right-radius: var(--radius-btn);
+}
+
+.btn__primary {
+    background: linear-gradient(var(--lightYellow), var(--darkYellow));
+    color: var(--green);
+}
+
+.btn__secondary{
+    color: var(--green);
+}

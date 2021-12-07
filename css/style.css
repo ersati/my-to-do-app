@@ -11,9 +11,10 @@
   --text: rgba(48, 114, 77, 1);
   --check: rgba(48, 114, 77, 1);
   --disabled: rgba(242, 176, 162, 1);
+  --border-radius: 15px;
+  --radius-btn: 20px;
   --width: 40vw;
   --height: auto;
-  --border-radius: 15px;
 }
 
 @font-face {
@@ -387,6 +388,31 @@ section.category-list ul#own-list .own-category .own-category__input {
       -ms-grid-row-align: end;
       align-self: end;
   background-color: red;
+}
+
+.btn {
+  font-family: 'Corinthia', sans-serif;
+  font-size: 30px;
+  margin: 0 0 0 30px;
+  cursor: pointer;
+  -webkit-transition: .3s;
+  transition: .3s;
+  border: none;
+  padding: 7px 30px;
+  -webkit-box-shadow: 10px 10px 6px 0 var(--lightYellow);
+          box-shadow: 10px 10px 6px 0 var(--lightYellow);
+  border-bottom-left-radius: var(--radius-btn);
+  border-top-right-radius: var(--radius-btn);
+}
+
+.btn__primary {
+  background: -webkit-gradient(linear, left top, left bottom, from(var(--lightYellow)), to(var(--darkYellow)));
+  background: linear-gradient(var(--lightYellow), var(--darkYellow));
+  color: var(--green);
+}
+
+.btn__secondary {
+  color: var(--green);
 }
 
 @media (max-width: 1200px) {

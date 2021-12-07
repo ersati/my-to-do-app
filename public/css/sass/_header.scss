@@ -6,20 +6,7 @@
 // .Grafika-5-rgba { color: rgba(242, 75, 60, 1); }
 
 
-:root{
-    --green: rgba(48, 114, 77, 1);
-    --lightYellow:rgba(216, 179, 67, 1); 
-    --darkYellow:rgba(242, 185, 79, 1);
-    --salmon:rgba(242, 176, 162, 1);
-    --red:rgba(242, 75, 60, 1); 
-    --background: #ffffff;
-    --text: rgba(48, 114, 77, 1);
-    --check: rgba(48, 114, 77, 1);
-    --disabled: rgba(242, 176, 162, 1);
-    --width: 40vw;
-    --height: auto;
-    --border-radius: 15px;
-}
+
 @font-face {
     font-family: pristina-regular;
     url:('../../font/PRISTINA.TTF');
@@ -33,7 +20,7 @@
 
 body { 
     // background-image: url(../../images/background.jpg);
-    background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+    background-image: linear-gradient(to right, var(--pink), var(--blue));
     // background-repeat: no-repeat;
     background-size: cover;
     margin: 0 ;
