@@ -55,6 +55,37 @@ body {
   }
 }
 
+body {
+  background-image: -webkit-gradient(linear, left top, right top, from(var(--pink)), to(var(--blue)));
+  background-image: linear-gradient(to right, var(--pink), var(--blue));
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: 'pristina-regular','Libre Franklin', sans-serif;
+  overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  body {
+    overflow: visible;
+  }
+}
+
 @-webkit-keyframes move {
   50% {
     padding-left: 8px;

@@ -17,23 +17,3 @@
     url('../../font/PRISTINA.TTF') format('svg'); /* Legacy iOS */
 }
 
-
-body { 
-    // background-image: url(../../images/background.jpg);
-    background-image: linear-gradient(to right, var(--pink), var(--blue));
-    // background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0 ;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    font-family: 'pristina-regular','Libre Franklin', sans-serif;
-    overflow: hidden;
-    @media (max-width: 1200px){
-        overflow: visible;
-
-    }
-}
