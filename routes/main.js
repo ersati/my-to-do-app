@@ -9,6 +9,7 @@ const ParamModel = require("../modules/ParamModel/ParamModel")
 const allTask = require('../modules/UserModel/UserTasks')
 
 const main = (req, res) => {
+    res.redirect('/home')
     if (req.user) {
         res.redirect('/home')
     }
