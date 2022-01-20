@@ -1,14 +1,14 @@
 <%- include('header'); -%>
 
-<form action="/register" method="post">
+<form class="form form__register" action="/register" method="post">
 
     <div class="form__wrapper">
-        <label for="username">Email</label>
-        <input type="text" name="username" id="">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="">
-        <input type="submit" value="Register">
-        <p>If you have account go to<a href="/login">Log on</a></p>
+        <label class="form__username--label" for="username">Email</label>
+        <input class="form__username" type="text" name="username" id="">
+        <label class="form__password--label" for="password">Password</label>
+        <input class="form__password" type="password" name="password" id="">
+        <input class="form__submit-register" type="submit" value="Register">
+        <p class="form__register__text">If you have account go to<a class="form__register__link" href="/login">Log on</a></p>
     </div>
     </form>
 
