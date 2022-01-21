@@ -884,11 +884,11 @@ body.login {
   color: var(--darkYellow);
 }
 
-h1.login__header {
+.login__header {
   text-align: center;
 }
 
-div.form__wrapper {
+.form__wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -902,17 +902,17 @@ div.form__wrapper {
           flex-direction: column;
 }
 
-div.form__wrapper a {
+.login__form__link {
   text-decoration: none;
   color: black;
   font-weight: bold;
 }
 
-div.form__wrapper input[type="submit"] {
+.login__form__submit {
   padding: 0;
 }
 
-div.form__wrapper input[type="password"] {
+.login__form__password {
   padding: 5px 60px;
   margin: 0px;
   border: none;
@@ -920,7 +920,7 @@ div.form__wrapper input[type="password"] {
   border-bottom: 4px solid var(--green);
 }
 
-div.form__wrapper input {
+.login__form__input {
   margin: 5px 0;
 }
 

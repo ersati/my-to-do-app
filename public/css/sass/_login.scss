@@ -7,33 +7,34 @@ body.login {
 .login__text-color{
     color:var(--darkYellow)
 }
-h1.login__header{
+.login__header{
     text-align: center;
 }
 
-div.form__wrapper {
+.form__wrapper {
     display: flex;
     justify-content: center;
     /* align-items: center; */
     flex-direction: column;
-    a{
-        text-decoration: none;
-        color: black;
-        font-weight: bold;
-    }
-    input[type="submit"]{
-        padding: 0;
-    }
-    input[type="password"] {
-        padding: 5px 60px;
-        margin: 0px;
-        border: none;
-        background-color: transparent;
-        border-bottom: 4px solid var(--green);
-    }
-    input{
-        margin: 5px 0;
-    }
+   
+}
+.login__form__link{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.login__form__submit{
+    padding: 0;
+}
+.login__form__password {
+    padding: 5px 60px;
+    margin: 0px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 4px solid var(--green);
+}
+.login__form__input{
+    margin: 5px 0;
 }
 
 .logout{
