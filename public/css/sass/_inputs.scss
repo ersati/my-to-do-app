@@ -22,38 +22,6 @@ h1.headline {
     margin: 0
 }
 
-input[type="submit"] {
-    font-family: 'Pristina', 'pristina-regular', sans-serif;
-    font-size: 30px;
-    padding: 7px 30px;
-    margin: 0 0 0 30px;
-    background: linear-gradient(var(--lightYellow), var(--darkYellow));
-    border: none;
-    box-shadow: 10px 10px 6px 0 var(--lightYellow);
-    color: var(--green);
-    border-bottom-left-radius: 20px;
-    border-top-right-radius: 20px;
-    cursor: pointer;
-    transition: .3s;
-
-    &:hover {
-        box-shadow: -3px -3px 6px 0 var(--lightYellow);
-        font-weight: bold;
-    }
-}
-
-input[type="text"] {
-    padding: 5px 60px;
-    margin: 0px;
-    border: none;
-    background-color: transparent;
-    border-bottom: 4px solid var(--green);
-
-    &:focus {
-        border: none;
-        border-bottom: 2px solid var(--green);
-    }
-}
 
 form {
     text-align: center;

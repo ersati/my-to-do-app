@@ -1,0 +1,13 @@
+.int-text{ 
+    
+        padding: 5px 60px;
+        margin: 0px;
+        border: none;
+        background-color: transparent;
+        border-bottom: 4px solid var(--green);
+    
+        &:focus {
+            border: none;
+            border-bottom: 2px solid var(--green);
+        }
+}

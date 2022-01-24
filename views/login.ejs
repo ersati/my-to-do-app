@@ -1,14 +1,14 @@
 <%- include('header'); -%>
 <div class="login">
 <h1 class='login__header login__text-color'><%= msg ? msg : 'Welcome to Hexagon Task Manager' %></h1>
-<form action="/login" method="post">
+<form class='form form__login' action="/login" method="post">
 
 <div class="form__wrapper login__form">
     <label class='login__text-color'for="username">Email</label>
-    <input class='login__form__username login__form__input' type="text" name="username" id="">
+    <input class='login__input int-text login__form__username login__form__input' type="text" name="username" id="">
     <label class='login__text-color' for="password">Password</label>
-    <input class='login__form__password login__form__input'type="password" name="password" id="">
-    <input class='login__form__submit login__form__input'type="submit" value="Login">
+    <input class='login__input int-text login__form__password login__form__input'type="password" name="password" id="">
+    <input class='btn btn__primary'type="submit" value="Login">
     <p class='login__text-color'>If you havent account go to<a class='login__form__link' href="/register">Sign up</a></p>
     
 </div>

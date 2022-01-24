@@ -2,9 +2,8 @@
 
 
 .btn{
-    font-family: 'Corinthia', sans-serif;
+    font-family: 'Pristina', 'pristina-regular', sans-serif;
     font-size: 30px;
-    margin: 0 0 0 30px;
     cursor: pointer;
     transition: .3s;
     border: none;
@@ -12,6 +11,10 @@
     box-shadow: 10px 10px 6px 0 var(--lightYellow);
     border-bottom-left-radius: var(--radius-btn);
     border-top-right-radius: var(--radius-btn);
+    &:hover{
+        box-shadow: -3px -3px 6px 0 var(--lightYellow);
+        font-weight: bold;
+    }
 }
 
 .btn__primary {

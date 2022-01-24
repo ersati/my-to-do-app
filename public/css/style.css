@@ -390,10 +390,16 @@ section.category-list ul#own-list .own-category .own-category__input {
   background-color: red;
 }
 
+.form {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .btn {
-  font-family: 'Corinthia', sans-serif;
+  font-family: 'Pristina', 'pristina-regular', sans-serif;
   font-size: 30px;
-  margin: 0 0 0 30px;
   cursor: pointer;
   -webkit-transition: .3s;
   transition: .3s;
@@ -405,6 +411,12 @@ section.category-list ul#own-list .own-category .own-category__input {
   border-top-right-radius: var(--radius-btn);
 }
 
+.btn:hover {
+  -webkit-box-shadow: -3px -3px 6px 0 var(--lightYellow);
+          box-shadow: -3px -3px 6px 0 var(--lightYellow);
+  font-weight: bold;
+}
+
 .btn__primary {
   background: -webkit-gradient(linear, left top, left bottom, from(var(--lightYellow)), to(var(--darkYellow)));
   background: linear-gradient(var(--lightYellow), var(--darkYellow));
@@ -413,6 +425,19 @@ section.category-list ul#own-list .own-category .own-category__input {
 
 .btn__secondary {
   color: var(--green);
+}
+
+.int-text {
+  padding: 5px 60px;
+  margin: 0px;
+  border: none;
+  background-color: transparent;
+  border-bottom: 4px solid var(--green);
+}
+
+.int-text:focus {
+  border: none;
+  border-bottom: 2px solid var(--green);
 }
 
 @media (max-width: 1200px) {
@@ -631,43 +656,6 @@ h1.headline {
   }
 }
 
-input[type="submit"] {
-  font-family: 'Pristina', 'pristina-regular', sans-serif;
-  font-size: 30px;
-  padding: 7px 30px;
-  margin: 0 0 0 30px;
-  background: -webkit-gradient(linear, left top, left bottom, from(var(--lightYellow)), to(var(--darkYellow)));
-  background: linear-gradient(var(--lightYellow), var(--darkYellow));
-  border: none;
-  -webkit-box-shadow: 10px 10px 6px 0 var(--lightYellow);
-          box-shadow: 10px 10px 6px 0 var(--lightYellow);
-  color: var(--green);
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 20px;
-  cursor: pointer;
-  -webkit-transition: .3s;
-  transition: .3s;
-}
-
-input[type="submit"]:hover {
-  -webkit-box-shadow: -3px -3px 6px 0 var(--lightYellow);
-          box-shadow: -3px -3px 6px 0 var(--lightYellow);
-  font-weight: bold;
-}
-
-input[type="text"] {
-  padding: 5px 60px;
-  margin: 0px;
-  border: none;
-  background-color: transparent;
-  border-bottom: 4px solid var(--green);
-}
-
-input[type="text"]:focus {
-  border: none;
-  border-bottom: 2px solid var(--green);
-}
-
 form {
   text-align: center;
   display: -webkit-box;
@@ -746,62 +734,6 @@ section ul li a {
   color: var(--lightYellow);
   display: block;
   background-color: var(--green);
-}
-
-section form {
-  text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-section form input[type="text"] {
-  padding: 5px 60px;
-  margin: 0px;
-  border: none;
-  background-color: transparent;
-  border-bottom: 4px solid var(--green);
-}
-
-@media (max-width: 1200px) {
-  section form input[type="text"] {
-    padding: 5px 33px;
-  }
-}
-
-section form input[type="text"]:focus {
-  border: none;
-  border-bottom: 2px solid var(--green);
-}
-
-section form input[type="submit"] {
-  font-family: 'Pristina', 'pristina-regular', sans-serif;
-  font-size: 30px;
-  padding: 7px 30px;
-  margin: 0 0 0 30px;
-  background: -webkit-gradient(linear, left top, left bottom, from(var(--lightYellow)), to(var(--darkYellow)));
-  background: linear-gradient(var(--lightYellow), var(--darkYellow));
-  border: none;
-  -webkit-box-shadow: 10px 10px 6px 0 var(--lightYellow);
-          box-shadow: 10px 10px 6px 0 var(--lightYellow);
-  color: var(--green);
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 20px;
-  cursor: pointer;
-  -webkit-transition: .3s;
-  transition: .3s;
-}
-
-@media (max-width: 1200px) {
-  section form input[type="submit"] {
-    font-size: 15px;
-  }
-}
-
-section form input[type="submit"]:hover {
-  -webkit-box-shadow: -3px -3px 6px 0 var(--lightYellow);
-          box-shadow: -3px -3px 6px 0 var(--lightYellow);
-  font-weight: bold;
 }
 
 section .headline {
@@ -908,10 +840,6 @@ body.login {
   font-weight: bold;
 }
 
-.login__form__submit {
-  padding: 0;
-}
-
 .login__form__password {
   padding: 5px 60px;
   margin: 0px;
@@ -920,8 +848,8 @@ body.login {
   border-bottom: 4px solid var(--green);
 }
 
-.login__form__input {
-  margin: 5px 0;
+.login__input {
+  margin-bottom: 10px;
 }
 
 .logout {
@@ -974,7 +902,7 @@ body.login {
   font-size: 30px;
 }
 
-footer {
+.footer {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   text-align: center;
